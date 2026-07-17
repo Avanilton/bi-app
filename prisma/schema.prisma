@@ -1,0 +1,124 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Usuario {
+  id        Int      @id @default(autoincrement())
+  nome      String
+  email     String   @unique
+  senha     String
+  setor     String   // "Admin", "Financeiro", "Diretoria", "Rateio", "RH", "Juridico"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TbImovel {
+  idEmpresa     Int
+  idImovel      Int
+  nomeFantasia  String?
+  cnpj          String?
+  
+  // Relations
+  clientes      TbCliente[]
+  boletos       TbBoleto[]
+  antecipacoes  TbAntecipacao[]
+  descontos     TbDescontoAntecipacao[]
+
+  @@id([idEmpresa, idImovel])
+}
+
+model TbCliente {
+  idEmpresa    Int
+  idImovel     Int
+  idCliente    Int
+  nomeCliente  String?
+  fonece       String?
+  foneco       String?
+  cpf          String?
+  email        String?
+  cnpj         String?
+  dddce        Int?
+  dddco        Int?
+  email2       String?
+  email3       String?
+
+  // Relations
+  imovel       TbImovel @relation(fields: [idEmpresa, idImovel], references: [idEmpresa, idImovel])
+  boletos      TbBoleto[]
+
+  @@id([idEmpresa, idImovel, idCliente])
+}
+
+model TbBoleto {
+  idBoleto        Int
+  idEmpresa       Int
+  idImovel        Int
+  idCliente       Int
+  cancelado       Boolean?
+  pago            Boolean?
+  valorPago       Float?
+  valorParc       Float?
+  multa           Float?
+  juros           Float?
+  correcao        Float?
+  encargo         Float?
+  total           Float?
+  dataVecto       DateTime?
+  nrParcela       Int?
+  tarifaBancaria  Float?
+  totPrestacao    Float?
+  origem          Int?
+  dtEmissaoExtra  DateTime?
+  totalExtra      Float?
+  idRateio        Int?
+  dataPgto        DateTime?
+  diferenca       Float?
+
+  // Relations
+  cliente         TbCliente @relation(fields: [idEmpresa, idImovel, idCliente], references: [idEmpresa, idImovel, idCliente])
+  imovel          TbImovel  @relation(fields: [idEmpresa, idImovel], references: [idEmpresa, idImovel])
+
+  @@id([idBoleto, idEmpresa, idImovel, idCliente])
+}
+
+model TbAntecipacao {
+  idEmpresa            Int
+  idTituloPagar        Int
+  idImovel             Int
+  mesRef               DateTime?
+  receitaAntecipada    Float?
+  receitaNaoAntecipada Float?
+  perdas               Float?
+  custas               Float?
+  servicos             Float?
+  reembolso            Float?
+  valor                Float?
+  idRateio             Int?
+
+  // Relations
+  imovel               TbImovel @relation(fields: [idEmpresa, idImovel], references: [idEmpresa, idImovel])
+
+  @@id([idEmpresa, idTituloPagar])
+}
+
+model TbDescontoAntecipacao {
+  idDesconto     Int
+  idImovel       Int
+  idParcelaPagar Int
+  idTituloPagar  Int
+  idEmpresa      Int
+  descricao      String?
+  valor          Float?
+
+  // Relations
+  imovel         TbImovel @relation(fields: [idEmpresa, idImovel], references: [idEmpresa, idImovel])
+
+  @@id([idDesconto, idImovel, idParcelaPagar, idTituloPagar, idEmpresa])
+}
