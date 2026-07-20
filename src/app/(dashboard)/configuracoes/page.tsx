@@ -1,11 +1,28 @@
-import { Metadata } from "next";
-import { Settings, UserPlus, Save } from "lucide-react";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Configurações e Usuários - BV Garantia BI",
-};
+import React, { useState } from "react";
+import { Settings, UserPlus, Save, RefreshCcw, Database } from "lucide-react";
 
 export default function ConfiguracoesPage() {
+  const [isSyncing, setIsSyncing] = useState(false);
+
+  const handleSync = async () => {
+    try {
+      setIsSyncing(true);
+      const res = await fetch("/api/sync", { method: "POST" });
+      const data = await res.json();
+      if (data.success) {
+        alert(data.message);
+      } else {
+        alert("Erro na sincronização.");
+      }
+    } catch (error) {
+      alert("Erro de conexão ao sincronizar.");
+    } finally {
+      setIsSyncing(false);
+    }
+  };
+
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       <div className="flex items-center justify-between bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
@@ -15,12 +32,31 @@ export default function ConfiguracoesPage() {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-gray-900">Configurações do Sistema</h1>
-            <p className="text-sm text-gray-500">Gerencie configurações globais e usuários do sistema.</p>
+            <p className="text-sm text-gray-500">Gerencie configurações globais, usuários e sincronizações do sistema.</p>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        {/* Sync Settings */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 lg:col-span-2">
+          <div className="flex items-center gap-3 mb-4">
+            <Database className="text-brand-primary" size={24} />
+            <h2 className="text-xl font-bold text-gray-900">Sincronização de Dados</h2>
+          </div>
+          <p className="text-sm text-gray-500 mb-6">Sincronize a base de dados local com a API da Novacorp. Para grandes volumes (milhões de registros de boletos), utilize o worker via terminal.</p>
+          
+          <button 
+            onClick={handleSync}
+            disabled={isSyncing}
+            className="flex items-center justify-center gap-2 px-6 py-3 bg-brand-primary text-white font-medium text-sm rounded-lg hover:bg-brand-primary/90 transition-all disabled:opacity-50 shadow-md shadow-brand-primary/20"
+          >
+            <RefreshCcw size={18} className={isSyncing ? "animate-spin" : ""} />
+            {isSyncing ? "Sincronizando Base de Dados..." : "Sincronizar API (Limitações Aplicadas)"}
+          </button>
+        </div>
+
         {/* User Registration Form */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <div className="flex items-center gap-3 mb-6">

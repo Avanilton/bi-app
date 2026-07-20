@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { 
   LayoutDashboard, 
   Briefcase, 
@@ -12,10 +12,10 @@ import {
   Menu,
   X,
   LogOut,
-  RefreshCcw,
   Search,
   FilterX,
-  Settings
+  Settings,
+  Filter
 } from "lucide-react";
 
 const navItems = [
@@ -29,26 +29,61 @@ const navItems = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
-  const [isSyncing, setIsSyncing] = useState(false);
+  const [condominios, setCondominios] = useState<{value: number, label: string}[]>([]);
 
-  const handleSync = async () => {
-    try {
-      setIsSyncing(true);
-      const res = await fetch("/api/sync", { method: "POST" });
-      const data = await res.json();
-      if (data.success) {
-        alert(data.message);
-        // Refresh page to load new data
-        window.location.reload();
-      } else {
-        alert("Erro na sincronização.");
+  // Filter States
+  const [filters, setFilters] = useState({
+    condominio: searchParams.get("condominio") || "",
+    regiao: searchParams.get("regiao") || "",
+    estado: searchParams.get("estado") || "",
+    data: searchParams.get("data") || "",
+    periodo: searchParams.get("periodo") || ""
+  });
+
+  useEffect(() => {
+    async function fetchCondominios() {
+      try {
+        const res = await fetch("/api/condominios");
+        const data = await res.json();
+        if (data.success) {
+          setCondominios(data.data.map((c: any) => ({
+            value: c.idImovel,
+            label: c.nomeFantasia ? `${c.idImovel} - ${c.nomeFantasia}` : `Condomínio ${c.idImovel}`
+          })));
+        }
+      } catch (error) {
+        console.error("Erro ao buscar condominios", error);
       }
-    } catch (error) {
-      alert("Erro de conexão ao sincronizar.");
-    } finally {
-      setIsSyncing(false);
     }
+    fetchCondominios();
+  }, []);
+
+  const handleClearFilters = () => {
+    setFilters({
+      condominio: "",
+      regiao: "",
+      estado: "",
+      data: "",
+      periodo: ""
+    });
+    router.push(pathname);
+  };
+
+  const updateUrl = (newParams: Record<string, string>) => {
+    const params = new URLSearchParams(searchParams.toString());
+    Object.entries(newParams).forEach(([key, value]) => {
+      if (value) params.set(key, value);
+      else params.delete(key);
+    });
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const handleApplyFilters = () => {
+    updateUrl(filters);
+    if (window.innerWidth < 1024) setIsOpen(false); // fecha sidebar no mobile
   };
 
   return (
@@ -122,39 +157,83 @@ export function Sidebar() {
           <div>
             <div className="flex items-center justify-between px-2 mb-3">
               <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Filtros Globais</div>
-              <button 
-                title="Limpar filtros"
-                className="text-gray-400 hover:text-brand-primary transition-colors flex items-center gap-1 text-[10px] uppercase font-bold"
-              >
-                <FilterX size={14} />
-                Limpar
-              </button>
+              <div className="flex items-center gap-2">
+                <button 
+                  onClick={handleClearFilters}
+                  title="Limpar filtros"
+                  className="text-gray-400 hover:text-red-500 transition-colors flex items-center gap-1 text-[10px] uppercase font-bold"
+                >
+                  <FilterX size={14} />
+                  Limpar
+                </button>
+                <button 
+                  onClick={handleApplyFilters}
+                  title="Aplicar filtros"
+                  className="text-brand-primary hover:text-brand-primary/80 transition-colors flex items-center gap-1 text-[10px] uppercase font-bold"
+                >
+                  <Filter size={14} />
+                  Filtrar
+                </button>
+              </div>
             </div>
             
-            <div className="space-y-4 px-1">
-              <FilterSelect label="Condomínio" placeholder="Pesquisar condomínio..." />
-              <FilterSelect label="Região" placeholder="Selecione a região..." />
-              <FilterSelect label="Estado" placeholder="Selecione o estado..." />
-              <FilterSelect label="Município" placeholder="Selecione o município..." />
-              <FilterSelect label="Data" placeholder="Selecione a data..." type="date" />
-              <FilterSelect label="Período" placeholder="Selecione o período..." />
-              <FilterSelect label="Advogado" placeholder="Pesquisar advogado..." />
-              <FilterSelect label="Índice de CM" placeholder="Selecione o índice..." />
+            <div className="space-y-4 px-1 pb-4">
+              <SearchableSelect 
+                label="Condomínio" 
+                placeholder="Pesquisar condomínio..." 
+                options={condominios} 
+                value={filters.condominio}
+                onChange={(val) => {
+                  setFilters(prev => ({...prev, condominio: val}));
+                  updateUrl({ condominio: val });
+                }}
+              />
+              <DropdownFilter 
+                label="Região" 
+                placeholder="Selecione a região" 
+                options={["Sul", "Sudeste", "Centro-Oeste", "Nordeste", "Norte"]} 
+                value={filters.regiao} 
+                onChange={(val) => {
+                  setFilters(prev => ({...prev, regiao: val}));
+                  updateUrl({ regiao: val });
+                }} 
+              />
+              <DropdownFilter 
+                label="Estado" 
+                placeholder="Selecione o estado" 
+                options={["AC", "AL", "AM", "AP", "BA", "CE", "DF", "ES", "GO", "MA", "MG", "MS", "MT", "PA", "PB", "PE", "PI", "PR", "RJ", "RN", "RO", "RR", "RS", "SC", "SE", "SP", "TO"]} 
+                value={filters.estado} 
+                onChange={(val) => {
+                  setFilters(prev => ({...prev, estado: val}));
+                  updateUrl({ estado: val });
+                }} 
+              />
+              <FilterSelect 
+                label="Data" 
+                placeholder="Selecione a data..." 
+                type="date" 
+                value={filters.data} 
+                onChange={(e) => {
+                  setFilters(prev => ({...prev, data: e.target.value, periodo: ""}));
+                  updateUrl({ data: e.target.value, periodo: "" });
+                }} 
+              />
+              <DropdownFilter 
+                label="Período (Mês)" 
+                placeholder="Selecione o mês" 
+                options={["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]} 
+                value={filters.periodo} 
+                onChange={(val) => {
+                  setFilters(prev => ({...prev, periodo: val, data: ""}));
+                  updateUrl({ periodo: val, data: "" });
+                }} 
+              />
             </div>
           </div>
         </div>
 
         {/* Footer actions */}
         <div className="p-4 border-t border-gray-100 bg-gray-50 space-y-3">
-          <button 
-            onClick={handleSync}
-            disabled={isSyncing}
-            className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-brand-secondary text-brand-secondary-foreground font-medium text-sm rounded-lg hover:brightness-95 transition-all disabled:opacity-50"
-          >
-            <RefreshCcw size={16} className={isSyncing ? "animate-spin" : ""} />
-            {isSyncing ? "Sincronizando..." : "Sincronizar API"}
-          </button>
-          
           <Link href="/login" className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 font-medium text-sm rounded-lg hover:bg-gray-50 transition-all">
             <LogOut size={16} />
             Sair
@@ -165,8 +244,8 @@ export function Sidebar() {
   );
 }
 
-// Simple filter component
-function FilterSelect({ label, placeholder, type = "text" }: { label: string, placeholder: string, type?: string }) {
+// Simple filter component for text/date
+function FilterSelect({ label, placeholder, type = "text", value, onChange }: { label: string, placeholder: string, type?: string, value?: string, onChange?: (e: any) => void }) {
   return (
     <div className="space-y-1.5">
       <label className="text-xs font-medium text-gray-700 ml-1">{label}</label>
@@ -179,9 +258,108 @@ function FilterSelect({ label, placeholder, type = "text" }: { label: string, pl
         <input 
           type={type}
           placeholder={placeholder}
+          value={value}
+          onChange={onChange}
           className={`w-full text-sm bg-white border border-gray-200 rounded-md py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-colors ${type === 'text' ? 'pl-8 pr-3' : 'px-3'}`}
         />
       </div>
+    </div>
+  );
+}
+
+// Generic Dropdown filter component
+function DropdownFilter({ label, placeholder, options, value, onChange }: { label: string, placeholder: string, options: string[], value: string, onChange: (val: string) => void }) {
+  return (
+    <div className="space-y-1.5">
+      <label className="text-xs font-medium text-gray-700 ml-1">{label}</label>
+      <select 
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full text-sm bg-white border border-gray-200 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-colors appearance-none"
+      >
+        <option value="">{placeholder}</option>
+        {options.map(opt => (
+          <option key={opt} value={opt}>{opt}</option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+// Custom Searchable Select for Condominios
+function SearchableSelect({ label, placeholder, options, value, onChange }: { label: string, placeholder: string, options: { value: string | number, label: string }[], value: string, onChange: (val: string) => void }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [search, setSearch] = useState("");
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const filteredOptions = options.filter(opt => opt.label.toLowerCase().includes(search.toLowerCase()));
+  const selectedLabel = options.find(opt => opt.value.toString() === value)?.label || "";
+
+  return (
+    <div className="space-y-1.5 relative" ref={wrapperRef}>
+      <label className="text-xs font-medium text-gray-700 ml-1">{label}</label>
+      <div 
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full text-sm bg-white border border-gray-200 rounded-md py-1.5 px-3 flex items-center justify-between cursor-pointer hover:border-brand-primary/50 transition-colors"
+      >
+        <span className={selectedLabel ? "text-gray-900 truncate" : "text-gray-400"}>
+          {selectedLabel || placeholder}
+        </span>
+        <div className="border-l border-gray-200 pl-2 ml-2 flex items-center justify-center">
+          <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+        </div>
+      </div>
+
+      {isOpen && (
+        <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg overflow-hidden">
+          <div className="p-2 border-b border-gray-100 sticky top-0 bg-white">
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 pl-2.5 flex items-center pointer-events-none">
+                <Search size={14} className="text-gray-400" />
+              </div>
+              <input 
+                type="text"
+                autoFocus
+                className="w-full text-sm bg-gray-50 border-none rounded-md py-1.5 pl-8 pr-3 focus:outline-none focus:ring-1 focus:ring-brand-primary"
+                placeholder="Buscar..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+          </div>
+          <ul className="max-h-48 overflow-y-auto py-1">
+            <li 
+              className={`px-3 py-2 text-sm cursor-pointer hover:bg-gray-50 ${!value ? 'bg-brand-primary/5 text-brand-primary font-medium' : 'text-gray-700'}`}
+              onClick={() => { onChange(""); setIsOpen(false); setSearch(""); }}
+            >
+              Todos (Limpar)
+            </li>
+            {filteredOptions.length > 0 ? (
+              filteredOptions.map(opt => (
+                <li 
+                  key={opt.value}
+                  className={`px-3 py-2 text-sm cursor-pointer hover:bg-brand-primary/10 transition-colors ${value === opt.value.toString() ? 'bg-brand-primary/5 text-brand-primary font-medium' : 'text-gray-700'}`}
+                  onClick={() => { onChange(opt.value.toString()); setIsOpen(false); setSearch(""); }}
+                >
+                  {opt.label}
+                </li>
+              ))
+            ) : (
+              <li className="px-3 py-3 text-sm text-gray-400 text-center">Nenhum resultado</li>
+            )}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }

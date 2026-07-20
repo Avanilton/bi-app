@@ -6,8 +6,8 @@ export function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // Protect configuration routes, dashboard routes, and sync API
-  const isProtectedPath = pathname.startsWith('/configuracoes') || pathname.startsWith('/dashboard') || pathname.startsWith('/api/sync');
+  // Protect configuration routes and dashboard routes
+  const isProtectedPath = pathname.startsWith('/configuracoes') || pathname.startsWith('/dashboard');
 
   if (isProtectedPath && !token) {
     if (pathname.startsWith('/api/')) {
@@ -25,5 +25,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/configuracoes/:path*', '/dashboard/:path*', '/api/sync', '/login'],
+  matcher: ['/configuracoes/:path*', '/dashboard/:path*', '/login'],
 };

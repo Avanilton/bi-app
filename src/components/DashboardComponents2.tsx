@@ -43,11 +43,11 @@ const comparativoCarteiraData = [
   { periodo: 'Mai', atual: 1280000, anterior: 1180000 },
 ];
 
-export function RateioBrutoChart() {
+export function RateioBrutoChart({ data = rateioData }: { data?: { periodo: string, valor: number }[] }) {
   return (
     <ChartCard title="Rateio Bruto">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={rateioData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+        <BarChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
           <XAxis dataKey="periodo" axisLine={false} tickLine={false} tick={{fill: '#888', fontSize: 12}} dy={10} />
           <YAxis 
@@ -83,11 +83,11 @@ const PosAtualTooltip = ({ active, payload, label }: any) => {
   return null;
 };
 
-export function PosicaoAtualCarteiraChart() {
+export function PosicaoAtualCarteiraChart({ data = posAtualCarteiraData }: { data?: { categoria: string, valor: number, percentual: number }[] }) {
   return (
     <ChartCard title="Posição Atual - Carteira">
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={posAtualCarteiraData} margin={{ top: 20, right: 20, bottom: 5, left: 0 }}>
+        <BarChart data={data} margin={{ top: 20, right: 20, bottom: 5, left: 0 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
           <XAxis dataKey="categoria" axisLine={false} tickLine={false} tick={{fill: '#888', fontSize: 12}} dy={10} />
           <YAxis 
@@ -106,11 +106,11 @@ export function PosicaoAtualCarteiraChart() {
   );
 }
 
-export function RecuperacaoCarteiraChart() {
+export function RecuperacaoCarteiraChart({ data = recuperacaoCarteiraData }: { data?: { periodo: string, valorAnterior: number, pctTTV: number, pctCarteira: number }[] }) {
   return (
     <ChartCard title="Recuperação de Carteira">
       <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart data={recuperacaoCarteiraData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+        <ComposedChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
           <XAxis dataKey="periodo" axisLine={false} tickLine={false} tick={{fill: '#888', fontSize: 12}} dy={10} />
           <YAxis 
@@ -157,11 +157,11 @@ export function RecuperacaoCarteiraChart() {
   );
 }
 
-export function CarteiraSaldoChart() {
+export function CarteiraSaldoChart({ data = carteiraSaldoData }: { data?: { dias: string, valor: number, pctJuridico: number }[] }) {
   return (
     <ChartCard title="Carteira - Saldo em Aberto">
       <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart data={carteiraSaldoData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+        <ComposedChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
           <XAxis dataKey="dias" axisLine={false} tickLine={false} tick={{fill: '#888', fontSize: 12}} dy={10} />
           <YAxis 
@@ -199,11 +199,11 @@ export function CarteiraSaldoChart() {
   );
 }
 
-export function ComparativoCarteiraChart() {
+export function ComparativoCarteiraChart({ data = comparativoCarteiraData }: { data?: { periodo: string, atual: number, anterior: number }[] }) {
   return (
     <ChartCard title="Comparativo Carteira">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={comparativoCarteiraData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+        <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
           <XAxis dataKey="periodo" axisLine={false} tickLine={false} tick={{fill: '#888', fontSize: 12}} dy={10} />
           <YAxis 
