@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { LogIn, BarChart3, TrendingUp, ShieldCheck, PieChart } from "lucide-react";
+import { LoginForm } from "./LoginForm";
 
 export const metadata: Metadata = {
   title: "BI BVGarantia - Login",
@@ -89,39 +90,7 @@ export default function LoginPage() {
               </p>
             </div>
             
-            <form className="space-y-5" action="/">
-              <div className="space-y-1.5">
-                <label className="block text-sm font-semibold text-gray-700">E-mail corporativo</label>
-                <input 
-                  type="email" 
-                  className="w-full px-4 py-3.5 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary focus:bg-white transition-all duration-200"
-                  placeholder="seu.nome@bvgarantia.com.br"
-                  required
-                />
-              </div>
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <label className="block text-sm font-semibold text-gray-700">Senha</label>
-                  <a href="#" className="text-xs font-semibold text-brand-primary hover:text-brand-primary/80 transition-colors">Esqueceu a senha?</a>
-                </div>
-                <input 
-                  type="password" 
-                  className="w-full px-4 py-3.5 bg-gray-50 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary focus:bg-white transition-all duration-200"
-                  placeholder="••••••••"
-                  required
-                />
-              </div>
-              
-              <div className="pt-2">
-                <button 
-                  type="submit"
-                  className="w-full py-4 px-4 bg-brand-primary hover:bg-brand-primary/95 text-white font-semibold rounded-xl transition-all duration-200 shadow-lg shadow-brand-primary/30 flex items-center justify-center gap-2 hover:-translate-y-0.5 active:translate-y-0"
-                >
-                  <LogIn size={20} />
-                  Entrar na Plataforma
-                </button>
-              </div>
-            </form>
+            <LoginForm />
             
             <div className="mt-8 pt-8 border-t border-gray-100 text-center">
               <p className="text-sm text-gray-500">
