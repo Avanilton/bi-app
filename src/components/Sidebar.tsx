@@ -39,7 +39,8 @@ export function Sidebar() {
     condominio: searchParams.get("condominio") || "",
     regiao: searchParams.get("regiao") || "",
     estado: searchParams.get("estado") || "",
-    data: searchParams.get("data") || "",
+    dataInicio: searchParams.get("dataInicio") || "",
+    dataFim: searchParams.get("dataFim") || "",
     periodo: searchParams.get("periodo") || ""
   });
 
@@ -66,7 +67,8 @@ export function Sidebar() {
       condominio: "",
       regiao: "",
       estado: "",
-      data: "",
+      dataInicio: "",
+      dataFim: "",
       periodo: ""
     });
     router.push(pathname);
@@ -209,13 +211,25 @@ export function Sidebar() {
                 }} 
               />
               <FilterSelect 
-                label="Data" 
-                placeholder="Selecione a data..." 
+                label="Data de Início" 
+                placeholder="Selecione a data inicial..." 
                 type="date" 
-                value={filters.data} 
+                value={filters.dataInicio}
+                disabled={!!filters.periodo} 
                 onChange={(e) => {
-                  setFilters(prev => ({...prev, data: e.target.value, periodo: ""}));
-                  updateUrl({ data: e.target.value, periodo: "" });
+                  setFilters(prev => ({...prev, dataInicio: e.target.value}));
+                  updateUrl({ dataInicio: e.target.value });
+                }} 
+              />
+              <FilterSelect 
+                label="Data de Fim" 
+                placeholder="Selecione a data final..." 
+                type="date" 
+                value={filters.dataFim} 
+                disabled={!!filters.periodo} 
+                onChange={(e) => {
+                  setFilters(prev => ({...prev, dataFim: e.target.value}));
+                  updateUrl({ dataFim: e.target.value });
                 }} 
               />
               <DropdownFilter 
@@ -223,9 +237,10 @@ export function Sidebar() {
                 placeholder="Selecione o mês" 
                 options={["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"]} 
                 value={filters.periodo} 
+                disabled={!!filters.dataInicio || !!filters.dataFim}
                 onChange={(val) => {
-                  setFilters(prev => ({...prev, periodo: val, data: ""}));
-                  updateUrl({ periodo: val, data: "" });
+                  setFilters(prev => ({...prev, periodo: val}));
+                  updateUrl({ periodo: val });
                 }} 
               />
             </div>
@@ -245,9 +260,9 @@ export function Sidebar() {
 }
 
 // Simple filter component for text/date
-function FilterSelect({ label, placeholder, type = "text", value, onChange }: { label: string, placeholder: string, type?: string, value?: string, onChange?: (e: any) => void }) {
+function FilterSelect({ label, placeholder, type = "text", value, onChange, disabled }: { label: string, placeholder: string, type?: string, value?: string, onChange?: (e: any) => void, disabled?: boolean }) {
   return (
-    <div className="space-y-1.5">
+    <div className={`space-y-1.5 ${disabled ? 'opacity-50' : ''}`}>
       <label className="text-xs font-medium text-gray-700 ml-1">{label}</label>
       <div className="relative">
         {type === "text" && (
@@ -260,7 +275,8 @@ function FilterSelect({ label, placeholder, type = "text", value, onChange }: { 
           placeholder={placeholder}
           value={value}
           onChange={onChange}
-          className={`w-full text-sm bg-white border border-gray-200 rounded-md py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-colors ${type === 'text' ? 'pl-8 pr-3' : 'px-3'}`}
+          disabled={disabled}
+          className={`w-full text-sm border border-gray-200 rounded-md py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-colors ${type === 'text' ? 'pl-8 pr-3' : 'px-3'} ${disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'}`}
         />
       </div>
     </div>
@@ -268,14 +284,15 @@ function FilterSelect({ label, placeholder, type = "text", value, onChange }: { 
 }
 
 // Generic Dropdown filter component
-function DropdownFilter({ label, placeholder, options, value, onChange }: { label: string, placeholder: string, options: string[], value: string, onChange: (val: string) => void }) {
+function DropdownFilter({ label, placeholder, options, value, onChange, disabled }: { label: string, placeholder: string, options: string[], value: string, onChange: (val: string) => void, disabled?: boolean }) {
   return (
-    <div className="space-y-1.5">
+    <div className={`space-y-1.5 ${disabled ? 'opacity-50' : ''}`}>
       <label className="text-xs font-medium text-gray-700 ml-1">{label}</label>
       <select 
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="w-full text-sm bg-white border border-gray-200 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-colors appearance-none"
+        disabled={disabled}
+        className={`w-full text-sm border border-gray-200 rounded-md px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-brand-primary/50 focus:border-brand-primary transition-colors appearance-none ${disabled ? 'bg-gray-100 cursor-not-allowed' : 'bg-white'}`}
       >
         <option value="">{placeholder}</option>
         {options.map(opt => (

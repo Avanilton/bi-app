@@ -77,11 +77,12 @@ export function ChartCard({ title, children }: { title: string, children: React.
   );
 }
 
-export function RecebimentoChart() {
+export function RecebimentoChart({ data }: { data?: { data: string; valor: number }[] }) {
+  const chartData = data && data.length > 0 ? data : recebimentoData;
   return (
     <ChartCard title="Recebimento">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={recebimentoData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+        <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
           <XAxis dataKey="data" axisLine={false} tickLine={false} tick={{fill: '#888', fontSize: 12}} dy={10} />
           <YAxis 

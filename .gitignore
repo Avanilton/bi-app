@@ -41,3 +41,15 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
+
+# database files
+*.db
+*.db-*
+*.db-wal
+*.db-shm
+*.db-journal
+dev.db*
+
+# temporary scratch & logs
+scratch*
+*.log

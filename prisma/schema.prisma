@@ -87,6 +87,10 @@ model TbBoleto {
   imovel          TbImovel  @relation(fields: [idEmpresa, idImovel], references: [idEmpresa, idImovel])
 
   @@id([idBoleto, idEmpresa, idImovel, idCliente])
+  @@index([pago, cancelado, dataVecto])
+  @@index([pago, cancelado, dataPgto])
+  @@index([pago, cancelado, origem, dataVecto])
+  @@index([idImovel, pago, cancelado])
 }
 
 model TbAntecipacao {
