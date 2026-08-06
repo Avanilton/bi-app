@@ -10,8 +10,7 @@ import {
 } from "@/components/DashboardComponents";
 import { AlertCircle, FileText, CalendarClock, DollarSign } from "lucide-react";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 1800;
 
 export const metadata: Metadata = {
   title: "Financeiro - BV Garantia BI",
@@ -232,12 +231,12 @@ export default async function FinanceiroPage({
     prevAmigavelResult,
     recebimentoGrouped,
   ] = await Promise.all([
-    prisma.tbBoleto.aggregate({ _sum: { total: true }, where: whereBoleto }),
+    prisma.tbBoleto.aggregate({ _sum: { total: true }, where: whereAbertosSemAcordo }),
     prisma.tbBoleto.aggregate({ _sum: { total: true }, where: whereAbertosSemAcordo }),
     prisma.tbBoleto.aggregate({ _sum: { total: true }, where: whereJuridicosNaoPagos }),
     prisma.tbBoleto.aggregate({ _sum: { total: true }, where: whereAmigavelNaoPagos }),
 
-    prisma.tbBoleto.aggregate({ _sum: { total: true }, where: wherePrevBoleto }),
+    prisma.tbBoleto.aggregate({ _sum: { total: true }, where: wherePrevAbertos }),
     prisma.tbBoleto.aggregate({ _sum: { total: true }, where: wherePrevAbertos }),
     prisma.tbBoleto.aggregate({ _sum: { total: true }, where: wherePrevJuridicos }),
     prisma.tbBoleto.aggregate({ _sum: { total: true }, where: wherePrevAmigavel }),

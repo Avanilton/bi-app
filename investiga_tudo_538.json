@@ -1,0 +1,74 @@
+{
+  "desejado_completo": {
+    "idBoleto": 7181454,
+    "idEmpresa": 75,
+    "idImovel": 538,
+    "idCliente": 98435,
+    "cancelado": false,
+    "pago": false,
+    "valorPago": 0,
+    "valorParc": 972.0934,
+    "multa": 0,
+    "juros": 0,
+    "correcao": 0,
+    "encargo": 0,
+    "total": 972.0934,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "nrParcela": 1,
+    "tarifaBancaria": 0,
+    "totPrestacao": 0,
+    "origem": 0,
+    "dtEmissaoExtra": null,
+    "totalExtra": 0,
+    "idRateio": 48125,
+    "dataPgto": null,
+    "diferenca": 0
+  },
+  "nao_desejado_completo": {
+    "idBoleto": 7181461,
+    "idEmpresa": 75,
+    "idImovel": 538,
+    "idCliente": 98442,
+    "cancelado": false,
+    "pago": false,
+    "valorPago": 0,
+    "valorParc": 1052.5665,
+    "multa": 0,
+    "juros": 0,
+    "correcao": 0,
+    "encargo": 0,
+    "total": 1052.5665,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "nrParcela": 1,
+    "tarifaBancaria": 0,
+    "totPrestacao": 0,
+    "origem": 0,
+    "dtEmissaoExtra": null,
+    "totalExtra": 0,
+    "idRateio": 48125,
+    "dataPgto": null,
+    "diferenca": 0
+  },
+  "diferencas": {
+    "idBoleto": {
+      "desejado": 7181454,
+      "nao_desejado": 7181461
+    },
+    "idCliente": {
+      "desejado": 98435,
+      "nao_desejado": 98442
+    },
+    "valorParc": {
+      "desejado": 972.0934,
+      "nao_desejado": 1052.5665
+    },
+    "total": {
+      "desejado": 972.0934,
+      "nao_desejado": 1052.5665
+    },
+    "dataVecto": {
+      "desejado": "2026-07-10T03:00:00.000Z",
+      "nao_desejado": "2026-07-10T03:00:00.000Z"
+    }
+  }
+}

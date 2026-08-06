@@ -1,0 +1,105 @@
+{
+  "somaTotalNoSistema": 7695.407639999999,
+  "somaTotalDesejados": 4136.6221000000005,
+  "somaTotalNaoDesejados": 3558.78554,
+  "boletos_nao_desejados": [
+    {
+      "idBoleto": 7181457,
+      "idCliente": 98438,
+      "total": 982.7328,
+      "valorParc": 982.7328,
+      "dataVecto": "2026-07-10T03:00:00.000Z",
+      "dataPgto": null,
+      "idRateio": 48125,
+      "nrParcela": 1,
+      "origem": 0,
+      "isDesejadoPeloUsuario": false
+    },
+    {
+      "idBoleto": 7181461,
+      "idCliente": 98442,
+      "total": 1052.5665,
+      "valorParc": 1052.5665,
+      "dataVecto": "2026-07-10T03:00:00.000Z",
+      "dataPgto": null,
+      "idRateio": 48125,
+      "nrParcela": 1,
+      "origem": 0,
+      "isDesejadoPeloUsuario": false
+    },
+    {
+      "idBoleto": 7181472,
+      "idCliente": 98453,
+      "total": 856.58624,
+      "valorParc": 856.58624,
+      "dataVecto": "2026-07-10T03:00:00.000Z",
+      "dataPgto": null,
+      "idRateio": 48125,
+      "nrParcela": 1,
+      "origem": 0,
+      "isDesejadoPeloUsuario": false
+    },
+    {
+      "idBoleto": 7212517,
+      "idCliente": 98474,
+      "total": 666.9,
+      "valorParc": 396.8891,
+      "dataVecto": "2026-08-02T03:00:00.000Z",
+      "dataPgto": null,
+      "idRateio": 0,
+      "nrParcela": 2,
+      "origem": 5,
+      "isDesejadoPeloUsuario": false
+    }
+  ],
+  "boletos_desejados": [
+    {
+      "idBoleto": 7000911,
+      "idCliente": 98475,
+      "total": 985.7331,
+      "valorParc": 985.7331,
+      "dataVecto": "2026-06-10T03:00:00.000Z",
+      "dataPgto": null,
+      "idRateio": 47271,
+      "nrParcela": 1,
+      "origem": 0,
+      "isDesejadoPeloUsuario": true
+    },
+    {
+      "idBoleto": 7181454,
+      "idCliente": 98435,
+      "total": 972.0934,
+      "valorParc": 972.0934,
+      "dataVecto": "2026-07-10T03:00:00.000Z",
+      "dataPgto": null,
+      "idRateio": 48125,
+      "nrParcela": 1,
+      "origem": 0,
+      "isDesejadoPeloUsuario": true
+    },
+    {
+      "idBoleto": 7181493,
+      "idCliente": 98474,
+      "total": 1120.0103,
+      "valorParc": 1120.0103,
+      "dataVecto": "2026-07-10T03:00:00.000Z",
+      "dataPgto": null,
+      "idRateio": 48125,
+      "nrParcela": 1,
+      "origem": 0,
+      "isDesejadoPeloUsuario": true
+    },
+    {
+      "idBoleto": 7181494,
+      "idCliente": 98475,
+      "total": 1058.7853,
+      "valorParc": 1058.7853,
+      "dataVecto": "2026-07-10T03:00:00.000Z",
+      "dataPgto": null,
+      "idRateio": 48125,
+      "nrParcela": 1,
+      "origem": 0,
+      "isDesejadoPeloUsuario": true
+    }
+  ]
+}
