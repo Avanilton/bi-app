@@ -5,11 +5,9 @@ generator client {
   provider = "prisma-client-js"
   engineType = "library"
 }
-
 datasource db {
   provider = "mysql"
 }
-
 model Usuario {
   id        Int      @id @default(autoincrement())
   nome      String
@@ -91,6 +89,10 @@ model TbBoleto {
   @@index([pago, cancelado, dataPgto])
   @@index([pago, cancelado, origem, dataVecto])
   @@index([idImovel, pago, cancelado])
+  @@index([idEmpresa, pago, cancelado, origem, dataVecto, total]) // Otimização para os aggregates do dashboard
+  @@index([idEmpresa, pago, cancelado, dataPgto, total]) // Otimização para recebimentoGrouped
+  @@index([idEmpresa, idImovel, pago, cancelado, origem, dataVecto, total]) // Otimização para filtro de condomínio
+  @@index([idEmpresa, idImovel, pago, cancelado, dataPgto, total]) // Otimização para recebimento com condomínio
 }
 
 model TbAntecipacao {

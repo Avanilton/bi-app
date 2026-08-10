@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const token = request.cookies.get('bi_token');
 
   const { pathname } = request.nextUrl;
@@ -18,7 +18,7 @@ export function middleware(request: NextRequest) {
 
   // Prevent logged-in users from accessing the login page
   if (pathname === '/login' && token) {
-    return NextResponse.redirect(new URL('/configuracoes', request.url)); // Default redirect after login
+    return NextResponse.redirect(new URL('/configuracoes', request.url));
   }
 
   return NextResponse.next();
