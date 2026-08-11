@@ -237,3 +237,52 @@ export function ComparativoCarteiraChart({ data = comparativoCarteiraData }: { d
     </ChartCard>
   );
 }
+
+export function RateioTable({ data = [] }: { data: any[] }) {
+  const formatCurrency = (val: number) => `R$\u00A0${val.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+  return (
+    <div className="bg-white rounded-2xl shadow-sm border border-gray-200 mt-6 overflow-hidden">
+      <div className="w-full h-[400px] overflow-y-scroll overflow-x-scroll bg-white">
+        <table className="w-full text-sm text-left min-w-max">
+          <thead className="text-xs text-gray-600 uppercase bg-gray-100 sticky top-0 z-10">
+            <tr>
+              <th className="px-4 py-3 font-medium">Ref.</th>
+              <th className="px-4 py-3 font-medium text-right">Antecipado</th>
+              <th className="px-4 py-3 font-medium text-right">(-) Outros</th>
+              <th className="px-4 py-3 font-medium text-right">Perda</th>
+              <th className="px-4 py-3 font-medium text-right">Adicional</th>
+              <th className="px-4 py-3 font-medium text-right">Serviço</th>
+              <th className="px-4 py-3 font-medium text-right">Antecipação</th>
+              <th className="px-4 py-3 font-medium text-right text-gray-400">Pis (0,65%)</th>
+              <th className="px-4 py-3 font-medium text-right text-gray-400">Cofins (3%)</th>
+              <th className="px-4 py-3 font-medium text-right text-gray-400">CSLL (1%)</th>
+              <th className="px-4 py-3 font-medium text-right text-gray-400">IR (1,50%)</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-50">
+            {data.length === 0 ? (
+              <tr>
+                <td colSpan={11} className="px-4 py-8 text-center text-gray-500">Nenhum dado encontrado para os filtros selecionados</td>
+              </tr>
+            ) : data.map((row, i) => (
+              <tr key={i} className="hover:bg-gray-50/50 transition-colors">
+                <td className="px-4 py-3 text-gray-900 font-medium whitespace-nowrap">{row.ref}</td>
+                <td className="px-4 py-3 text-right text-gray-600 whitespace-nowrap">{formatCurrency(row.antecipado)}</td>
+                <td className="px-4 py-3 text-right text-red-500 whitespace-nowrap">{formatCurrency(row.outros)}</td>
+                <td className="px-4 py-3 text-right text-red-500 whitespace-nowrap">{formatCurrency(row.perda)}</td>
+                <td className="px-4 py-3 text-right text-green-600 whitespace-nowrap">{formatCurrency(row.adicional)}</td>
+                <td className="px-4 py-3 text-right text-red-500 whitespace-nowrap">{formatCurrency(row.servico)}</td>
+                <td className="px-4 py-3 text-right font-semibold text-brand-primary whitespace-nowrap">{formatCurrency(row.antecipacao)}</td>
+                <td className="px-4 py-3 text-right text-gray-400 whitespace-nowrap">{formatCurrency(row.pis)}</td>
+                <td className="px-4 py-3 text-right text-gray-400 whitespace-nowrap">{formatCurrency(row.cofins)}</td>
+                <td className="px-4 py-3 text-right text-gray-400 whitespace-nowrap">{formatCurrency(row.csll)}</td>
+                <td className="px-4 py-3 text-right text-gray-400 whitespace-nowrap">{formatCurrency(row.ir)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}

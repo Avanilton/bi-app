@@ -1,0 +1,23 @@
+[
+  {
+    "Database": "information_schema"
+  },
+  {
+    "Database": "mysql"
+  },
+  {
+    "Database": "novacorpconect"
+  },
+  {
+    "Database": "performance_schema"
+  },
+  {
+    "Database": "sakila"
+  },
+  {
+    "Database": "sys"
+  },
+  {
+    "Database": "world"
+  }
+]

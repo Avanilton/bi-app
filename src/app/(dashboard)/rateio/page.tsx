@@ -33,7 +33,7 @@ export default async function RateioPage({
     let ddds: number[] = [];
     if (estado) ddds = getDDDsForEstado(estado);
     else if (regiao) ddds = getDDDsForRegiao(regiao);
-    
+
     if (ddds.length > 0) {
       where.imovel = {
         clientes: {
@@ -70,26 +70,119 @@ export default async function RateioPage({
   const antecipacoes = await prisma.tbAntecipacao.findMany({
     where,
     select: {
+      idTituloPagar: true,
       mesRef: true,
       valor: true,
+      receitaAntecipada: true,
+      perdas: true,
+      custas: true,
+      servicos: true,
     }
   });
 
+  const idTitulos = antecipacoes.map(a => a.idTituloPagar);
+  let descontos: any[] = [];
+  if (idTitulos.length > 0) {
+    descontos = await prisma.tbDescontoAntecipacao.findMany({
+      where: {
+        idTituloPagar: { in: idTitulos }
+      },
+      select: {
+        idTituloPagar: true,
+        valor: true,
+      }
+    });
+  }
+
   const mesesMap = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
   const chartMap: Record<string, number> = {};
-  
+  const tableMap: Record<string, any> = {};
+  const tituloToMes: Record<number, string> = {};
+
   antecipacoes.forEach(a => {
     if (a.mesRef && a.valor) {
       const month = a.mesRef.getUTCMonth();
+      const year = a.mesRef.getUTCFullYear();
       const label = mesesMap[month];
       chartMap[label] = (chartMap[label] || 0) + a.valor;
+
+      const mesKey = `${String(month + 1).padStart(2, '0')}/${year}`;
+      tituloToMes[a.idTituloPagar] = mesKey;
+
+      if (!tableMap[mesKey]) {
+        tableMap[mesKey] = {
+          mesRefObj: a.mesRef,
+          ref: mesKey,
+          antecipado: 0,
+          outros: 0,
+          perda: 0,
+          adicional: 0,
+          servico: 0,
+        };
+      }
+      tableMap[mesKey].antecipado += (a.receitaAntecipada || 0);
+      tableMap[mesKey].perda += (a.perdas || 0);
+      tableMap[mesKey].adicional += (a.custas || 0);
+      tableMap[mesKey].servico += (a.servicos || 0);
     }
   });
+
+  descontos.forEach(d => {
+    const mesKey = tituloToMes[d.idTituloPagar];
+    if (mesKey && tableMap[mesKey]) {
+      tableMap[mesKey].outros += (d.valor || 0);
+    }
+  });
+
+  const tableData = Object.values(tableMap)
+    .sort((a, b) => b.mesRefObj.getTime() - a.mesRefObj.getTime())
+    .map(row => {
+      const antecipacaoLiquida = row.antecipado - row.outros - row.perda + row.adicional - row.servico;
+      return {
+        ref: row.ref,
+        antecipado: row.antecipado,
+        outros: row.outros,
+        perda: row.perda,
+        adicional: row.adicional,
+        servico: row.servico,
+        antecipacao: antecipacaoLiquida,
+        pis: 0,
+        cofins: 0,
+        csll: 0,
+        ir: 0
+      };
+    });
 
   const chartData = mesesMap.map(mes => ({
     periodo: mes,
     valor: chartMap[mes] || 0
   }));
+
+  // Para a tabela TbAntecipacao, mesRef costuma ser o último dia do mês. 
+  // "Data de vencimento hoje" no contexto de mesRef significa o mês atual.
+  const startOfMonth = new Date();
+  startOfMonth.setHours(0, 0, 0, 0);
+  startOfMonth.setDate(1);
+
+  const endOfMonth = new Date(startOfMonth);
+  endOfMonth.setMonth(endOfMonth.getMonth() + 1);
+  endOfMonth.setDate(0); // Último dia do mês atual
+  endOfMonth.setHours(23, 59, 59, 999);
+
+  const antecipacoesHoje = await prisma.tbAntecipacao.aggregate({
+    where: {
+      ...where,
+      mesRef: {
+        gte: startOfMonth,
+        lte: endOfMonth,
+      }
+    },
+    _sum: {
+      servicos: true,
+    }
+  });
+
+  const servicosHoje = antecipacoesHoje._sum.servicos || 0;
 
   return (
     <div className="space-y-6">
@@ -102,7 +195,18 @@ export default async function RateioPage({
           <strong>Filtros Ativos:</strong> Condomínio: {condominio || 'Nenhum'}, Região: {regiao || 'Nenhum'}, Estado: {estado || 'Nenhum'}
         </div>
       </div>
-      
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col hover:shadow-md transition-shadow">
+          <div className="flex justify-between items-start mb-4">
+            <h3 className="text-gray-500 font-medium text-sm">Rateio (Mês Atual)</h3>
+          </div>
+          <div className="text-2xl font-bold text-gray-900 mb-2">
+            R$ {servicosHoje.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          </div>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <RateioBrutoChart data={chartData} />
       </div>

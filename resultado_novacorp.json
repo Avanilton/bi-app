@@ -1,0 +1,12 @@
+[
+  {
+    "query": "SELECT\n    SUM(\n        CASE\n            WHEN M.tipoMvto = 2\n                THEN (M.valorRecebido - M.troco)\n        END\n    ) AS valorCredito,\n\n    SUM(\n        CASE\n            WHEN M.tipoMvto = 1\n                THEN M.valorMvto\n        END\n    ) AS valorDebito,\n\n    T.tipoPgto,\n    M.idTipoPgto\n\nFROM TbCaixaMovi M,\n     TbTipoPgto T\n\nWHERE M.idEmpresa = T.idEmpresa\n  AND M.idTipoPgto = T.idTipoPgto\n  AND M.idFuncionario = 1\n  AND M.idEmpresa = 75\n  AND M.transferido = false\n\nGROUP BY\n    T.tipoPgto,\n    M.idTipoPgto;",
+    "status": "error",
+    "error": "Table 'novacorpconect.tbcaixamovi' doesn't exist"
+  },
+  {
+    "query": "SELECT\n    *\nFROM TbConta\nWHERE inativo = 0\n  AND idEmpresa = 75;",
+    "status": "error",
+    "error": "Table 'novacorpconect.tbconta' doesn't exist"
+  }
+]
