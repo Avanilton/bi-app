@@ -10,6 +10,20 @@ import {
   ReceitasVariaveisChart
 } from "@/components/DashboardComponents";
 import { AlertCircle, FileText, CalendarClock, DollarSign } from "lucide-react";
+import * as fs from "fs";
+import * as path from "path";
+
+/** Lê os dados extraídos dos PDFs (planilhas/dados.json), se existir. */
+function lerDadosPlanilhas(): { inadimplencia: number; juridiconaopago: number; amigavelnaopago: number; abertosSemAcordo: number } | null {
+  try {
+    const filePath = path.join(process.cwd(), "planilhas", "dados.json");
+    if (!fs.existsSync(filePath)) return null;
+    const raw = fs.readFileSync(filePath, "utf-8");
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
 
 
 export const metadata: Metadata = {
@@ -289,15 +303,23 @@ export default async function FinanceiroPage({
     periodo
   );
 
-  const inadimplenciaFormatada = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(data.inadimplenciaTotal);
-  const abertosFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(data.abertosTotal);
-  const juridicosFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(data.juridicosTotal);
-  const amigavelFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(data.amigavelTotal);
+  // Usa dados extraídos dos PDFs (planilhas/dados.json) como prioridade, se disponíveis
+  const dadosPlanilhas = lerDadosPlanilhas();
 
-  const trendInadimplencia = computeTrend(data.inadimplenciaTotal, data.prevInadTotal);
-  const trendAbertos = computeTrend(data.abertosTotal, data.prevAbertosTotal);
-  const trendJuridicos = computeTrend(data.juridicosTotal, data.prevJuridicosTotal);
-  const trendAmigavel = computeTrend(data.amigavelTotal, data.prevAmigavelTotal);
+  const inadimplenciaTotal = dadosPlanilhas?.inadimplencia ?? data.inadimplenciaTotal;
+  const abertosTotal = dadosPlanilhas?.abertosSemAcordo ?? data.abertosTotal;
+  const juridicosTotal = dadosPlanilhas?.juridiconaopago ?? data.juridicosTotal;
+  const amigavelTotal = dadosPlanilhas?.amigavelnaopago ?? data.amigavelTotal;
+
+  const inadimplenciaFormatada = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(inadimplenciaTotal);
+  const abertosFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(abertosTotal);
+  const juridicosFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(juridicosTotal);
+  const amigavelFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(amigavelTotal);
+
+  const trendInadimplencia = computeTrend(inadimplenciaTotal, data.prevInadTotal);
+  const trendAbertos = computeTrend(abertosTotal, data.prevAbertosTotal);
+  const trendJuridicos = computeTrend(juridicosTotal, data.prevJuridicosTotal);
+  const trendAmigavel = computeTrend(amigavelTotal, data.prevAmigavelTotal);
 
   const monthNamesShort = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
   const monthlyRecebimentoMap: { [key: string]: number } = {};

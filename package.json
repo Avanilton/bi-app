@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "sync": "tsx scripts/sync.ts"
+    "sync": "tsx scripts/sync.ts",
+    "atualizar-planilhas": "tsx scripts/atualizar-planilhas.ts"
   },
   "dependencies": {
     "@prisma/adapter-better-sqlite3": "^7.8.0",
@@ -22,7 +23,10 @@
     "mariadb": "^3.5.3",
     "mysql2": "^3.23.0",
     "next": "16.2.10",
-    "pdf-parse": "^2.4.5",
+    "pdf-lib": "^1.17.1",
+    "pdf-parse": "^1.1.1",
+    "pdfjs-dist": "^6.2.108",
+    "playwright": "^1.62.1",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "recharts": "^3.9.2",
