@@ -24,7 +24,7 @@
     "mysql2": "^3.23.0",
     "next": "16.2.10",
     "pdf-lib": "^1.17.1",
-    "pdf-parse": "^1.1.1",
+    "pdf-parse": "^1.1.4",
     "pdfjs-dist": "^6.2.108",
     "playwright": "^1.62.1",
     "react": "19.2.4",

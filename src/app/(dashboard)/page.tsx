@@ -12,6 +12,8 @@ import {
 import { AlertCircle, FileText, CalendarClock, DollarSign } from "lucide-react";
 import * as fs from "fs";
 import * as path from "path";
+import { getRecebimentoTotalAsync } from "@/lib/pdf-recebimento";
+import { getFaturamentoTotalAsync } from "@/lib/pdf-faturamento";
 
 /** Lê os dados extraídos dos PDFs (planilhas/dados.json), se existir. */
 function lerDadosPlanilhas(): { inadimplencia: number; juridiconaopago: number; amigavelnaopago: number; abertosSemAcordo: number } | null {
@@ -336,6 +338,9 @@ export default async function FinanceiroPage({
     valor: Math.round(valor)
   }));
 
+  const recebimentoPDFTotal = await getRecebimentoTotalAsync();
+  const faturamentoPDFTotal = await getFaturamentoTotalAsync();
+
   return (
     <div className="space-y-6">
       <div>
@@ -381,8 +386,18 @@ export default async function FinanceiroPage({
 
       {/* Gráficos Principais */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <RecebimentoChart data={recebimentoChartData} />
-        <FaturamentoChart />
+        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-center items-center hover:shadow-md transition-shadow min-h-[300px]">
+          <h3 className="text-gray-500 font-medium text-lg mb-6">Recebimento (PDF)</h3>
+          <div className="text-5xl font-bold text-brand-primary">
+            R$ {recebimentoPDFTotal}
+          </div>
+        </div>
+        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-center items-center hover:shadow-md transition-shadow min-h-[300px]">
+          <h3 className="text-gray-500 font-medium text-lg mb-6">Faturamento (PDF)</h3>
+          <div className="text-5xl font-bold text-green-600">
+            R$ {faturamentoPDFTotal}
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

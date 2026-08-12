@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { RateioBrutoChart } from "@/components/DashboardComponents2";
 import prisma from "@/lib/prisma";
 import { getDDDsForEstado, getDDDsForRegiao } from "@/lib/ddd";
+import { getRecebimentoTotalAsync } from "@/lib/pdf-recebimento";
 
 export const metadata: Metadata = {
   title: "Rateio - BV Garantia BI",
@@ -25,8 +26,12 @@ export default async function RateioPage({
 
   const where: any = {};
 
+  let idImoveis: number[] | null = null;
+
   if (condominio) {
-    where.idImovel = parseInt(condominio, 10);
+    const id = parseInt(condominio, 10);
+    where.idImovel = id;
+    idImoveis = [id];
   }
 
   if (regiao || estado) {
@@ -35,13 +40,20 @@ export default async function RateioPage({
     else if (regiao) ddds = getDDDsForRegiao(regiao);
 
     if (ddds.length > 0) {
-      where.imovel = {
-        clientes: {
-          some: {
-            dddce: { in: ddds }
-          }
-        }
-      };
+      const clientesMatches = await prisma.tbCliente.findMany({
+        where: { dddce: { in: ddds } },
+        select: { idImovel: true },
+        distinct: ['idImovel']
+      });
+      const idsByDdd = clientesMatches.map(c => c.idImovel);
+      
+      if (idImoveis) {
+        idImoveis = idImoveis.filter(id => idsByDdd.includes(id));
+      } else {
+        idImoveis = idsByDdd;
+      }
+      
+      where.idImovel = { in: idImoveis };
     }
   }
 
@@ -80,13 +92,20 @@ export default async function RateioPage({
     }
   });
 
-  const idTitulos = antecipacoes.map(a => a.idTituloPagar);
   let descontos: any[] = [];
-  if (idTitulos.length > 0) {
+  if (antecipacoes.length > 0) {
+    const whereDescontos: any = {};
+    const idTitulos = antecipacoes.map(a => a.idTituloPagar);
+    
+    if (idImoveis && idImoveis.length > 0) {
+      // Otimização: buscar pela chave primária (idImovel) é muito mais rápido que um IN gigante
+      whereDescontos.idImovel = { in: idImoveis };
+    } else if (idTitulos.length <= 50000) {
+      whereDescontos.idTituloPagar = { in: idTitulos };
+    }
+
     descontos = await prisma.tbDescontoAntecipacao.findMany({
-      where: {
-        idTituloPagar: { in: idTitulos }
-      },
+      where: whereDescontos,
       select: {
         idTituloPagar: true,
         valor: true,
@@ -184,6 +203,8 @@ export default async function RateioPage({
 
   const servicosHoje = antecipacoesHoje._sum.servicos || 0;
 
+  const totalRecebimentoPDF = await getRecebimentoTotalAsync();
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-end">
@@ -203,6 +224,15 @@ export default async function RateioPage({
           </div>
           <div className="text-2xl font-bold text-gray-900 mb-2">
             R$ {servicosHoje.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+          </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col hover:shadow-md transition-shadow">
+          <div className="flex justify-between items-start mb-4">
+            <h3 className="text-gray-500 font-medium text-sm">Recebimento (PDF)</h3>
+          </div>
+          <div className="text-2xl font-bold text-gray-900 mb-2 text-green-600">
+            R$ {totalRecebimentoPDF}
           </div>
         </div>
       </div>
