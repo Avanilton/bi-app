@@ -74,13 +74,27 @@ export function Sidebar() {
     router.push(pathname);
   };
 
-  const updateUrl = (newParams: Record<string, string>) => {
+  const updateUrl = (newFilters: Partial<typeof filters>) => {
     const params = new URLSearchParams(searchParams.toString());
-    Object.entries(newParams).forEach(([key, value]) => {
-      if (value) params.set(key, value);
-      else params.delete(key);
+    Object.entries(newFilters).forEach(([key, value]) => {
+      if (value) {
+        params.set(key, value);
+      } else {
+        params.delete(key);
+      }
     });
     router.push(`${pathname}?${params.toString()}`);
+  };
+
+  const handleLogout = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+      router.push('/login');
+      router.refresh();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleApplyFilters = () => {
@@ -249,10 +263,10 @@ export function Sidebar() {
 
         {/* Footer actions */}
         <div className="p-4 border-t border-gray-100 bg-gray-50 space-y-3">
-          <Link href="/login" className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 font-medium text-sm rounded-lg hover:bg-gray-50 transition-all">
+          <button onClick={handleLogout} className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-white border border-gray-200 text-gray-700 font-medium text-sm rounded-lg hover:bg-gray-50 transition-all">
             <LogOut size={16} />
             Sair
-          </Link>
+          </button>
         </div>
       </aside>
     </>
