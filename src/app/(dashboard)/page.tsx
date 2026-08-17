@@ -10,23 +10,6 @@ import {
   ReceitasVariaveisChart
 } from "@/components/DashboardComponents";
 import { AlertCircle, FileText, CalendarClock, DollarSign } from "lucide-react";
-import * as fs from "fs";
-import * as path from "path";
-import { getRecebimentoTotalAsync } from "@/lib/pdf-recebimento";
-import { getFaturamentoTotalAsync } from "@/lib/pdf-faturamento";
-
-/** Lê os dados extraídos dos PDFs (planilhas/dados.json), se existir. */
-function lerDadosPlanilhas(): { inadimplencia: number; juridiconaopago: number; amigavelnaopago: number; abertosSemAcordo: number } | null {
-  try {
-    const filePath = path.join(process.cwd(), "planilhas", "dados.json");
-    if (!fs.existsSync(filePath)) return null;
-    const raw = fs.readFileSync(filePath, "utf-8");
-    return JSON.parse(raw);
-  } catch {
-    return null;
-  }
-}
-
 
 export const metadata: Metadata = {
   title: "Financeiro - BV Garantia BI",
@@ -305,13 +288,10 @@ export default async function FinanceiroPage({
     periodo
   );
 
-  // Usa dados extraídos dos PDFs (planilhas/dados.json) como prioridade, se disponíveis
-  const dadosPlanilhas = lerDadosPlanilhas();
-
-  const inadimplenciaTotal = dadosPlanilhas?.inadimplencia ?? data.inadimplenciaTotal;
-  const abertosTotal = dadosPlanilhas?.abertosSemAcordo ?? data.abertosTotal;
-  const juridicosTotal = dadosPlanilhas?.juridiconaopago ?? data.juridicosTotal;
-  const amigavelTotal = dadosPlanilhas?.amigavelnaopago ?? data.amigavelTotal;
+  const inadimplenciaTotal = data.inadimplenciaTotal;
+  const abertosTotal = data.abertosTotal;
+  const juridicosTotal = data.juridicosTotal;
+  const amigavelTotal = data.amigavelTotal;
 
   const inadimplenciaFormatada = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(inadimplenciaTotal);
   const abertosFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(abertosTotal);
@@ -337,9 +317,6 @@ export default async function FinanceiroPage({
     data,
     valor: Math.round(valor)
   }));
-
-  const recebimentoPDFTotal = await getRecebimentoTotalAsync();
-  const faturamentoPDFTotal = await getFaturamentoTotalAsync();
 
   return (
     <div className="space-y-6">
@@ -386,18 +363,8 @@ export default async function FinanceiroPage({
 
       {/* Gráficos Principais */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-center items-center hover:shadow-md transition-shadow min-h-[300px]">
-          <h3 className="text-gray-500 font-medium text-lg mb-6">Recebimento (PDF)</h3>
-          <div className="text-5xl font-bold text-brand-primary">
-            R$ {recebimentoPDFTotal}
-          </div>
-        </div>
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-center items-center hover:shadow-md transition-shadow min-h-[300px]">
-          <h3 className="text-gray-500 font-medium text-lg mb-6">Faturamento (PDF)</h3>
-          <div className="text-5xl font-bold text-green-600">
-            R$ {faturamentoPDFTotal}
-          </div>
-        </div>
+        <RecebimentoChart data={recebimentoChartData} />
+        <FaturamentoChart />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
