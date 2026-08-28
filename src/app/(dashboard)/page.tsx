@@ -122,20 +122,12 @@ const getFinanceiroData = async (
 
     const whereAmigavelNaoPagos = {
       ...whereBoleto,
-      origem: 5,
-      idRateio: 0,
-      AND: [
-        { totPrestacao: { equals: 0 } }
-      ]
+      origem: 6
     };
 
     const whereJuridicosNaoPagos = {
       ...whereBoleto,
-      origem: 6,
-      nrParcela: {
-        not: null,
-        notIn: [0]
-      }
+      origem: 5
     };
 
     let prevDateFilter: any = {};
@@ -175,40 +167,44 @@ const getFinanceiroData = async (
 
     const wherePrevJuridicosNaoPagos = {
       ...wherePrevBoleto,
-      origem: 6,
-      nrParcela: {
-        not: null,
-        notIn: [0]
-      }
+      origem: 5
     };
 
     const wherePrevAmigavelNaoPagos = {
       ...wherePrevBoleto,
-      origem: 5,
-      idRateio: 0,
-      AND: [
-        { totPrestacao: { equals: 0 } }
-      ]
+      origem: 6
     };
 
-    const whereRecebimento: any = {
+    const whereRecebimentoCard: any = {
       pago: true,
       cancelado: false,
     };
-    if (condominio) whereRecebimento.idImovel = whereBoleto.idImovel;
-    if (whereBoleto.cliente) whereRecebimento.cliente = whereBoleto.cliente;
+    if (condominio) whereRecebimentoCard.idImovel = whereBoleto.idImovel;
+    if (whereBoleto.cliente) whereRecebimentoCard.cliente = whereBoleto.cliente;
+
+    const whereRecebimentoChart: any = {
+      pago: true,
+      cancelado: false,
+    };
+    if (condominio) whereRecebimentoChart.idImovel = whereBoleto.idImovel;
+    if (whereBoleto.cliente) whereRecebimentoChart.cliente = whereBoleto.cliente;
 
     if (dataInicio || dataFim) {
-      whereRecebimento.dataPgto = {};
+      whereRecebimentoCard.dataPgto = {};
+      whereRecebimentoChart.dataPgto = {};
       if (dataInicio) {
         const dateInicioObj = new Date(dataInicio);
-        if (!isNaN(dateInicioObj.getTime())) whereRecebimento.dataPgto.gte = dateInicioObj;
+        if (!isNaN(dateInicioObj.getTime())) {
+          whereRecebimentoCard.dataPgto.gte = dateInicioObj;
+          whereRecebimentoChart.dataPgto.gte = dateInicioObj;
+        }
       }
       if (dataFim) {
         const dateFimObj = new Date(dataFim);
         if (!isNaN(dateFimObj.getTime())) {
           dateFimObj.setHours(23, 59, 59, 999);
-          whereRecebimento.dataPgto.lte = dateFimObj;
+          whereRecebimentoCard.dataPgto.lte = dateFimObj;
+          whereRecebimentoChart.dataPgto.lte = dateFimObj;
         }
       }
     } else if (periodo) {
@@ -218,41 +214,66 @@ const getFinanceiroData = async (
         const year = new Date().getUTCFullYear();
         const firstDay = new Date(Date.UTC(year, monthIndex, 1));
         const nextMonth = new Date(Date.UTC(year, monthIndex + 1, 1));
-        whereRecebimento.dataPgto = { gte: firstDay, lt: nextMonth };
+        whereRecebimentoCard.dataPgto = { gte: firstDay, lt: nextMonth };
+        whereRecebimentoChart.dataPgto = { gte: firstDay, lt: nextMonth };
       }
     } else {
+      const year = today.getUTCFullYear();
+      const month = today.getUTCMonth();
+      const firstDay = new Date(Date.UTC(year, month, 1));
+      whereRecebimentoCard.dataPgto = { gte: firstDay, lte: today };
+
       const sixMonthsAgo = new Date();
       sixMonthsAgo.setMonth(today.getMonth() - 5);
       sixMonthsAgo.setDate(1);
       sixMonthsAgo.setHours(0, 0, 0, 0);
-      whereRecebimento.dataPgto = { gte: sixMonthsAgo, lte: today };
+      whereRecebimentoChart.dataPgto = { gte: sixMonthsAgo, lte: today };
+    }
+
+    const wherePrevRecebimento: any = {
+      pago: true,
+      cancelado: false,
+    };
+    if (condominio) wherePrevRecebimento.idImovel = whereBoleto.idImovel;
+    if (whereBoleto.cliente) wherePrevRecebimento.cliente = whereBoleto.cliente;
+
+    if (dataInicio || dataFim) {
+      wherePrevRecebimento.dataPgto = prevDateFilter;
+    } else if (periodo) {
+      wherePrevRecebimento.dataPgto = prevDateFilter;
+    } else {
+      const year = today.getUTCFullYear();
+      const month = today.getUTCMonth();
+      const startPrev = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0, 0));
+      const endPrev = new Date(Date.UTC(year, month, 0, 23, 59, 59, 999));
+      wherePrevRecebimento.dataPgto = { gte: startPrev, lte: endPrev };
     }
 
     // Executa 1 por 1 sequencialmente para não disputar conexão ou travar o pool do MySQL remoto
     const inadimplenciaResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: whereAbertosSemAcordo });
-    const abertosResult = inadimplenciaResult; // Duplicado de inadimplenciaResult
+    const recebimentoResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: whereRecebimentoCard });
     const juridicosResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: whereJuridicosNaoPagos });
     const amigavelResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: whereAmigavelNaoPagos });
 
     const prevInadimplenciaResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: wherePrevAbertos });
-    const prevAbertosResult = prevInadimplenciaResult; // Duplicado de prevInadimplenciaResult
+    const prevRecebimentoResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: wherePrevRecebimento });
     const prevJuridicosResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: wherePrevJuridicosNaoPagos });
     const prevAmigavelResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: wherePrevAmigavelNaoPagos });
 
     const recebimentoGrouped = await prisma.tbBoleto.groupBy({
       by: ['dataPgto'],
       _sum: { total: true },
-      where: whereRecebimento
+      where: whereRecebimentoChart
     });
 
     return {
       inadimplenciaTotal: inadimplenciaResult._sum?.total || 0,
-      abertosTotal: abertosResult._sum?.total || 0,
+      recebimentoTotal: recebimentoResult._sum?.total || 0,
       juridicosTotal: (juridicosResult as any)._sum?.total || 0,
       amigavelTotal: (amigavelResult as any)._sum?.total || 0,
 
       prevInadTotal: prevInadimplenciaResult._sum?.total || 0,
-      prevAbertosTotal: prevAbertosResult._sum?.total || 0,
+      prevRecebimentoTotal: prevRecebimentoResult._sum?.total || 0,
       prevJuridicosTotal: (prevJuridicosResult as any)._sum?.total || 0,
       prevAmigavelTotal: (prevAmigavelResult as any)._sum?.total || 0,
 
@@ -289,17 +310,17 @@ export default async function FinanceiroPage({
   );
 
   const inadimplenciaTotal = data.inadimplenciaTotal;
-  const abertosTotal = data.abertosTotal;
+  const recebimentoTotal = data.recebimentoTotal;
   const juridicosTotal = data.juridicosTotal;
   const amigavelTotal = data.amigavelTotal;
 
   const inadimplenciaFormatada = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(inadimplenciaTotal);
-  const abertosFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(abertosTotal);
+  const recebimentoFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(recebimentoTotal);
   const juridicosFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(juridicosTotal);
   const amigavelFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(amigavelTotal);
 
   const trendInadimplencia = computeTrend(inadimplenciaTotal, data.prevInadTotal);
-  const trendAbertos = computeTrend(abertosTotal, data.prevAbertosTotal);
+  const trendRecebimento = computeTrend(recebimentoTotal, data.prevRecebimentoTotal);
   const trendJuridicos = computeTrend(juridicosTotal, data.prevJuridicosTotal);
   const trendAmigavel = computeTrend(amigavelTotal, data.prevAmigavelTotal);
 
@@ -336,11 +357,11 @@ export default async function FinanceiroPage({
           colorClass="text-red-500 bg-red-50"
         />
         <StatCard
-          title="Abertos S/ Acordo"
-          value={abertosFormatado}
+          title="Recebimento"
+          value={recebimentoFormatado}
           iconNode={<FileText size={20} />}
-          trend={trendAbertos.trend}
-          trendValue={trendAbertos.trendValue}
+          trend={trendRecebimento.trend}
+          trendValue={trendRecebimento.trendValue}
           colorClass="text-brand-primary bg-brand-primary/10"
         />
         <StatCard
