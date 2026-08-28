@@ -1,44 +1,51 @@
-name: Deploy cPanel via GitHub
+name: Deploy Next.js to cPanel
 
 on:
   push:
     branches:
-      - main # ou master, conforme a branch principal do seu repositório
+      - main # ou master
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
+      - name: 📥 Checkout do código
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js
+      - name: ⚙️ Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
-      - name: Instalar dependências
+      - name: 📦 Instalar Dependências
         run: npm ci
 
-      - name: Gerar Prisma Client
+      - name: 🗄️ Gerar Prisma Client
         run: npx prisma generate
 
-      - name: Build do Next.js
+      - name: 🏗️ Build do Next.js
         run: npm run build
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }} # se o build precisar validar schema/banco
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
-      - name: Sincronizar arquivos com o cPanel via FTP
+      - name: 🔄 Criar arquivo de restart do Passenger
+        run: |
+          mkdir -p tmp
+          touch tmp/restart.txt
+
+      - name: 🚀 Enviar para o cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          # Envia os arquivos necessários para o cPanel
+          # Sincroniza o código compilado e estrutura necessária
           exclude: |
             **/.git*
             **/.git*/**
             **/node_modules/**
             .env
+            scripts/**
+            planilhas/**
