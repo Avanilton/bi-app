@@ -39,6 +39,7 @@ jobs:
         run: |
           rm -rf node_modules
           rm -rf .next/cache
+          sed -i '/\.next/d' .gitignore
 
       - name: 🚀 Enviar para o cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
