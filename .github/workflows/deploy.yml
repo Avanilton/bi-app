@@ -45,8 +45,9 @@ jobs:
           exclude: |
             **/.git*
             **/.git*/**
-            node_modules
+            **/node_modules/**
             node_modules/**
+            .next/cache/**
             .env
             scripts/**
             planilhas/**
