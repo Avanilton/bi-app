@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import path from "path";
-import Database from "better-sqlite3";
+import prisma from "@/lib/prisma";
 
 const JWT_SECRET = process.env.JWT_SECRET || "bi-bvgarantia-secret-key-2026";
 
@@ -17,19 +16,9 @@ export async function POST(req: Request) {
       );
     }
 
-    // Usa SQLite local para autenticação (tabela Usuario existe no dev.db)
-    const dbPath = path.join(process.cwd(), "dev.db");
-    const db = new Database(dbPath, { readonly: true });
-
-    const usuario = db.prepare("SELECT * FROM Usuario WHERE email = ?").get(email) as {
-      id: number;
-      nome: string;
-      email: string;
-      senha: string;
-      setor: string;
-    } | undefined;
-
-    db.close();
+    const usuario = await prisma.usuario.findUnique({
+      where: { email },
+    });
 
     if (!usuario) {
       return NextResponse.json(
