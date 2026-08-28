@@ -4,7 +4,7 @@ import * as fs from "fs";
 
 // Polyfill DOMMatrix for pdfjs-dist in Node.js
 if (typeof global !== 'undefined' && !global.DOMMatrix) {
-  global.DOMMatrix = class DOMMatrix {};
+  global.DOMMatrix = class DOMMatrix {} as any;
 }
 
 const PLANILHAS_DIR = path.join(process.cwd(), "planilhas");
@@ -23,6 +23,7 @@ async function extrairValorDePdf(nomeArquivo: string): Promise<number> {
   }
 
   try {
+    // @ts-expect-error No type definitions for pdf.mjs
     const pdfjs = await import("pdfjs-dist/build/pdf.mjs");
     const { pathToFileURL } = await import("url");
     pdfjs.GlobalWorkerOptions.workerSrc = pathToFileURL(path.join(process.cwd(), "node_modules", "pdfjs-dist", "build", "pdf.worker.mjs")).href;

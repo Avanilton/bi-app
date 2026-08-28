@@ -82,7 +82,7 @@ export function RecebimentoChart({ data }: { data?: { data: string; valor: numbe
   return (
     <ChartCard title="Recebimento">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+        <ComposedChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
           <XAxis dataKey="data" axisLine={false} tickLine={false} tick={{fill: '#888', fontSize: 12}} dy={10} />
           <YAxis 
@@ -95,6 +95,7 @@ export function RecebimentoChart({ data }: { data?: { data: string; valor: numbe
             contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)' }}
             formatter={(value) => [`R$ ${Number(value).toLocaleString('pt-BR')}`, 'Recebimento']}
           />
+          <Bar dataKey="valor" fill="#fed7aa" radius={[4, 4, 0, 0]} barSize={40} />
           <Line 
             type="monotone" 
             dataKey="valor" 
@@ -103,7 +104,7 @@ export function RecebimentoChart({ data }: { data?: { data: string; valor: numbe
             dot={{ fill: '#de8531', strokeWidth: 2, r: 4 }} 
             activeDot={{ r: 6, stroke: '#fff', strokeWidth: 2 }}
           />
-        </LineChart>
+        </ComposedChart>
       </ResponsiveContainer>
     </ChartCard>
   );

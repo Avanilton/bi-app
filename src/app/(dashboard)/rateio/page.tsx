@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import { RateioBrutoChart } from "@/components/DashboardComponents2";
 import prisma from "@/lib/prisma";
 import { getDDDsForEstado, getDDDsForRegiao } from "@/lib/ddd";
-import { getRecebimentoTotalAsync } from "@/lib/pdf-recebimento";
 
 export const metadata: Metadata = {
   title: "Rateio - BV Garantia BI",
@@ -202,8 +201,7 @@ export default async function RateioPage({
   });
 
   const servicosHoje = antecipacoesHoje._sum.servicos || 0;
-
-  const totalRecebimentoPDF = await getRecebimentoTotalAsync();
+  const totalRecebimentoPDF = "Indisponível (em desenv.)";
 
   return (
     <div className="space-y-6">
