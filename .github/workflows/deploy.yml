@@ -35,6 +35,11 @@ jobs:
           mkdir -p tmp
           touch tmp/restart.txt
 
+      - name: 🗑️ Remover arquivos pesados antes do FTP
+        run: |
+          rm -rf node_modules
+          rm -rf .next/cache
+
       - name: 🚀 Enviar para o cPanel via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
