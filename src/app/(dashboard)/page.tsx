@@ -249,6 +249,121 @@ const getFinanceiroData = async (
       wherePrevRecebimento.dataPgto = { gte: startPrev, lte: endPrev };
     }
 
+    // Cache logic execution
+    let useCache = false;
+    let cacheData: any = null;
+    let idImoveis: number[] | null = null;
+
+    if (condominio) idImoveis = [parseInt(condominio, 10)];
+    
+    if (regiao || estado) {
+      let ddds: number[] = [];
+      if (estado) ddds = getDDDsForEstado(estado);
+      else if (regiao) ddds = getDDDsForRegiao(regiao);
+
+      if (ddds.length > 0) {
+        const clientesMatches = await prisma.tbCliente.findMany({
+          where: { dddce: { in: ddds } },
+          select: { idImovel: true },
+          distinct: ['idImovel']
+        });
+        const idsByDdd = clientesMatches.map(c => c.idImovel).filter(id => id !== null) as number[];
+        if (idImoveis) {
+          idImoveis = idImoveis.filter(id => idsByDdd.includes(id));
+        } else {
+          idImoveis = idsByDdd;
+        }
+      }
+    }
+
+    if ((condominio || regiao || estado) && !dataInicio && !dataFim) {
+      try {
+        const fs = require('fs');
+        const path = require('path');
+        const cachePath = path.join(process.cwd(), "planilhas", "cache-boletos.json");
+        if (fs.existsSync(cachePath)) {
+          cacheData = JSON.parse(fs.readFileSync(cachePath, 'utf8')).data;
+          useCache = true;
+        }
+      } catch(e) {}
+    }
+
+    if (useCache && cacheData && idImoveis) {
+      let inad = 0;
+      let juri = 0;
+      let amig = 0;
+      let receb = 0;
+      let prevReceb = 0;
+      const recebGroupedMap: Record<string, number> = {};
+
+      let targetMonth = today.getUTCMonth() + 1;
+      let targetYear = today.getUTCFullYear();
+      let prevMonth = targetMonth === 1 ? 12 : targetMonth - 1;
+      let prevYear = targetMonth === 1 ? targetYear - 1 : targetYear;
+
+      if (periodo) {
+        const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+        const monthIndex = meses.indexOf(periodo);
+        if (monthIndex >= 0) {
+          targetMonth = monthIndex + 1;
+          targetYear = today.getUTCFullYear();
+          prevMonth = targetMonth === 1 ? 12 : targetMonth - 1;
+          prevYear = targetMonth === 1 ? targetYear - 1 : targetYear;
+        }
+      }
+
+      const targetKey = `${targetYear}-${String(targetMonth).padStart(2, '0')}`;
+      const prevKey = `${prevYear}-${String(prevMonth).padStart(2, '0')}`;
+
+      // Keys for the last 6 months for the chart
+      const chartKeys: string[] = [];
+      for (let i = 5; i >= 0; i--) {
+        let m = targetMonth - i;
+        let y = targetYear;
+        if (m <= 0) {
+          m += 12;
+          y -= 1;
+        }
+        chartKeys.push(`${y}-${String(m).padStart(2, '0')}`);
+      }
+
+      for (const id of idImoveis) {
+        const imovelData = cacheData[id];
+        if (imovelData) {
+          inad += (imovelData.inadimplencia || 0);
+          juri += (imovelData.juridico || 0);
+          amig += (imovelData.amigavel || 0);
+          
+          if (imovelData.recebimentosPorMes) {
+             receb += (imovelData.recebimentosPorMes[targetKey] || 0);
+             prevReceb += (imovelData.recebimentosPorMes[prevKey] || 0);
+             
+             chartKeys.forEach(k => {
+               recebGroupedMap[k] = (recebGroupedMap[k] || 0) + (imovelData.recebimentosPorMes[k] || 0);
+             });
+          }
+        }
+      }
+
+      return {
+        inadimplenciaTotal: inad,
+        recebimentoTotal: receb,
+        juridicosTotal: juri,
+        amigavelTotal: amig,
+        prevInadTotal: inad, // No trend for inadimplencia when cached
+        prevRecebimentoTotal: prevReceb,
+        prevJuridicosTotal: juri, // No trend
+        prevAmigavelTotal: amig, // No trend
+        recebimentoGrouped: Object.entries(recebGroupedMap).map(([k, v]) => {
+          const [y, m] = k.split('-');
+          return {
+            dataPgto: new Date(Date.UTC(parseInt(y), parseInt(m) - 1, 15)).toISOString(),
+            total: v
+          };
+        })
+      };
+    }
+
     // Executa 1 por 1 sequencialmente para não disputar conexão ou travar o pool do MySQL remoto
     const inadimplenciaResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: whereAbertosSemAcordo });
     const recebimentoResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: whereRecebimentoCard });
