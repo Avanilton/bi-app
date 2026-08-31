@@ -48,12 +48,18 @@ export function Sidebar() {
     async function fetchCondominios() {
       try {
         const res = await fetch("/api/condominios");
-        const data = await res.json();
-        if (data.success) {
-          setCondominios(data.data.map((c: any) => ({
-            value: c.idImovel,
-            label: c.nomeFantasia ? `${c.idImovel} - ${c.nomeFantasia}` : `Condomínio ${c.idImovel}`
-          })));
+        const contentType = res.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+          const data = await res.json();
+          if (data.success) {
+            setCondominios(data.data.map((c: any) => ({
+              value: c.idImovel,
+              label: c.nomeFantasia ? `${c.idImovel} - ${c.nomeFantasia}` : `Condomínio ${c.idImovel}`
+            })));
+          }
+        } else {
+          const text = await res.text();
+          console.error("A resposta da API não é JSON. Status:", res.status, "Resposta:", text.substring(0, 100));
         }
       } catch (error) {
         console.error("Erro ao buscar condominios", error);

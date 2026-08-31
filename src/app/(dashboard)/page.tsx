@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
 import { getDDDsForEstado, getDDDsForRegiao } from "@/lib/ddd";
+import { INACTIVE_CONDOMINIOS } from "@/lib/constants";
 import {
   StatCard,
   RecebimentoChart,
@@ -61,6 +62,7 @@ const getFinanceiroData = async (
       idEmpresa: 75,
       pago: false,
       cancelado: false,
+      idImovel: { notIn: INACTIVE_CONDOMINIOS }
     };
 
     if (condominio) {
@@ -99,7 +101,7 @@ const getFinanceiroData = async (
       const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
       const monthIndex = meses.indexOf(periodo);
       if (monthIndex >= 0) {
-        const year = new Date().getUTCFullYear();
+        const year = new Date().getFullYear();
         const firstDay = new Date(Date.UTC(year, monthIndex, 1));
         const nextMonth = new Date(Date.UTC(year, monthIndex + 1, 1));
         whereBoleto.dataVecto = {
@@ -113,10 +115,16 @@ const getFinanceiroData = async (
       };
     }
 
+    // Get the last day of the current month
+    const year = today.getFullYear();
+    const month = today.getMonth();
+    const endOfCurrentMonth = new Date(Date.UTC(year, month + 1, 0, 23, 59, 59, 999));
+    
     const whereAbertosSemAcordo = {
       ...whereBoleto,
+      dataVecto: { lte: endOfCurrentMonth },
       AND: [
-        { OR: [{ origem: null }, { origem: { notIn: [5, 6] } }] }
+        { OR: [{ origem: null }, { origem: 0 }] }
       ]
     };
 
@@ -135,7 +143,7 @@ const getFinanceiroData = async (
       const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
       const monthIndex = meses.indexOf(periodo);
       if (monthIndex >= 0) {
-        const year = new Date().getUTCFullYear();
+        const year = new Date().getFullYear();
         const prevMonthIndex = monthIndex === 0 ? 11 : monthIndex - 1;
         const prevYear = monthIndex === 0 ? year - 1 : year;
         const startPrev = new Date(Date.UTC(prevYear, prevMonthIndex, 1, 0, 0, 0, 0));
@@ -143,8 +151,8 @@ const getFinanceiroData = async (
         prevDateFilter = { gte: startPrev, lte: endPrev };
       }
     } else {
-      const year = today.getUTCFullYear();
-      const month = today.getUTCMonth();
+      const year = today.getFullYear();
+      const month = today.getMonth();
       const endPrevMonth = new Date(Date.UTC(year, month, 0, 23, 59, 59, 999));
       prevDateFilter = { lte: endPrevMonth };
     }
@@ -153,15 +161,17 @@ const getFinanceiroData = async (
       idEmpresa: 75,
       pago: false,
       cancelado: false,
-      dataVecto: prevDateFilter
+      dataVecto: prevDateFilter,
+      idImovel: { notIn: INACTIVE_CONDOMINIOS }
     };
     if (condominio) wherePrevBoleto.idImovel = whereBoleto.idImovel;
     if (whereBoleto.cliente) wherePrevBoleto.cliente = whereBoleto.cliente;
 
     const wherePrevAbertos = {
       ...wherePrevBoleto,
+      dataVecto: { lte: endOfCurrentMonth },
       AND: [
-        { OR: [{ origem: null }, { origem: { notIn: [5, 6] } }] }
+        { OR: [{ origem: null }, { origem: 0 }] }
       ]
     };
 
@@ -178,6 +188,7 @@ const getFinanceiroData = async (
     const whereRecebimentoCard: any = {
       pago: true,
       cancelado: false,
+      idImovel: { notIn: INACTIVE_CONDOMINIOS }
     };
     if (condominio) whereRecebimentoCard.idImovel = whereBoleto.idImovel;
     if (whereBoleto.cliente) whereRecebimentoCard.cliente = whereBoleto.cliente;
@@ -185,6 +196,7 @@ const getFinanceiroData = async (
     const whereRecebimentoChart: any = {
       pago: true,
       cancelado: false,
+      idImovel: { notIn: INACTIVE_CONDOMINIOS }
     };
     if (condominio) whereRecebimentoChart.idImovel = whereBoleto.idImovel;
     if (whereBoleto.cliente) whereRecebimentoChart.cliente = whereBoleto.cliente;
@@ -211,15 +223,15 @@ const getFinanceiroData = async (
       const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
       const monthIndex = meses.indexOf(periodo);
       if (monthIndex >= 0) {
-        const year = new Date().getUTCFullYear();
+        const year = new Date().getFullYear();
         const firstDay = new Date(Date.UTC(year, monthIndex, 1));
         const nextMonth = new Date(Date.UTC(year, monthIndex + 1, 1));
         whereRecebimentoCard.dataPgto = { gte: firstDay, lt: nextMonth };
         whereRecebimentoChart.dataPgto = { gte: firstDay, lt: nextMonth };
       }
     } else {
-      const year = today.getUTCFullYear();
-      const month = today.getUTCMonth();
+      const year = today.getFullYear();
+      const month = today.getMonth();
       const firstDay = new Date(Date.UTC(year, month, 1));
       whereRecebimentoCard.dataPgto = { gte: firstDay, lte: today };
 
@@ -233,6 +245,7 @@ const getFinanceiroData = async (
     const wherePrevRecebimento: any = {
       pago: true,
       cancelado: false,
+      idImovel: { notIn: INACTIVE_CONDOMINIOS }
     };
     if (condominio) wherePrevRecebimento.idImovel = whereBoleto.idImovel;
     if (whereBoleto.cliente) wherePrevRecebimento.cliente = whereBoleto.cliente;
@@ -242,8 +255,8 @@ const getFinanceiroData = async (
     } else if (periodo) {
       wherePrevRecebimento.dataPgto = prevDateFilter;
     } else {
-      const year = today.getUTCFullYear();
-      const month = today.getUTCMonth();
+      const year = today.getFullYear();
+      const month = today.getMonth();
       const startPrev = new Date(Date.UTC(year, month - 1, 1, 0, 0, 0, 0));
       const endPrev = new Date(Date.UTC(year, month, 0, 23, 59, 59, 999));
       wherePrevRecebimento.dataPgto = { gte: startPrev, lte: endPrev };
@@ -276,7 +289,7 @@ const getFinanceiroData = async (
       }
     }
 
-    if ((condominio || regiao || estado) && !dataInicio && !dataFim) {
+    if (!dataInicio && !dataFim) {
       try {
         const fs = require('fs');
         const path = require('path');
@@ -288,7 +301,10 @@ const getFinanceiroData = async (
       } catch(e) {}
     }
 
-    if (useCache && cacheData && idImoveis) {
+    if (useCache && cacheData) {
+      if (!idImoveis) {
+        idImoveis = Object.keys(cacheData).map(k => parseInt(k, 10));
+      }
       let inad = 0;
       let juri = 0;
       let amig = 0;
@@ -296,8 +312,8 @@ const getFinanceiroData = async (
       let prevReceb = 0;
       const recebGroupedMap: Record<string, number> = {};
 
-      let targetMonth = today.getUTCMonth() + 1;
-      let targetYear = today.getUTCFullYear();
+      let targetMonth = today.getMonth() + 1;
+      let targetYear = today.getFullYear();
       let prevMonth = targetMonth === 1 ? 12 : targetMonth - 1;
       let prevYear = targetMonth === 1 ? targetYear - 1 : targetYear;
 
@@ -306,7 +322,7 @@ const getFinanceiroData = async (
         const monthIndex = meses.indexOf(periodo);
         if (monthIndex >= 0) {
           targetMonth = monthIndex + 1;
-          targetYear = today.getUTCFullYear();
+          targetYear = today.getFullYear();
           prevMonth = targetMonth === 1 ? 12 : targetMonth - 1;
           prevYear = targetMonth === 1 ? targetYear - 1 : targetYear;
         }
