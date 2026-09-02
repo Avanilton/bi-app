@@ -5,72 +5,14 @@ import { Settings, UserPlus, Save, RefreshCcw, Database, FileSpreadsheet, CheckC
 
 type PlanilhasStatus = "idle" | "running" | "done" | "error";
 
-interface PlanilhasDados {
-  inadimplencia: number;
-  juridiconaopago: number;
-  amigavelnaopago: number;
-  abertosSemAcordo: number;
-  updatedAt: string;
-}
-
 function formatBRL(value: number): string {
   return new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(value);
 }
 
-function formatDateTime(iso: string): string {
-  return new Date(iso).toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" });
-}
 
 export default function ConfiguracoesPage() {
   const [isSyncing, setIsSyncing] = useState(false);
 
-  // ── Atualizar Planilhas ─────────────────────────────────────────────────
-  const [planilhasStatus, setPlanilhasStatus] = useState<PlanilhasStatus>("idle");
-  const [planilhasDados, setPlanilhasDados] = useState<PlanilhasDados | null>(null);
-  const [planilhasLog, setPlanilhasLog] = useState<string>("");
-  const [planilhasUpdatedAt, setPlanilhasUpdatedAt] = useState<string | null>(null);
-  const pollingRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const logEndRef = useRef<HTMLDivElement | null>(null);
-
-  const fetchPlanilhasStatus = useCallback(async () => {
-    try {
-      const res = await fetch("/api/planilhas-status");
-      const json = await res.json();
-      if (json.dados) setPlanilhasDados(json.dados);
-      if (json.updatedAt) setPlanilhasUpdatedAt(json.updatedAt);
-    } catch {
-      // silently ignore errors
-    }
-  }, []);
-
-  // Carrega status inicial ao montar
-  useEffect(() => {
-    fetchPlanilhasStatus();
-  }, [fetchPlanilhasStatus]);
-
-  const handleAtualizarPlanilhas = async () => {
-    try {
-      setPlanilhasStatus("running");
-
-      const res = await fetch("/api/atualizar-planilhas", { method: "POST" });
-      const data = await res.json();
-
-      if (!data.success) {
-        setPlanilhasStatus("error");
-        return;
-      }
-
-      setPlanilhasStatus("done");
-      setPlanilhasDados(data.dados);
-      setPlanilhasUpdatedAt(data.dados.updatedAt);
-      
-      // Volta para idle depois de 3 segundos para permitir nova leitura
-      setTimeout(() => setPlanilhasStatus("idle"), 3000);
-    } catch (error) {
-      setPlanilhasStatus("error");
-    }
-  };
-  // ────────────────────────────────────────────────────────────────────────
 
   const handleSync = async () => {
     try {
@@ -124,78 +66,7 @@ export default function ConfiguracoesPage() {
           </button>
         </div>
 
-        {/* Atualizar Planilhas (Bot PDF) */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 lg:col-span-2">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <FileSpreadsheet style={{ color: '#059669' }} size={24} />
-              <div>
-                <h2 className="text-xl font-bold text-gray-900">Atualizar Planilhas</h2>
-                <p className="text-sm text-gray-500">
-                  Bot extrai PDFs do sistema Novacorp e atualiza automaticamente os indicadores do dashboard.
-                </p>
-              </div>
-            </div>
 
-            {/* Badge de status */}
-            {planilhasStatus === "running" && (
-              <span style={{ backgroundColor: '#eff6ff', color: '#1d4ed8', borderColor: '#bfdbfe' }} className="flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full border">
-                <RefreshCcw size={12} className="animate-spin" /> Executando...
-              </span>
-            )}
-            {planilhasStatus === "done" && (
-              <span style={{ backgroundColor: '#ecfdf5', color: '#065f46', borderColor: '#a7f3d0' }} className="flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-full border">
-                <CheckCircle size={12} /> Concluído
-              </span>
-            )}
-            {planilhasStatus === "error" && (
-              <span className="flex items-center gap-1.5 px-3 py-1 bg-red-50 text-red-700 text-xs font-semibold rounded-full border border-red-200">
-                <XCircle size={12} /> Erro
-              </span>
-            )}
-          </div>
-
-          {/* Linha separadora */}
-          <div className="border-t border-gray-100 my-4" />
-
-          {/* Última atualização + Valores extraídos */}
-          {planilhasDados && (
-            <div className="mb-5">
-              {planilhasUpdatedAt && (
-                <p className="flex items-center gap-1.5 text-xs text-gray-400 mb-3">
-                  <Clock size={12} />
-                  Última atualização: <span className="font-medium text-gray-600">{formatDateTime(planilhasUpdatedAt)}</span>
-                </p>
-              )}
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-                {[
-                  { label: "Inadimplência", value: planilhasDados.inadimplencia, bg: '#fef2f2', color: '#b91c1c', border: '#fecaca' },
-                  { label: "Jurídicos não pagos", value: planilhasDados.juridiconaopago, bg: '#fff7ed', color: '#c2410c', border: '#fed7aa' },
-                  { label: "Amigável não pagos", value: planilhasDados.amigavelnaopago, bg: '#fefce8', color: '#a16207', border: '#fde68a' },
-                  { label: "Abertos S/ Acordo", value: planilhasDados.abertosSemAcordo, bg: '#fdf6ee', color: '#de8531', border: '#f5cfa0' },
-                ].map((item) => (
-                  <div key={item.label} style={{ backgroundColor: item.bg, color: item.color, borderColor: item.border }} className="p-3 rounded-xl border">
-                    <p className="text-xs font-medium opacity-80">{item.label}</p>
-                    <p className="text-base font-bold mt-0.5">{formatBRL(item.value)}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Botões */}
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handleAtualizarPlanilhas}
-              disabled={planilhasStatus === "running"}
-              style={{ backgroundColor: '#059669', color: '#fff' }}
-              className="flex items-center justify-center gap-2 px-6 py-3 font-medium text-sm rounded-lg transition-all disabled:opacity-50 shadow-md hover:opacity-90"
-            >
-              <FileSpreadsheet size={18} className={planilhasStatus === "running" ? "animate-pulse" : ""} />
-              {planilhasStatus === "running" ? "Lendo PDFs da pasta..." : "Ler PDFs da pasta planilhas"}
-            </button>
-          </div>
-        </div>
 
         {/* User Registration Form */}
 
