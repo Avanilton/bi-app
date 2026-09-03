@@ -12,8 +12,8 @@ async function checkTables() {
   });
   
   // List all tables that might relate to acordos/agreements
-  const [tables] = await connection.execute("SHOW TABLES");
-  const all = (tables as any[]).map(t => Object.values(t)[0]);
+  const [tables] = await connection.query("SHOW TABLES");
+  const all = (tables as any[]).map(t => Object.values(t)[0] as string);
   const relevant = all.filter((t: string) => 
     t.toLowerCase().includes('acor') || 
     t.toLowerCase().includes('acordo') ||

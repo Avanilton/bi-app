@@ -1,13 +1,18 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function proxy(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const token = request.cookies.get('bi_token');
 
   const { pathname } = request.nextUrl;
 
   // Protect configuration routes and dashboard routes
-  const isProtectedPath = pathname.startsWith('/configuracoes') || pathname.startsWith('/dashboard');
+  const isProtectedPath = pathname === '/' || 
+                          pathname.startsWith('/rateio') || 
+                          pathname.startsWith('/juridico') || 
+                          pathname.startsWith('/rh') || 
+                          pathname.startsWith('/diretoria') || 
+                          pathname.startsWith('/configuracoes');
 
   if (isProtectedPath && !token) {
     if (pathname.startsWith('/api/')) {
@@ -18,12 +23,12 @@ export function proxy(request: NextRequest) {
 
   // Prevent logged-in users from accessing the login page
   if (pathname === '/login' && token) {
-    return NextResponse.redirect(new URL('/configuracoes', request.url));
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/configuracoes/:path*', '/dashboard/:path*', '/login'],
+  matcher: ['/((?!api/auth|_next/static|_next/image|favicon.ico).*)'],
 };
