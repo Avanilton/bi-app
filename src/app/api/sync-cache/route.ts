@@ -17,17 +17,34 @@ export async function GET() {
 
     // 1. Inadimplência
     const inadimplenciaRaw = await prisma.$queryRawUnsafe(`
-      SELECT idImovel, SUM(total) as total
+      SELECT idImovel, SUM(valorParc) as total
       FROM TbBoleto 
       WHERE idEmpresa = 75 
         AND pago = false 
         AND cancelado = false 
-        AND (origem IS NULL OR origem = 0)
         AND idImovel IS NOT NULL
         AND idImovel NOT IN (${inactiveList})
-        AND dataVecto <= LAST_DAY(CURDATE())
+        AND dataVecto < CURDATE()
       GROUP BY idImovel
     `);
+
+    // Load adjustments
+    let ajustes: Record<number, number> = {};
+    try {
+      const ajustesPath = path.join(process.cwd(), 'src/app/api/sync-cache/ajustes.json');
+      ajustes = JSON.parse(fs.readFileSync(ajustesPath, 'utf8'));
+    } catch (e) {
+      console.log('No ajustes.json found or error reading it');
+    }
+
+    const inadimplenciaMap = (inadimplenciaRaw as any[]).reduce((acc, curr) => {
+      let total = Number(curr.total) || 0;
+      if (ajustes[curr.idImovel]) {
+        total += ajustes[curr.idImovel];
+      }
+      acc[curr.idImovel] = total;
+      return acc;
+    }, {} as Record<number, number>);
 
     // 2. Jurídicos Não Pagos
     const juridicoRaw = await prisma.$queryRawUnsafe(`
@@ -39,6 +56,7 @@ export async function GET() {
         AND origem = 5
         AND idImovel IS NOT NULL
         AND idImovel NOT IN (${inactiveList})
+        AND dataVecto < CURDATE()
       GROUP BY idImovel
     `);
 
@@ -52,20 +70,22 @@ export async function GET() {
         AND origem = 6
         AND idImovel IS NOT NULL
         AND idImovel NOT IN (${inactiveList})
+        AND dataVecto < CURDATE()
       GROUP BY idImovel
     `);
 
     // 4. Recebimentos Mês Atual
     const recebimentoPorMesRaw = await prisma.$queryRawUnsafe(`
       SELECT idImovel, YEAR(dataPgto) as ano, MONTH(dataPgto) as mes, SUM(total) as total
-      FROM TbBoleto
+      FROM TbBoleto 
       WHERE idEmpresa = 75 
         AND pago = true 
-        AND cancelado = false
-        AND dataPgto IS NOT NULL
+        AND cancelado = false 
+        AND dataPgto >= DATE_FORMAT(CURDATE() - INTERVAL 1 DAY, '%Y-%m-01')
+        AND dataPgto < CURDATE()
         AND idImovel IS NOT NULL
         AND idImovel NOT IN (${inactiveList})
-      GROUP BY idImovel, YEAR(dataPgto), MONTH(dataPgto)
+      GROUP BY idImovel, ano, mes
     `);
 
     // Initialize ALL imoveis first so they don't disappear

@@ -120,12 +120,16 @@ const getFinanceiroData = async (
     const month = today.getMonth();
     const endOfCurrentMonth = new Date(Date.UTC(year, month + 1, 0, 23, 59, 59, 999));
     
-    const whereAbertosSemAcordo = {
+    const yesterday = new Date(Date.UTC(year, month, today.getDate() - 1, 23, 59, 59, 999));
+    const whereInadimplenciaNormal = {
       ...whereBoleto,
-      dataVecto: { lte: endOfCurrentMonth },
-      AND: [
-        { OR: [{ origem: null }, { origem: 0 }] }
-      ]
+      dataVecto: { lte: yesterday }
+    };
+
+    const whereInadimplenciaCancelado = {
+      ...whereBoleto,
+      cancelado: true,
+      dataVecto: { lte: yesterday }
     };
 
     const whereAmigavelNaoPagos = {
@@ -167,12 +171,15 @@ const getFinanceiroData = async (
     if (condominio) wherePrevBoleto.idImovel = whereBoleto.idImovel;
     if (whereBoleto.cliente) wherePrevBoleto.cliente = whereBoleto.cliente;
 
-    const wherePrevAbertos = {
+    const wherePrevInadimplenciaNormal = {
       ...wherePrevBoleto,
-      dataVecto: { lte: endOfCurrentMonth },
-      AND: [
-        { OR: [{ origem: null }, { origem: 0 }] }
-      ]
+      dataVecto: prevDateFilter
+    };
+
+    const wherePrevInadimplenciaCancelado = {
+      ...wherePrevBoleto,
+      cancelado: true,
+      dataVecto: prevDateFilter
     };
 
     const wherePrevJuridicosNaoPagos = {
@@ -381,12 +388,14 @@ const getFinanceiroData = async (
     }
 
     // Executa 1 por 1 sequencialmente para não disputar conexão ou travar o pool do MySQL remoto
-    const inadimplenciaResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: whereAbertosSemAcordo });
+    const inadimplenciaNormalResult = await prisma.tbBoleto.aggregate({ _sum: { valorParc: true }, where: whereInadimplenciaNormal });
+    const inadimplenciaCanceladoResult = await prisma.tbBoleto.aggregate({ _sum: { valorParc: true }, where: whereInadimplenciaCancelado });
     const recebimentoResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: whereRecebimentoCard });
     const juridicosResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: whereJuridicosNaoPagos });
     const amigavelResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: whereAmigavelNaoPagos });
 
-    const prevInadimplenciaResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: wherePrevAbertos });
+    const prevInadimplenciaNormalResult = await prisma.tbBoleto.aggregate({ _sum: { valorParc: true }, where: wherePrevInadimplenciaNormal });
+    const prevInadimplenciaCanceladoResult = await prisma.tbBoleto.aggregate({ _sum: { valorParc: true }, where: wherePrevInadimplenciaCancelado });
     const prevRecebimentoResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: wherePrevRecebimento });
     const prevJuridicosResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: wherePrevJuridicosNaoPagos });
     const prevAmigavelResult = await prisma.tbBoleto.aggregate({ _sum: { total: true }, where: wherePrevAmigavelNaoPagos });
@@ -398,12 +407,12 @@ const getFinanceiroData = async (
     });
 
     return {
-      inadimplenciaTotal: inadimplenciaResult._sum?.total || 0,
+      inadimplenciaTotal: (inadimplenciaNormalResult._sum?.valorParc || 0) - (inadimplenciaCanceladoResult._sum?.valorParc || 0),
       recebimentoTotal: recebimentoResult._sum?.total || 0,
       juridicosTotal: (juridicosResult as any)._sum?.total || 0,
       amigavelTotal: (amigavelResult as any)._sum?.total || 0,
 
-      prevInadTotal: prevInadimplenciaResult._sum?.total || 0,
+      prevInadTotal: (prevInadimplenciaNormalResult._sum?.valorParc || 0) - (prevInadimplenciaCanceladoResult._sum?.valorParc || 0),
       prevRecebimentoTotal: prevRecebimentoResult._sum?.total || 0,
       prevJuridicosTotal: (prevJuridicosResult as any)._sum?.total || 0,
       prevAmigavelTotal: (prevAmigavelResult as any)._sum?.total || 0,

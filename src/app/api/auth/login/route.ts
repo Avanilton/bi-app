@@ -22,7 +22,7 @@ export async function POST(req: Request) {
         where: { email },
       });
     } catch (e) {
-      console.warn("DB Usuario query failed, falling back to mock user if admin:", e.message);
+      console.warn("DB Usuario query failed, falling back to mock user if admin:", (e as Error).message);
     }
 
     if (!usuario && email === "admin@bvgarantia.com.br") {

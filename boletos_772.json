@@ -1,0 +1,2594 @@
+[
+  {
+    "idBoleto": 4556493,
+    "dataVecto": "2025-02-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4556528,
+    "dataVecto": "2025-02-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4556568,
+    "dataVecto": "2025-02-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4556569,
+    "dataVecto": "2025-02-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4556621,
+    "dataVecto": "2025-02-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4556667,
+    "dataVecto": "2025-02-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4556673,
+    "dataVecto": "2025-02-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4556713,
+    "dataVecto": "2025-02-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4556714,
+    "dataVecto": "2025-02-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4556746,
+    "dataVecto": "2025-02-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4556749,
+    "dataVecto": "2025-02-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4556772,
+    "dataVecto": "2025-02-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4556793,
+    "dataVecto": "2025-02-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4684839,
+    "dataVecto": "2025-03-10T03:00:00.000Z",
+    "valorParc": 393.0336,
+    "total": 393.0336
+  },
+  {
+    "idBoleto": 4684874,
+    "dataVecto": "2025-03-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4684909,
+    "dataVecto": "2025-03-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4684949,
+    "dataVecto": "2025-03-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4684950,
+    "dataVecto": "2025-03-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4685002,
+    "dataVecto": "2025-03-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4685014,
+    "dataVecto": "2025-03-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4685048,
+    "dataVecto": "2025-03-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4685054,
+    "dataVecto": "2025-03-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4685094,
+    "dataVecto": "2025-03-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4685095,
+    "dataVecto": "2025-03-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4685127,
+    "dataVecto": "2025-03-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4685130,
+    "dataVecto": "2025-03-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4685153,
+    "dataVecto": "2025-03-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4685174,
+    "dataVecto": "2025-03-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4839043,
+    "dataVecto": "2025-04-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4839078,
+    "dataVecto": "2025-04-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4839118,
+    "dataVecto": "2025-04-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4839119,
+    "dataVecto": "2025-04-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4839171,
+    "dataVecto": "2025-04-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4839189,
+    "dataVecto": "2025-04-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4839217,
+    "dataVecto": "2025-04-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4839223,
+    "dataVecto": "2025-04-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4839263,
+    "dataVecto": "2025-04-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4839264,
+    "dataVecto": "2025-04-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4839296,
+    "dataVecto": "2025-04-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4839322,
+    "dataVecto": "2025-04-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4839343,
+    "dataVecto": "2025-04-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4970700,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 393.0336,
+    "total": 393.0336
+  },
+  {
+    "idBoleto": 4970735,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4970770,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4970810,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4970811,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4970863,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4970881,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4970884,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4970914,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4970915,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4970930,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4970955,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4970956,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4970988,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4970991,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 4971014,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 4971035,
+    "dataVecto": "2025-05-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 5137452,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 393.0406,
+    "total": 393.0406
+  },
+  {
+    "idBoleto": 5137487,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 390.6611,
+    "total": 390.6611
+  },
+  {
+    "idBoleto": 5137522,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 401.4756,
+    "total": 401.4756
+  },
+  {
+    "idBoleto": 5137562,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 401.4756,
+    "total": 401.4756
+  },
+  {
+    "idBoleto": 5137563,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 390.6611,
+    "total": 390.6611
+  },
+  {
+    "idBoleto": 5137615,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 390.6611,
+    "total": 390.6611
+  },
+  {
+    "idBoleto": 5137633,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 390.6611,
+    "total": 390.6611
+  },
+  {
+    "idBoleto": 5137663,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 401.4756,
+    "total": 401.4756
+  },
+  {
+    "idBoleto": 5137666,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 390.6611,
+    "total": 390.6611
+  },
+  {
+    "idBoleto": 5137667,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 401.4756,
+    "total": 401.4756
+  },
+  {
+    "idBoleto": 5137682,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 390.6611,
+    "total": 390.6611
+  },
+  {
+    "idBoleto": 5137707,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 401.4756,
+    "total": 401.4756
+  },
+  {
+    "idBoleto": 5137708,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 401.4756,
+    "total": 401.4756
+  },
+  {
+    "idBoleto": 5137740,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 401.4756,
+    "total": 401.4756
+  },
+  {
+    "idBoleto": 5137743,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 401.4756,
+    "total": 401.4756
+  },
+  {
+    "idBoleto": 5137766,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 390.6611,
+    "total": 390.6611
+  },
+  {
+    "idBoleto": 5137787,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 401.4756,
+    "total": 401.4756
+  },
+  {
+    "idBoleto": 5137797,
+    "dataVecto": "2025-06-10T03:00:00.000Z",
+    "valorParc": 390.6611,
+    "total": 390.6611
+  },
+  {
+    "idBoleto": 5162585,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 393.0336,
+    "total": 393.0336
+  },
+  {
+    "idBoleto": 5162609,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 390.66098,
+    "total": 390.66098
+  },
+  {
+    "idBoleto": 5162620,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 390.66098,
+    "total": 390.66098
+  },
+  {
+    "idBoleto": 5162655,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 401.4696,
+    "total": 401.4696
+  },
+  {
+    "idBoleto": 5162695,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 5162696,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 5162748,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 5162766,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 5162796,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 5162799,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 5162800,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 5162815,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 5162840,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 5162841,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 5162873,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 5162876,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 401.46954,
+    "total": 401.46954
+  },
+  {
+    "idBoleto": 5162894,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 5162899,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 5162930,
+    "dataVecto": "2025-07-10T03:00:00.000Z",
+    "valorParc": 390.661,
+    "total": 390.661
+  },
+  {
+    "idBoleto": 5317833,
+    "dataVecto": "2025-08-10T03:00:00.000Z",
+    "valorParc": 393.0365,
+    "total": 393.0365
+  },
+  {
+    "idBoleto": 5317868,
+    "dataVecto": "2025-08-10T03:00:00.000Z",
+    "valorParc": 390.6582,
+    "total": 390.6582
+  },
+  {
+    "idBoleto": 5317903,
+    "dataVecto": "2025-08-10T03:00:00.000Z",
+    "valorParc": 401.47244,
+    "total": 401.47244
+  },
+  {
+    "idBoleto": 5317943,
+    "dataVecto": "2025-08-10T03:00:00.000Z",
+    "valorParc": 401.47244,
+    "total": 401.47244
+  },
+  {
+    "idBoleto": 5317944,
+    "dataVecto": "2025-08-10T03:00:00.000Z",
+    "valorParc": 390.65826,
+    "total": 390.65826
+  },
+  {
+    "idBoleto": 5317996,
+    "dataVecto": "2025-08-10T03:00:00.000Z",
+    "valorParc": 390.65826,
+    "total": 390.65826
+  },
+  {
+    "idBoleto": 5318003,
+    "dataVecto": "2025-08-10T03:00:00.000Z",
+    "valorParc": 401.47244,
+    "total": 401.47244
+  },
+  {
+    "idBoleto": 5318014,
+    "dataVecto": "2025-08-10T03:00:00.000Z",
+    "valorParc": 390.65826,
+    "total": 390.65826
+  },
+  {
+    "idBoleto": 5318044,
+    "dataVecto": "2025-08-10T03:00:00.000Z",
+    "valorParc": 401.47244,
+    "total": 401.47244
+  },
+  {
+    "idBoleto": 5318048,
+    "dataVecto": "2025-08-10T03:00:00.000Z",
+    "valorParc": 401.47244,
+    "total": 401.47244
+  },
+  {
+    "idBoleto": 5318063,
+    "dataVecto": "2025-08-10T03:00:00.000Z",
+    "valorParc": 390.65826,
+    "total": 390.65826
+  },
+  {
+    "idBoleto": 5318088,
+    "dataVecto": "2025-08-10T03:00:00.000Z",
+    "valorParc": 401.47244,
+    "total": 401.47244
+  },
+  {
+    "idBoleto": 5318107,
+    "dataVecto": "2025-08-10T03:00:00.000Z",
+    "valorParc": 390.65826,
+    "total": 390.65826
+  },
+  {
+    "idBoleto": 5318121,
+    "dataVecto": "2025-08-10T03:00:00.000Z",
+    "valorParc": 401.47244,
+    "total": 401.47244
+  },
+  {
+    "idBoleto": 5318142,
+    "dataVecto": "2025-08-10T03:00:00.000Z",
+    "valorParc": 390.65826,
+    "total": 390.65826
+  },
+  {
+    "idBoleto": 5318147,
+    "dataVecto": "2025-08-10T03:00:00.000Z",
+    "valorParc": 390.65826,
+    "total": 390.65826
+  },
+  {
+    "idBoleto": 5547458,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 412.50998,
+    "total": 412.50998
+  },
+  {
+    "idBoleto": 5547482,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 410.02,
+    "total": 410.02
+  },
+  {
+    "idBoleto": 5547493,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 410.02,
+    "total": 410.02
+  },
+  {
+    "idBoleto": 5547528,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 421.4,
+    "total": 421.4
+  },
+  {
+    "idBoleto": 5547568,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 421.4,
+    "total": 421.4
+  },
+  {
+    "idBoleto": 5547569,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 410.02,
+    "total": 410.02
+  },
+  {
+    "idBoleto": 5547621,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 410.02,
+    "total": 410.02
+  },
+  {
+    "idBoleto": 5547628,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 421.4,
+    "total": 421.4
+  },
+  {
+    "idBoleto": 5547639,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 410.02,
+    "total": 410.02
+  },
+  {
+    "idBoleto": 5547667,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 410.02,
+    "total": 410.02
+  },
+  {
+    "idBoleto": 5547669,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 421.4,
+    "total": 421.4
+  },
+  {
+    "idBoleto": 5547672,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 410.02,
+    "total": 410.02
+  },
+  {
+    "idBoleto": 5547673,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 421.4,
+    "total": 421.4
+  },
+  {
+    "idBoleto": 5547688,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 410.02,
+    "total": 410.02
+  },
+  {
+    "idBoleto": 5547732,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 410.02,
+    "total": 410.02
+  },
+  {
+    "idBoleto": 5547746,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 421.4,
+    "total": 421.4
+  },
+  {
+    "idBoleto": 5547767,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 410.02,
+    "total": 410.02
+  },
+  {
+    "idBoleto": 5547772,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 410.02,
+    "total": 410.02
+  },
+  {
+    "idBoleto": 5547803,
+    "dataVecto": "2025-09-10T03:00:00.000Z",
+    "valorParc": 410.02,
+    "total": 410.02
+  },
+  {
+    "idBoleto": 5662160,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 468.5766,
+    "total": 468.5766
+  },
+  {
+    "idBoleto": 5662184,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 410.021,
+    "total": 410.021
+  },
+  {
+    "idBoleto": 5662195,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 410.021,
+    "total": 410.021
+  },
+  {
+    "idBoleto": 5662230,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 421.38995,
+    "total": 421.38995
+  },
+  {
+    "idBoleto": 5662270,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 421.38995,
+    "total": 421.38995
+  },
+  {
+    "idBoleto": 5662271,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 410.0211,
+    "total": 410.0211
+  },
+  {
+    "idBoleto": 5662323,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 410.0211,
+    "total": 410.0211
+  },
+  {
+    "idBoleto": 5662330,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 421.38995,
+    "total": 421.38995
+  },
+  {
+    "idBoleto": 5662335,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 410.0211,
+    "total": 410.0211
+  },
+  {
+    "idBoleto": 5662341,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 410.0211,
+    "total": 410.0211
+  },
+  {
+    "idBoleto": 5662369,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 410.0211,
+    "total": 410.0211
+  },
+  {
+    "idBoleto": 5662371,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 421.38995,
+    "total": 421.38995
+  },
+  {
+    "idBoleto": 5662374,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 410.0211,
+    "total": 410.0211
+  },
+  {
+    "idBoleto": 5662375,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 421.38995,
+    "total": 421.38995
+  },
+  {
+    "idBoleto": 5662390,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 410.0211,
+    "total": 410.0211
+  },
+  {
+    "idBoleto": 5662415,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 421.38995,
+    "total": 421.38995
+  },
+  {
+    "idBoleto": 5662434,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 410.0211,
+    "total": 410.0211
+  },
+  {
+    "idBoleto": 5662448,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 421.38995,
+    "total": 421.38995
+  },
+  {
+    "idBoleto": 5662469,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 410.0211,
+    "total": 410.0211
+  },
+  {
+    "idBoleto": 5662474,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 410.0211,
+    "total": 410.0211
+  },
+  {
+    "idBoleto": 5662505,
+    "dataVecto": "2025-10-10T03:00:00.000Z",
+    "valorParc": 410.0211,
+    "total": 410.0211
+  },
+  {
+    "idBoleto": 5775162,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 365.076,
+    "total": 365.076
+  },
+  {
+    "idBoleto": 5775186,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 5775192,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 372.88428,
+    "total": 372.88428
+  },
+  {
+    "idBoleto": 5775197,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 5775232,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 372.88428,
+    "total": 372.88428
+  },
+  {
+    "idBoleto": 5775272,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 372.88434,
+    "total": 372.88434
+  },
+  {
+    "idBoleto": 5775273,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 5775325,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 5775332,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 372.88434,
+    "total": 372.88434
+  },
+  {
+    "idBoleto": 5775343,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 5775371,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 5775373,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 5775377,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 5775392,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 5775417,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 5775436,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 5775444,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 5775450,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 5775471,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 5775476,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 5775507,
+    "dataVecto": "2025-11-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 5934131,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 365.076,
+    "total": 365.076
+  },
+  {
+    "idBoleto": 5934155,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 5934161,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 372.88428,
+    "total": 372.88428
+  },
+  {
+    "idBoleto": 5934166,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 5934201,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 5934241,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 5934242,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 5934294,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 418.93994,
+    "total": 418.93994
+  },
+  {
+    "idBoleto": 5934301,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 5934312,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 5934334,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 1389.0144,
+    "total": 1389.0144
+  },
+  {
+    "idBoleto": 5934340,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 5934342,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 5934346,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 5934361,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 5934362,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 5934386,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 5934419,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 5934445,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 5934476,
+    "dataVecto": "2025-12-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6111254,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 365.076,
+    "total": 365.076
+  },
+  {
+    "idBoleto": 6111278,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 6111284,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 372.88428,
+    "total": 372.88428
+  },
+  {
+    "idBoleto": 6111289,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 6111324,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6111364,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6111365,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6111384,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6111417,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6111424,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6111429,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6111435,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6111463,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6111465,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6111468,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6111469,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6111484,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6111485,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6111488,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6111509,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6111542,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6111545,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6111568,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6111599,
+    "dataVecto": "2026-01-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6355444,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 365.076,
+    "total": 365.076
+  },
+  {
+    "idBoleto": 6355468,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 6355474,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 372.88428,
+    "total": 372.88428
+  },
+  {
+    "idBoleto": 6355479,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 6355514,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 372.88434,
+    "total": 372.88434
+  },
+  {
+    "idBoleto": 6355554,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6355555,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6355607,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6355614,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6355619,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6355625,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6355653,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6355655,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6355658,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6355659,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6355675,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6355678,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6355699,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6355732,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6355735,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6355755,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6355758,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6355789,
+    "dataVecto": "2026-02-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6425899,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 365.076,
+    "total": 365.076
+  },
+  {
+    "idBoleto": 6425923,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 6425929,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 372.88428,
+    "total": 372.88428
+  },
+  {
+    "idBoleto": 6425934,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 6425943,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 6425969,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6426009,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6426010,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6426062,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6426074,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6426080,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6426093,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6426108,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6426110,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6426113,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6426114,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6426133,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6426154,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6426173,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6426187,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6426188,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6426210,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6426213,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6426244,
+    "dataVecto": "2026-03-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6592344,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 365.076,
+    "total": 365.076
+  },
+  {
+    "idBoleto": 6592368,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 6592374,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 372.88428,
+    "total": 372.88428
+  },
+  {
+    "idBoleto": 6592379,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 6592388,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 6592408,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 6592414,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 372.88428,
+    "total": 372.88428
+  },
+  {
+    "idBoleto": 6592454,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6592455,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6592507,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6592519,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6592525,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6592538,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6592553,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6592555,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6592558,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6592559,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6592574,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6592575,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6592578,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6592599,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6592618,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6592632,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6592633,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6592655,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6592658,
+    "dataVecto": "2026-04-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6762293,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 365.076,
+    "total": 365.076
+  },
+  {
+    "idBoleto": 6762317,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 6762323,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 372.88428,
+    "total": 372.88428
+  },
+  {
+    "idBoleto": 6762328,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 6762357,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 6762363,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 372.88428,
+    "total": 372.88428
+  },
+  {
+    "idBoleto": 6762399,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6762403,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6762404,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6762456,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6762468,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6762474,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 692.05994,
+    "total": 692.05994
+  },
+  {
+    "idBoleto": 6762487,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6762502,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6762504,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6762506,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6762507,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6762508,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6762523,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6762524,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6762567,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6762581,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6762582,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 6762588,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6762604,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 6762607,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 418.93994,
+    "total": 418.93994
+  },
+  {
+    "idBoleto": 6762638,
+    "dataVecto": "2026-05-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 7059070,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 365.076,
+    "total": 365.076
+  },
+  {
+    "idBoleto": 7059094,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 7059100,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 372.88428,
+    "total": 372.88428
+  },
+  {
+    "idBoleto": 7059105,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 7059122,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.8799,
+    "total": 362.8799
+  },
+  {
+    "idBoleto": 7059140,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 372.88434,
+    "total": 372.88434
+  },
+  {
+    "idBoleto": 7059176,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 7059180,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 7059181,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 7059190,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 7059209,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 7059233,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 7059251,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 7059264,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 7059279,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 7059281,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 7059283,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 7059284,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 7059285,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 7059297,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 7059300,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 7059301,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 7059304,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 7059325,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 7059344,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 7059358,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 7059365,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 7059370,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 7059381,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 372.88437,
+    "total": 372.88437
+  },
+  {
+    "idBoleto": 7059384,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 7059415,
+    "dataVecto": "2026-06-10T03:00:00.000Z",
+    "valorParc": 362.87994,
+    "total": 362.87994
+  },
+  {
+    "idBoleto": 7190753,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 696.33997,
+    "total": 696.33997
+  },
+  {
+    "idBoleto": 7190758,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 365.06998,
+    "total": 365.06998
+  },
+  {
+    "idBoleto": 7190777,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7190783,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7190788,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7190805,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7190817,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7190823,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7190859,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7190863,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7190864,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7190873,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7190892,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7190916,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7190934,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7190947,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7190962,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7190964,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7190966,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7190967,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7190968,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7190980,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7190983,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7190984,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7190987,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7190994,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7191001,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7191026,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7191027,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7191041,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7191048,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7191064,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7191067,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7191098,
+    "dataVecto": "2026-07-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289650,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 365.06998,
+    "total": 365.06998
+  },
+  {
+    "idBoleto": 7289651,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289652,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289655,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 365.06998,
+    "total": 365.06998
+  },
+  {
+    "idBoleto": 7289669,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289674,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289680,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289685,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289702,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289714,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289720,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289725,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289731,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289756,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289760,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289761,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289763,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289770,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289771,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289789,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289813,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289825,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289831,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289837,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289840,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289844,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289859,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289861,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289863,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289864,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289865,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289877,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289880,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289881,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289884,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289891,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289898,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289905,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289923,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289924,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289932,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289938,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289941,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289945,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289950,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289954,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289961,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289964,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289987,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  },
+  {
+    "idBoleto": 7289990,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 372.88998,
+    "total": 372.88998
+  },
+  {
+    "idBoleto": 7289995,
+    "dataVecto": "2026-08-10T03:00:00.000Z",
+    "valorParc": 362.88,
+    "total": 362.88
+  }
+]
