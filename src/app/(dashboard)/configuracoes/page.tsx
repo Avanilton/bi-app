@@ -12,7 +12,23 @@ function formatBRL(value: number): string {
 
 export default function ConfiguracoesPage() {
   const [isSyncing, setIsSyncing] = useState(false);
+  const [automationStatus, setAutomationStatus] = useState<any>(null);
+  const [isStarting, setIsStarting] = useState(false);
+  const fetchStatus = async () => {
+    try {
+      const res = await fetch("/api/automation/status");
+      const data = await res.json();
+      setAutomationStatus(data);
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
+  useEffect(() => {
+    fetchStatus();
+    const interval = setInterval(fetchStatus, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleSync = async () => {
     try {
@@ -30,8 +46,6 @@ export default function ConfiguracoesPage() {
       setIsSyncing(false);
     }
   };
-
-
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       <div className="flex items-center justify-between bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
@@ -64,6 +78,91 @@ export default function ConfiguracoesPage() {
             <RefreshCcw size={18} className={isSyncing ? "animate-spin" : ""} />
             {isSyncing ? "Sincronizando Base de Dados..." : "Sincronizar API (Limitações Aplicadas)"}
           </button>
+          
+          <div className="mt-6 border-t pt-6">
+            <h3 className="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
+              <Clock size={20} className="text-brand-primary"/> 
+              Automação de Inadimplência
+            </h3>
+            <p className="text-sm text-gray-500 mb-4">
+              O robô (Playwright) acessará o sistema da Novacorp, fará os filtros de todos os condomínios para ontem (D-1), e atualizará o Card de Inadimplência. O processo pode demorar alguns minutos.
+            </p>
+            
+            {(automationStatus?.isRunning || isStarting) && (
+              <div className="mb-6 bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-sm font-semibold text-gray-700">
+                    {isStarting ? "Iniciando processo em segundo plano..." : automationStatus?.message || "Iniciando..."}
+                  </span>
+                  <span className="text-sm font-bold text-brand-primary">{automationStatus?.progress || 0}%</span>
+                </div>
+                <div className="w-full bg-gray-200 rounded-full h-2.5">
+                  <div className="bg-brand-primary h-2.5 rounded-full transition-all duration-500 ease-out" style={{ width: `${automationStatus?.progress || 0}%` }}></div>
+                </div>
+              </div>
+            )}
+            
+            <div className="flex gap-4">
+              <button 
+                onClick={async () => {
+                  try {
+                    setIsStarting(true);
+                    await fetch("/api/automation/run", { method: "POST" });
+                    setTimeout(() => setIsStarting(false), 8000);
+                    fetchStatus();
+                  } catch (e) {
+                    console.error(e);
+                    setIsStarting(false);
+                  }
+                }}
+                disabled={automationStatus?.isRunning || isStarting}
+                className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-900 text-white font-medium text-sm rounded-lg hover:bg-gray-800 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <RefreshCcw size={18} className={(automationStatus?.isRunning || isStarting) ? "animate-spin" : ""} />
+                {(automationStatus?.isRunning || isStarting) ? "Automação em Andamento..." : "Rodar Automação Manualmente"}
+              </button>
+
+              {(automationStatus?.isRunning || isStarting) && (
+                <button 
+                  onClick={async () => {
+                    try {
+                      await fetch("/api/automation/cancel", { method: "POST" });
+                      alert("Solicitação de cancelamento enviada! O robô vai parar na próxima etapa.");
+                      fetchStatus();
+                    } catch (e) {
+                      console.error(e);
+                    }
+                  }}
+                  className="flex items-center justify-center gap-2 px-6 py-3 bg-red-50 text-red-600 font-medium text-sm rounded-lg hover:bg-red-100 transition-all border border-red-200"
+                >
+                  <XCircle size={18} />
+                  Cancelar
+                </button>
+              )}
+            </div>
+
+            {/* Console de Logs */}
+            {automationStatus?.logs && automationStatus.logs.length > 0 && (automationStatus?.isRunning || isStarting) && (
+              <div className="mt-6 bg-gray-900 rounded-lg p-4 font-mono text-xs text-gray-300 h-64 overflow-y-auto shadow-inner border border-gray-800">
+                <div className="flex items-center gap-2 mb-3 border-b border-gray-700 pb-2">
+                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                  <span className="ml-2 text-gray-400 font-sans text-sm">Terminal do Robô</span>
+                </div>
+                {automationStatus.logs.map((log: string, idx: number) => (
+                  <div key={idx} className={`mb-1 ${log.toLowerCase().includes("erro") ? "text-red-400" : "text-green-400"}`}>
+                    {log}
+                  </div>
+                ))}
+                {automationStatus?.isError && (
+                  <div className="mt-2 text-red-500 font-bold">
+                    O processo foi interrompido devido a um erro.
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
 
 

@@ -19,11 +19,7 @@ import {
 } from "lucide-react";
 
 const navItems = [
-  { name: "Financeiro", href: "/", icon: LayoutDashboard },
-  { name: "Diretoria", href: "/diretoria", icon: Briefcase },
-  { name: "Rateio", href: "/rateio", icon: PieChart },
-  { name: "RH", href: "/rh", icon: Users },
-  { name: "Jurídico", href: "/juridico", icon: Scale },
+  { name: "Dashboard", href: "/", icon: LayoutDashboard },
   { name: "Configurações", href: "/configuracoes", icon: Settings },
 ];
 

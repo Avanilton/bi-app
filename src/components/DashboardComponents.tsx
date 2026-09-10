@@ -44,9 +44,12 @@ const receitasVariaveisData = [
 ];
 
 // Reusable Card Component
-export function StatCard({ title, value, iconNode, trend, trendValue, colorClass = "text-brand-primary" }: any) {
+export function StatCard({ title, value, iconNode, trend, trendValue, colorClass = "text-brand-primary", onClick }: any) {
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col hover:shadow-md transition-shadow">
+    <div 
+      onClick={onClick}
+      className={`bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col hover:shadow-md transition-shadow ${onClick ? 'cursor-pointer' : ''}`}
+    >
       <div className="flex justify-between items-start mb-4">
         <h3 className="text-gray-500 font-medium text-sm">{title}</h3>
         <div className={`p-2 rounded-lg bg-gray-50 ${colorClass}`}>

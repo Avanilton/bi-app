@@ -1,0 +1,16 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/local-client"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model InadimplenciaDiaria {
+  id             Int      @id @default(autoincrement())
+  dataReferencia DateTime @unique
+  valorTotal     Float
+  detalhes       String?  // JSON string
+  dataExecucao   DateTime @default(now())
+}

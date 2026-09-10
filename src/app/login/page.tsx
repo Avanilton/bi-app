@@ -31,7 +31,7 @@ export default function LoginPage() {
               A inteligência por trás das suas decisões.
             </h1>
             <p className="text-lg text-gray-300 leading-relaxed">
-              Plataforma exclusiva de Business Intelligence para gestão financeira, análise de rateio, diretoria, RH e jurídico. Acesse seus indicadores em tempo real.
+              Plataforma exclusiva de Business Intelligence para gestão financeira integrada. Acesse seus indicadores do Dashboard em tempo real.
             </p>
           </div>
         </div>
