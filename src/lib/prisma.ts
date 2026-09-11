@@ -22,7 +22,7 @@ const globalForPrisma = global as unknown as { prisma: PrismaClient };
 function createPrismaClient() {
   const config = getDatabaseConfig();
   const pool = createPool(config);
-  const adapter = new PrismaMariaDb(pool);
+  const adapter = new PrismaMariaDb(pool as any);
   return new PrismaClient({ adapter });
 }
 
