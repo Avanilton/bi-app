@@ -14,8 +14,8 @@ export default async function DebugPage() {
 
   const ids = [7348766, 3622010, 7348769, 6188759, 6972768, 7174688, 7348761];
   
-  const problemBoletos = boletos.filter(b => ids.includes(b.idBoleto));
-  const missingIds = ids.filter(id => !boletos.some(b => b.idBoleto === id));
+  const problemBoletos = boletos.filter((b: any) => ids.includes(b.idBoleto));
+  const missingIds = ids.filter((id: any) => !boletos.some((b: any) => b.idBoleto === id));
 
   let total = 0;
   for (const b of boletos) {
