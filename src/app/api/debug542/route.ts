@@ -49,7 +49,7 @@ export async function GET() {
   });
 
   const rompidosSet = new Set(rompidosIds);
-  const amigaveisFilteredBoletos = allAmigaveisBoletos.filter(b => !rompidosSet.has(b.idCliente));
+  const amigaveisFilteredBoletos = allAmigaveisBoletos.filter((b: any) => !rompidosSet.has(b.idCliente));
 
   const fs = require('fs');
   const pdfBoletos = new Set(JSON.parse(fs.readFileSync('C:\\Users\\Administrador\\Documents\\Projetos BV\\bibvgarantia\\bi-app\\pdf_boletos.json', 'utf8')));
