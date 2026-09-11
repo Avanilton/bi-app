@@ -74,7 +74,7 @@ export async function GET() {
     (await prisma.tbBoleto.findMany({
       where: { idEmpresa: 75, origem: 5, idRateio: 0, OR: [{ pago: false }, { pago: null }], AND: [{ OR: [{ cancelado: false }, { cancelado: null }] }], dataVecto: { lte: new Date() } },
       select: { idBoleto: true }
-    })).map(b => b.idBoleto)
+    })).map((b: any) => b.idBoleto)
   );
 
   const pdfNotInRateio0Ids: number[] = [...pdfBoletos].filter((pid: any) => !allRateioZeroIds.has(pid)) as number[];
