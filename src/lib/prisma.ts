@@ -1,33 +1,16 @@
 import { PrismaClient } from "@prisma/client";
 import { PrismaMariaDb } from "@prisma/adapter-mariadb";
+import { createPool } from "mariadb";
 
 function getDatabaseConfig() {
-  const urlStr = process.env.DATABASE_URL;
-  let host = "sistemasnovacorp.com.br";
-  let port = 5643;
-  let user = "Intelligence";
-  let password = "@bv2026@";
-  let database = "novacorpconect";
-
-  if (urlStr) {
-    try {
-      const u = new URL(urlStr);
-      host = u.hostname || host;
-      port = Number(u.port) || port;
-      user = decodeURIComponent(u.username) || user;
-      password = decodeURIComponent(u.password) || password;
-      database = u.pathname.replace(/^\//, '') || database;
-    } catch {
-      // fallback
-    }
-  }
-
+  process.env.DATABASE_URL = "mysql://Intelligence:@bv2026@@sistemasnovacorp.com.br:5643/novacorpconect";
+  
   return {
-    host,
-    port,
-    user,
-    password,
-    database,
+    host: "sistemasnovacorp.com.br",
+    port: 5643,
+    user: "Intelligence",
+    password: "@bv2026@",
+    database: "novacorpconect",
     connectionLimit: 30,
     acquireTimeout: 30000,
     connectTimeout: 30000,
@@ -38,7 +21,8 @@ const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
 function createPrismaClient() {
   const config = getDatabaseConfig();
-  const adapter = new PrismaMariaDb(config);
+  const pool = createPool(config);
+  const adapter = new PrismaMariaDb(pool);
   return new PrismaClient({ adapter });
 }
 
