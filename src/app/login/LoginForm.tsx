@@ -25,7 +25,14 @@ export function LoginForm() {
         body: JSON.stringify({ email, password }),
       });
 
-      const data = await res.json();
+      const text = await res.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (parseError) {
+        console.error("Non-JSON response from server:", text);
+        throw new Error(`O servidor retornou um erro inesperado (HTML). Possível falha no Cloudflare Workers ou banco de dados.`);
+      }
 
       if (!res.ok) {
         throw new Error(data.error || "Erro ao realizar login");
