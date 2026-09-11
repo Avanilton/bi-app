@@ -178,6 +178,7 @@ export async function runInadimplenciaAutomation() {
         for (let i = 1; i < count; i++) {
             let nomeCondominio = await optionsLocator.nth(i).getAttribute('data-label') || await optionsLocator.nth(i).textContent() || '';
             nomeCondominio = nomeCondominio.trim();
+            if (!nomeCondominio.includes('ADIR PEDROSO') && !nomeCondominio.includes('AGUAS CLARAS')) continue;
 
             if (alreadyImported.has(nomeCondominio)) {
                 console.log(`[${i}/${count-1}] Pulando: ${nomeCondominio} (já importado)`);
@@ -367,10 +368,12 @@ export async function runInadimplenciaAutomation() {
                         }
                         }
                     }
-                } catch (e) {
-                    console.log(`-> Erro inesperado ao processar PDF do ${nomeCondominio}:`, e);
+                } catch (e: any) {
+                    console.log(`\x1b[31m-> Erro crítico ao processar o condomínio ${nomeCondominio}: ${e.message}\x1b[0m`);
                 }
-            } else {
+            }
+            if (nomeCondominio.includes('AGUAS CLARAS')) break;
+        } else {
                 console.log(`-> Resposta do PDF não encontrada para ${nomeCondominio}.`);
             }
 
@@ -403,15 +406,6 @@ export async function runInadimplenciaAutomation() {
                 dataExecucao: new Date()
             }
         });
-
-        // Gerar um aviso textual
-        const aviso = `=== AVISO DE IMPORTAÇÃO ===
-Data da Importação: ${new Date().toLocaleString()}
-Referência dos Dados: ${dbToday.toLocaleDateString()}
-Total de Condomínios Extraídos: ${detalhes.length}
-Valor Total Inadimplência: R$ ${totalGeral.toFixed(2)}
-`;
-        require('fs').writeFileSync(path.join(process.cwd(), 'public', 'aviso_importacao.txt'), aviso, 'utf8');
 
         console.log("Processo concluído com sucesso e gravado no DB Local.");
     } finally {

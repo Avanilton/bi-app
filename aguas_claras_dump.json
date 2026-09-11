@@ -1,0 +1,349 @@
+{
+  "condominio": "AGUAS CLARAS",
+  "valor": 158174.69,
+  "condominos": [
+    {
+      "codigo": "126281",
+      "nome": "CARLOS EDUARDO FIGUEREDO DA SILVA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126282",
+      "nome": "JACKELINE SULAMITA DE CASTRO",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126283",
+      "nome": "DIOGO LUCAS GOMES",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126286",
+      "nome": "CASSIA MARIA DE SOUZA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126305",
+      "nome": "GRACINEUDA FARIAS GOMES",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126311",
+      "nome": "DANILO SANTOS PEREIRA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126316",
+      "nome": "RODRIGO COLLEONI DA SILVA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126325",
+      "nome": "JESSICA APARECIDA DA SILVA GOMES",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126333",
+      "nome": "GISELE MARIA DA SILVA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126345",
+      "nome": "ALCIDES VIANA SANTOS",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126351",
+      "nome": "FABIO AVELANEDA ALVES",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126356",
+      "nome": "YUME CRISTIANE MIYABE PEREIRA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126362",
+      "nome": "VANESSA ALBUQUERQUE DI GENARO",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126387",
+      "nome": "PEDRO DA CRUZ RAFAELE",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126391",
+      "nome": "KARINE CRUZ SOUZA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126392",
+      "nome": "DAIANE ARAUJO TEIXEIRA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126394",
+      "nome": "LEANDRO SENA DE OLIVEIRA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126401",
+      "nome": "VITORIA LETICIA CIPRIANO",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126402",
+      "nome": "SILVIA DA SILVA SOARES",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126411",
+      "nome": "MAGDA CANDIDA INHUMA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126415",
+      "nome": "RENATO DE CASTRO RIBEIRO",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126420",
+      "nome": "JULIA DA SILVA POLITANO",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126444",
+      "nome": "BRUNO BACCARI MACHADO",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126451",
+      "nome": "RINAN HELBER DE LIMA BORGES",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126456",
+      "nome": "BARBARA RUEDA SALAZAR",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126462",
+      "nome": "BEATRIZ SUELLEN DOS SANTOS",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126465",
+      "nome": "LUIZ FERNANDO COLIN VIANA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126484",
+      "nome": "EVELYN SALES DA COSTA OLIVEIRA",
+      "bloco": "VectoValor",
+      "documentos": [
+        {
+          "documento": "5934334",
+          "ref": "12/2025",
+          "vecto": "Total cliente:",
+          "valor": 1389.01
+        }
+      ]
+    },
+    {
+      "codigo": "126494",
+      "nome": "THUANE RAIRA FLORIANO",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126495",
+      "nome": "BIANCA APARECIDA ANTUNES PEREIRA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126496",
+      "nome": "PRISCILA APARECIDA DA SILVA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126508",
+      "nome": "KILZA MACIEL DA SILVA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126511",
+      "nome": "LUCAS ARAUJO DA SILVA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126512",
+      "nome": "DAIANE PEDRO DA SILVA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126515",
+      "nome": "ANILTON JOS DA LUZ",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126522",
+      "nome": "DAMARES MATOS RAIRES",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126529",
+      "nome": "INES DANIELA DA SILVA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126536",
+      "nome": "AMARO PEREIRA DA SILVA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126537",
+      "nome": "TIAGO DE AGUIAR SANTOS",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126548",
+      "nome": "ARIANE DE ARAUJO COUTO",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126555",
+      "nome": "MATHEUS SOUSA RODRIGUES DE JESUS",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126563",
+      "nome": "GIULIA SILVA GUIMARAES",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126569",
+      "nome": "CLAYTON AMARO DOS SANTOS",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126570",
+      "nome": "RENATA VENANCIO DA SILVA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126572",
+      "nome": "DANIEL COELHO RIOS",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126576",
+      "nome": "MARCIO DE OLIVEIRA SOARES",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126581",
+      "nome": "HAROLDO CHARLES PEREIRA DA SILVA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126585",
+      "nome": "REINALDO NOGUEIRA GONCALVES",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126590",
+      "nome": "LEONARDO SOARES DE CARVALHO",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126592",
+      "nome": "TAMIRIS SENA DE OLIVEIRA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126595",
+      "nome": "LUCAS DE SOUZA CAMPOS",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126612",
+      "nome": "BRUNO APARECIDO L M DOS SANTOS",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126616",
+      "nome": "MARCILIO MARQUES DA SILVA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126618",
+      "nome": "JEFFERSON PEREIRA LIMA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126621",
+      "nome": "MARIANA PIRES FERREIRA",
+      "bloco": "VectoValor",
+      "documentos": []
+    },
+    {
+      "codigo": "126626",
+      "nome": "RAFAEL DA SILVA ALMEIDA",
+      "bloco": "JUDICIAL",
+      "documentos": []
+    }
+  ]
+}
