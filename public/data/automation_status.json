@@ -1,11 +1,9 @@
 {
-  "message": "Processando: DONA FRANCISCA (126/616)",
+  "message": "Processando: DUNAS VILLAGE CLUB (128/616)",
   "progress": 46,
   "isRunning": true,
   "isError": false,
   "logs": [
-    "[15:51:40] Processando: CAIUA XII (77/616)",
-    "[15:51:57] Processando: CAIUA XIII (78/616)",
     "[15:52:14] Processando: CAMARA I (79/616)",
     "[15:52:31] Processando: CAMPIDOGLIO (80/616)",
     "[15:52:49] Processando: CAMPO ALEGRE ( PONTA GROSSA) (81/616)",
@@ -53,7 +51,9 @@
     "[16:04:56] Processando: DOM FELICIANO (123/616)",
     "[16:05:13] Processando: DOM GREGORIO (124/616)",
     "[16:05:31] Processando: DONA CARLOTA (125/616)",
-    "[16:05:48] Processando: DONA FRANCISCA (126/616)"
+    "[16:05:48] Processando: DONA FRANCISCA (126/616)",
+    "[16:06:05] Processando: DONA LOURDES (127/616)",
+    "[16:06:22] Processando: DUNAS VILLAGE CLUB (128/616)"
   ],
-  "timestamp": "2026-09-11T19:05:48.407Z"
+  "timestamp": "2026-09-11T19:06:22.924Z"
 }
