@@ -38,8 +38,7 @@ export function LoginForm() {
         throw new Error(data.error || "Erro ao realizar login");
       }
 
-      router.push("/configuracoes");
-      router.refresh();
+      window.location.href = "/configuracoes";
     } catch (err: any) {
       setError(err.message || "Erro de conexão. Tente novamente.");
     } finally {

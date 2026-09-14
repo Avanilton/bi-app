@@ -26,21 +26,26 @@ const prismaLocal = new PrismaClient({ adapter });
 
 import prisma from "@/lib/prisma";
 
+// Cache global para evitar carregar e processar 20MB de JSON a cada load
+let cachedDataExecucaoTS: number | null = null;
+let cachedInadimplenciaDetalhes: any[] = [];
+let cachedInadimplenciaTotal: number = 0;
+
+// Parse de datas para filtro nos documentos
+const parseDDMMYYYY = (dateString: string) => {
+  if (!dateString) return null;
+  const parts = dateString.split('/');
+  if (parts.length === 3) {
+    return new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
+  }
+  return null;
+};
+
 // Função para buscar dados injetados pela automação Python/Playwright
 const getDashboardData = async (params: any) => {
   let inadimplenciaTotal = 0;
   let inadimplenciaDetalhes = [];
   
-  // Parse de datas para filtro nos documentos
-  const parseDDMMYYYY = (dateString: string) => {
-    if (!dateString) return null;
-    const parts = dateString.split('/');
-    if (parts.length === 3) {
-      return new Date(parseInt(parts[2], 10), parseInt(parts[1], 10) - 1, parseInt(parts[0], 10));
-    }
-    return null;
-  };
-
   let startDate: Date | null = null;
   let endDate: Date | null = null;
   
@@ -58,56 +63,91 @@ const getDashboardData = async (params: any) => {
   }
 
   try {
-    const lastRecord = await prismaLocal.inadimplenciaDiaria.findFirst({
-      orderBy: { dataExecucao: "desc" }
+    // 1. Busca apenas a dataExecucao primeiro (Ultra Rápido)
+    const lastRecordMeta = await prismaLocal.inadimplenciaDiaria.findFirst({
+      orderBy: { dataExecucao: "desc" },
+      select: { dataExecucao: true, valorTotal: true }
     });
     
-    if (lastRecord) {
-      inadimplenciaTotal = lastRecord.valorTotal;
-      if (lastRecord.detalhes) {
-        inadimplenciaDetalhes = JSON.parse(lastRecord.detalhes);
+    if (lastRecordMeta) {
+      const currentDBTime = lastRecordMeta.dataExecucao.getTime();
+      
+      // Verifica se o cache é válido
+      if (cachedDataExecucaoTS === currentDBTime) {
+        inadimplenciaDetalhes = cachedInadimplenciaDetalhes;
+        inadimplenciaTotal = cachedInadimplenciaTotal;
+      } else {
+        // Precisa atualizar o cache. Carrega tudo. (Pode demorar 1-2 seg, mas só ocorre 1x)
+        const lastRecord = await prismaLocal.inadimplenciaDiaria.findFirst({
+          orderBy: { dataExecucao: "desc" }
+        });
         
-        // Filtro por Data no Campo Vecto (dd/mm/yyyy)
-        if (startDate && endDate) {
-          inadimplenciaDetalhes = inadimplenciaDetalhes.map((cond: any) => {
-            let totalCondominio = 0;
-            const condominosFiltrados = cond.condominos?.map((pessoa: any) => {
-              const documentosFiltrados = pessoa.documentos?.filter((doc: any) => {
-                const docDate = parseDDMMYYYY(doc.vecto);
-                if (!docDate) return false;
-                return docDate >= startDate! && docDate <= endDate!;
-              }) || [];
-              
-              const totalPessoa = documentosFiltrados.reduce((acc: number, cur: any) => acc + (cur.valor || 0), 0);
-              totalCondominio += totalPessoa;
-              
-              return { ...pessoa, documentos: documentosFiltrados, valor: totalPessoa };
-            }) || [];
-            
-            return { ...cond, condominos: condominosFiltrados, valor: totalCondominio };
-          });
-        }
-
-        // Filtro por Condomínio
-        if (params.condominio) {
-          const idImovel = parseInt(params.condominio, 10);
-          if (!isNaN(idImovel)) {
-            const imovel = await prisma.tbImovel.findFirst({
-              where: { idImovel },
-              select: { nomeFantasia: true }
-            });
-            
-            if (imovel && imovel.nomeFantasia) {
-              const nome = imovel.nomeFantasia.toUpperCase().trim();
-              inadimplenciaDetalhes = inadimplenciaDetalhes.filter((d: any) => {
-                const docNome = d.condominio?.toUpperCase().trim() || "";
-                return docNome.includes(nome) || nome.includes(docNome);
+        if (lastRecord && lastRecord.detalhes) {
+          inadimplenciaTotal = lastRecord.valorTotal;
+          inadimplenciaDetalhes = JSON.parse(lastRecord.detalhes);
+          
+          // Pré-processamento: converter datas para timestamp pra busca O(1)
+          inadimplenciaDetalhes.forEach((cond: any) => {
+            cond.condominos?.forEach((pessoa: any) => {
+              pessoa.documentos?.forEach((doc: any) => {
+                const dateObj = parseDDMMYYYY(doc.vecto);
+                doc.parsedTS = dateObj ? dateObj.getTime() : 0;
               });
-            }
+            });
+          });
+          
+          // Salva no cache
+          cachedDataExecucaoTS = currentDBTime;
+          cachedInadimplenciaDetalhes = inadimplenciaDetalhes;
+          cachedInadimplenciaTotal = inadimplenciaTotal;
+        }
+      }
+      
+      // Aplicando filtros na memória instanciada (super rápido)
+      
+      // Filtro por Condomínio
+      if (params.condominio) {
+        const idImovel = parseInt(params.condominio, 10);
+        if (!isNaN(idImovel)) {
+          const imovel = await prisma.tbImovel.findFirst({
+            where: { idImovel },
+            select: { nomeFantasia: true }
+          });
+          
+          if (imovel && imovel.nomeFantasia) {
+            const nome = imovel.nomeFantasia.toUpperCase().trim();
+            inadimplenciaDetalhes = inadimplenciaDetalhes.filter((d: any) => {
+              const docNome = d.condominio?.toUpperCase().trim() || "";
+              return docNome.includes(nome) || nome.includes(docNome);
+            });
           }
         }
+      }
+
+      // Filtro por Data
+      if (startDate && endDate) {
+        const startTS = startDate.getTime();
+        const endTS = endDate.getTime();
         
-        // Recalcula o total final baseado nos filtrados
+        inadimplenciaDetalhes = inadimplenciaDetalhes.map((cond: any) => {
+          let totalCondominio = 0;
+          const condominosFiltrados = cond.condominos?.map((pessoa: any) => {
+            const documentosFiltrados = pessoa.documentos?.filter((doc: any) => {
+              return doc.parsedTS >= startTS && doc.parsedTS <= endTS;
+            }) || [];
+            
+            const totalPessoa = documentosFiltrados.reduce((acc: number, cur: any) => acc + (cur.valor || 0), 0);
+            totalCondominio += totalPessoa;
+            
+            return { ...pessoa, documentos: documentosFiltrados, valor: totalPessoa };
+          }) || [];
+          
+          return { ...cond, condominos: condominosFiltrados, valor: totalCondominio };
+        });
+      }
+
+      // Se aplicamos qualquer filtro, devemos recalcular o Total Geral
+      if (params.condominio || (startDate && endDate)) {
         inadimplenciaTotal = inadimplenciaDetalhes.reduce((acc: number, curr: any) => acc + (curr.valor || 0), 0);
       }
     }

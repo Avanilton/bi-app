@@ -378,6 +378,26 @@ export async function runInadimplenciaAutomation() {
             totalGeral += valor;
             detalhes.push({ condominio: nomeCondominio, valor, condominos });
 
+            try {
+                // Salva de forma incremental no banco para não perder progresso
+                await prisma.inadimplenciaDiaria.upsert({
+                    where: { dataReferencia: today },
+                    update: {
+                        valorTotal: totalGeral,
+                        detalhes: JSON.stringify(detalhes),
+                        dataExecucao: new Date()
+                    },
+                    create: {
+                        dataReferencia: today,
+                        valorTotal: totalGeral,
+                        detalhes: JSON.stringify(detalhes),
+                        dataExecucao: new Date()
+                    }
+                });
+            } catch (saveError) {
+                console.error("Erro ao salvar progresso incremental:", saveError);
+            }
+
             await page.bringToFront();
         }
 

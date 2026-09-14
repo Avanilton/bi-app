@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Allow Cloudflare domain in Next.js development server
+  // @ts-ignore - this is a valid option printed by Next.js errors
+  allowedDevOrigins: ['appkaza.com.br', 'www.appkaza.com.br', 'localhost:3006'],
 };
 
 export default nextConfig;

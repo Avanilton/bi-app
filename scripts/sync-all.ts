@@ -25,7 +25,11 @@ async function run() {
     });
 
     const args = process.argv.slice(2);
-    const targetTable = args[0] ? args[0].toLowerCase().replace('--table=', '') : 'all';
+    const targetTableArg = args.find(a => a.startsWith('--table='));
+    const targetTable = targetTableArg ? targetTableArg.toLowerCase().replace('--table=', '') : (args[0] && !args[0].startsWith('--') ? args[0].toLowerCase() : 'all');
+    
+    const offsetArg = args.find(a => a.startsWith('--offset='));
+    const startOffset = offsetArg ? parseInt(offsetArg.replace('--offset=', ''), 10) : 0;
 
     const chunkSize = 500;
     
@@ -62,9 +66,9 @@ async function run() {
     // 2. TbCliente
     if (targetTable === 'all' || targetTable === 'tbcliente') {
       console.log("Sincronizando TbCliente (PAGINADO)...");
-      let cOffset = 0;
+      let cOffset = targetTable === 'tbcliente' ? startOffset : 0;
       let keepFetchingC = true;
-      let cCount = 0;
+      let cCount = targetTable === 'tbcliente' ? startOffset : 0;
       const limitC = 5000;
 
       while (keepFetchingC) {
@@ -107,9 +111,9 @@ async function run() {
     // 3. TbAntecipacao
     if (targetTable === 'all' || targetTable === 'tbantecipacao') {
       console.log("Sincronizando TbAntecipacao (PAGINADO)...");
-      let aOffset = 0;
+      let aOffset = targetTable === 'tbantecipacao' ? startOffset : 0;
       let keepFetchingA = true;
-      let aCount = 0;
+      let aCount = targetTable === 'tbantecipacao' ? startOffset : 0;
       const limitA = 5000;
 
       while (keepFetchingA) {
@@ -151,9 +155,9 @@ async function run() {
     // 4. TbDescontoAntecipacao
     if (targetTable === 'all' || targetTable === 'tbdescontoantecipacao' || targetTable === 'tbdesconto') {
       console.log("Sincronizando TbDescontoAntecipacao (PAGINADO)...");
-      let dOffset = 0;
+      let dOffset = (targetTable === 'tbdescontoantecipacao' || targetTable === 'tbdesconto') ? startOffset : 0;
       let keepFetchingD = true;
-      let dCount = 0;
+      let dCount = (targetTable === 'tbdescontoantecipacao' || targetTable === 'tbdesconto') ? startOffset : 0;
       const limitD = 5000;
 
       while (keepFetchingD) {
@@ -215,9 +219,9 @@ async function run() {
 
       const dateIso = (d: any) => d ? new Date(d).toISOString() : null;
 
-      let offset = 0;
+      let offset = targetTable === 'tbboleto' ? startOffset : 0;
       let keepFetching = true;
-      let bCount = 0;
+      let bCount = targetTable === 'tbboleto' ? startOffset : 0;
       const limit = 50000;
       
       while (keepFetching) {
