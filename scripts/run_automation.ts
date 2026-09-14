@@ -1,12 +1,7 @@
 import { chromium } from 'playwright';
-import { PrismaClient } from '../prisma/generated/local-client';
-import { PrismaLibSql } from "@prisma/adapter-libsql";
+import prisma from '../src/lib/prisma';
 import path from "path";
 import fs from "fs";
-
-const dbPath = path.resolve(process.cwd(), "local.db");
-const adapter = new PrismaLibSql({ url: `file:${dbPath}` });
-const prisma = new PrismaClient({ adapter });
 
 const STATUS_FILE = path.resolve(process.cwd(), "public", "data", "automation_status.json");
 

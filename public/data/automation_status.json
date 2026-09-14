@@ -1,0 +1,30 @@
+{
+  "message": "Processando: ALTAVILLE (15/617)",
+  "progress": 36,
+  "isRunning": true,
+  "isError": false,
+  "logs": [
+    "[11:47:23] Iniciando automação Playwright...",
+    "[11:47:23] Acessando página de login do Novacorp...",
+    "[11:47:24] Preenchendo credenciais de acesso...",
+    "[11:47:27] Login efetuado com sucesso. Navegando para o relatório...",
+    "[11:47:29] Aplicando os 7 filtros exigidos no relatório...",
+    "[11:47:37] Encontrados 617 condomínios. Iniciando extração...",
+    "[11:47:37] Processando: ADIR PEDROSO (1/617)",
+    "[11:47:56] Processando: AGUAS CLARAS (2/617)",
+    "[11:48:14] Processando: AGUAS DE PORTO BELO (3/617)",
+    "[11:48:32] Processando: AIMORE (4/617)",
+    "[11:48:49] Processando: ALAMEDA CLUBE (5/617)",
+    "[11:49:07] Processando: ALAMEDA DO VALE (ITAJAI) (6/617)",
+    "[11:49:25] Processando: ALAMEDA DOS COQUEIROS (7/617)",
+    "[11:49:43] Processando: ALAMEDA DOS IPES II (8/617)",
+    "[11:50:00] Processando: ALAMEDA VILLE (9/617)",
+    "[11:50:18] Processando: ALBATROZ (10/617)",
+    "[11:50:35] Processando: ALEGRIA (11/617)",
+    "[11:50:53] Processando: ALEMANHA (12/617)",
+    "[11:51:18] Processando: ALEXANDRIA (13/617)",
+    "[11:51:36] Processando: ALMEIDA GARRET (14/617)",
+    "[11:51:53] Processando: ALTAVILLE (15/617)"
+  ],
+  "timestamp": "2026-09-14T14:51:53.888Z"
+}
