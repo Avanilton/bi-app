@@ -18,11 +18,9 @@ export const metadata: Metadata = {
 export const dynamic = 'force-dynamic';
 
 import { PrismaClient } from "../../../prisma/generated/local-client";
-import { PrismaLibSql } from "@prisma/adapter-libsql";
 
 const dbPath = path.resolve(process.cwd(), "local.db");
-const adapter = new PrismaLibSql({ url: `file:${dbPath}` });
-const prismaLocal = new PrismaClient({ adapter });
+const prismaLocal = new PrismaClient({ datasources: { db: { url: `file:${dbPath}` } } } as any);
 
 import prisma from "@/lib/prisma";
 
@@ -109,13 +107,20 @@ const getDashboardData = async (params: any) => {
       if (params.condominio) {
         const idImovel = parseInt(params.condominio, 10);
         if (!isNaN(idImovel)) {
-          const imovel = await prisma.tbImovel.findFirst({
-            where: { idImovel },
-            select: { nomeFantasia: true }
-          });
+          let nomeFantasia = null;
+          try {
+            const res = await fetch("http://localhost:3006/api/condominios", { next: { revalidate: 600 } });
+            const json = await res.json();
+            if (json.success && json.data) {
+              const imovel = json.data.find((c: any) => c.idImovel === idImovel);
+              if (imovel) nomeFantasia = imovel.nomeFantasia;
+            }
+          } catch (error) {
+            console.error("Erro ao buscar nome do condominio internamente:", error);
+          }
           
-          if (imovel && imovel.nomeFantasia) {
-            const nome = imovel.nomeFantasia.toUpperCase().trim();
+          if (nomeFantasia) {
+            const nome = nomeFantasia.toUpperCase().trim();
             inadimplenciaDetalhes = inadimplenciaDetalhes.filter((d: any) => {
               const docNome = d.condominio?.toUpperCase().trim() || "";
               return docNome.includes(nome) || nome.includes(docNome);

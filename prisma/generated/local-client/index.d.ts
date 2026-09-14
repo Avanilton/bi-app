@@ -3,7 +3,7 @@
  * Client
 **/
 
-import * as runtime from './runtime/client.js';
+import * as runtime from './runtime/library.js';
 import $Types = runtime.Types // general types
 import $Public = runtime.Types.Public
 import $Utils = runtime.Types.Utils
@@ -21,46 +21,42 @@ export type InadimplenciaDiaria = $Result.DefaultSelection<Prisma.$Inadimplencia
 
 /**
  * ##  Prisma Client ʲˢ
- *
+ * 
  * Type-safe database client for TypeScript & Node.js
  * @example
  * ```
- * const prisma = new PrismaClient({
- *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
- * })
+ * const prisma = new PrismaClient()
  * // Fetch zero or more InadimplenciaDiarias
  * const inadimplenciaDiarias = await prisma.inadimplenciaDiaria.findMany()
  * ```
  *
- *
- * Read more in our [docs](https://pris.ly/d/client).
+ * 
+ * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
  */
 export class PrismaClient<
-  ClientOptions extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
-  const U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
+  T extends Prisma.PrismaClientOptions = Prisma.PrismaClientOptions,
+  U = 'log' extends keyof T ? T['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<T['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
 
     /**
    * ##  Prisma Client ʲˢ
-   *
+   * 
    * Type-safe database client for TypeScript & Node.js
    * @example
    * ```
-   * const prisma = new PrismaClient({
-   *   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL })
-   * })
+   * const prisma = new PrismaClient()
    * // Fetch zero or more InadimplenciaDiarias
    * const inadimplenciaDiarias = await prisma.inadimplenciaDiaria.findMany()
    * ```
    *
-   *
-   * Read more in our [docs](https://pris.ly/d/client).
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client).
    */
 
-  constructor(optionsArg ?: Prisma.Subset<ClientOptions, Prisma.PrismaClientOptions>);
-  $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): PrismaClient;
+  constructor(optionsArg ?: Prisma.Subset<T, Prisma.PrismaClientOptions>);
+  $on<V extends U>(eventType: V, callback: (event: V extends 'query' ? Prisma.QueryEvent : Prisma.LogEvent) => void): void;
 
   /**
    * Connect with the database
@@ -72,14 +68,21 @@ export class PrismaClient<
    */
   $disconnect(): $Utils.JsPromise<void>;
 
+  /**
+   * Add a middleware
+   * @deprecated since 4.16.0. For new code, prefer client extensions instead.
+   * @see https://pris.ly/d/extensions
+   */
+  $use(cb: Prisma.Middleware): void
+
 /**
    * Executes a prepared raw query and returns the number of affected rows.
    * @example
    * ```
    * const result = await prisma.$executeRaw`UPDATE User SET cool = ${true} WHERE email = ${'user@email.com'};`
    * ```
-   *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -90,8 +93,8 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$executeRawUnsafe('UPDATE User SET cool = $1 WHERE email = $2 ;', true, 'user@email.com')
    * ```
-   *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $executeRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<number>;
 
@@ -101,8 +104,8 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$queryRaw`SELECT * FROM User WHERE id = ${1} OR email = ${'user@email.com'};`
    * ```
-   *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRaw<T = unknown>(query: TemplateStringsArray | Prisma.Sql, ...values: any[]): Prisma.PrismaPromise<T>;
 
@@ -113,11 +116,10 @@ export class PrismaClient<
    * ```
    * const result = await prisma.$queryRawUnsafe('SELECT * FROM User WHERE id = $1 OR email = $2;', 1, 'user@email.com')
    * ```
-   *
-   * Read more in our [docs](https://pris.ly/d/raw-queries).
+   * 
+   * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/raw-database-access).
    */
   $queryRawUnsafe<T = unknown>(query: string, ...values: any[]): Prisma.PrismaPromise<T>;
-
 
   /**
    * Allows the running of a sequence of read/write operations that are guaranteed to either succeed or fail as a whole.
@@ -130,15 +132,14 @@ export class PrismaClient<
    * ])
    * ```
    * 
-   * Read more in our [docs](https://www.prisma.io/docs/orm/prisma-client/queries/transactions).
+   * Read more in our [docs](https://www.prisma.io/docs/concepts/components/prisma-client/transactions).
    */
-  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
+  $transaction<P extends Prisma.PrismaPromise<any>[]>(arg: [...P], options?: { isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<runtime.Types.Utils.UnwrapTuple<P>>
 
   $transaction<R>(fn: (prisma: Omit<PrismaClient, runtime.ITXClientDenyList>) => $Utils.JsPromise<R>, options?: { maxWait?: number, timeout?: number, isolationLevel?: Prisma.TransactionIsolationLevel }): $Utils.JsPromise<R>
 
-  $extends: $Extensions.ExtendsHook<"extends", Prisma.TypeMapCb<ClientOptions>, ExtArgs, $Utils.Call<Prisma.TypeMapCb<ClientOptions>, {
-    extArgs: ExtArgs
-  }>>
+
+  $extends: $Extensions.ExtendsHook<'extends', Prisma.TypeMapCb, ExtArgs>
 
       /**
    * `prisma.inadimplenciaDiaria`: Exposes CRUD operations for the **InadimplenciaDiaria** model.
@@ -148,7 +149,7 @@ export class PrismaClient<
     * const inadimplenciaDiarias = await prisma.inadimplenciaDiaria.findMany()
     * ```
     */
-  get inadimplenciaDiaria(): Prisma.InadimplenciaDiariaDelegate<ExtArgs, ClientOptions>;
+  get inadimplenciaDiaria(): Prisma.InadimplenciaDiariaDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -169,6 +170,7 @@ export namespace Prisma {
   export import PrismaClientRustPanicError = runtime.PrismaClientRustPanicError
   export import PrismaClientInitializationError = runtime.PrismaClientInitializationError
   export import PrismaClientValidationError = runtime.PrismaClientValidationError
+  export import NotFoundError = runtime.NotFoundError
 
   /**
    * Re-export of sql-template-tag
@@ -179,14 +181,20 @@ export namespace Prisma {
   export import raw = runtime.raw
   export import Sql = runtime.Sql
 
-
-
   /**
    * Decimal.js
    */
   export import Decimal = runtime.Decimal
 
   export type DecimalJsLike = runtime.DecimalJsLike
+
+  /**
+   * Metrics 
+   */
+  export type Metrics = runtime.Metrics
+  export type Metric<T> = runtime.Metric<T>
+  export type MetricHistogram = runtime.MetricHistogram
+  export type MetricHistogramBucket = runtime.MetricHistogramBucket
 
   /**
   * Extensions
@@ -199,40 +207,76 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 7.8.0
-   * Query Engine version: 3c6e192761c0362d496ed980de936e2f3cebcd3a
+   * Prisma Client JS version: 5.14.0
+   * Query Engine version: e9771e62de70f79a5e1c604a2d7c8e2a0a874b48
    */
   export type PrismaVersion = {
     client: string
-    engine: string
   }
 
-  export const prismaVersion: PrismaVersion
+  export const prismaVersion: PrismaVersion 
 
   /**
    * Utility Types
    */
 
+  /**
+   * From https://github.com/sindresorhus/type-fest/
+   * Matches a JSON object.
+   * This type can be useful to enforce some input to be JSON-compatible or as a super-type to be extended from. 
+   */
+  export type JsonObject = {[Key in string]?: JsonValue}
 
-  export import Bytes = runtime.Bytes
-  export import JsonObject = runtime.JsonObject
-  export import JsonArray = runtime.JsonArray
-  export import JsonValue = runtime.JsonValue
-  export import InputJsonObject = runtime.InputJsonObject
-  export import InputJsonArray = runtime.InputJsonArray
-  export import InputJsonValue = runtime.InputJsonValue
+  /**
+   * From https://github.com/sindresorhus/type-fest/
+   * Matches a JSON array.
+   */
+  export interface JsonArray extends Array<JsonValue> {}
+
+  /**
+   * From https://github.com/sindresorhus/type-fest/
+   * Matches any valid JSON value.
+   */
+  export type JsonValue = string | number | boolean | JsonObject | JsonArray | null
+
+  /**
+   * Matches a JSON object.
+   * Unlike `JsonObject`, this type allows undefined and read-only properties.
+   */
+  export type InputJsonObject = {readonly [Key in string]?: InputJsonValue | null}
+
+  /**
+   * Matches a JSON array.
+   * Unlike `JsonArray`, readonly arrays are assignable to this type.
+   */
+  export interface InputJsonArray extends ReadonlyArray<InputJsonValue | null> {}
+
+  /**
+   * Matches any valid value that can be used as an input for operations like
+   * create and update as the value of a JSON field. Unlike `JsonValue`, this
+   * type allows read-only arrays and read-only object properties and disallows
+   * `null` at the top level.
+   *
+   * `null` cannot be used as the value of a JSON field because its meaning
+   * would be ambiguous. Use `Prisma.JsonNull` to store the JSON null value or
+   * `Prisma.DbNull` to clear the JSON value and set the field to the database
+   * NULL value instead.
+   *
+   * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-by-null-values
+   */
+  export type InputJsonValue = string | number | boolean | InputJsonObject | InputJsonArray | { toJSON(): unknown }
 
   /**
    * Types of the values used to represent different kinds of `null` values when working with JSON fields.
-   *
+   * 
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   namespace NullTypes {
     /**
     * Type of `Prisma.DbNull`.
-    *
+    * 
     * You cannot use other instances of this class. Please use the `Prisma.DbNull` value.
-    *
+    * 
     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
     */
     class DbNull {
@@ -242,9 +286,9 @@ export namespace Prisma {
 
     /**
     * Type of `Prisma.JsonNull`.
-    *
+    * 
     * You cannot use other instances of this class. Please use the `Prisma.JsonNull` value.
-    *
+    * 
     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
     */
     class JsonNull {
@@ -254,9 +298,9 @@ export namespace Prisma {
 
     /**
     * Type of `Prisma.AnyNull`.
-    *
+    * 
     * You cannot use other instances of this class. Please use the `Prisma.AnyNull` value.
-    *
+    * 
     * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
     */
     class AnyNull {
@@ -267,21 +311,21 @@ export namespace Prisma {
 
   /**
    * Helper for filtering JSON entries that have `null` on the database (empty on the db)
-   *
+   * 
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   export const DbNull: NullTypes.DbNull
 
   /**
    * Helper for filtering JSON entries that have JSON `null` values (not empty on the db)
-   *
+   * 
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   export const JsonNull: NullTypes.JsonNull
 
   /**
    * Helper for filtering JSON entries that are `Prisma.DbNull` or `Prisma.JsonNull`
-   *
+   * 
    * @see https://www.prisma.io/docs/concepts/components/prisma-client/working-with-fields/working-with-json-fields#filtering-on-a-json-field
    */
   export const AnyNull: NullTypes.AnyNull
@@ -469,7 +513,7 @@ export namespace Prisma {
   type AtLeast<O extends object, K extends string> = NoExpand<
     O extends unknown
     ? | (K extends keyof O ? { [P in K]: O[P] } & O : O)
-      | {[P in keyof O as P extends K ? P : never]-?: O[P]} & O
+      | {[P in keyof O as P extends K ? K : never]-?: O[P]} & O
     : never>;
 
   type _Strict<U, _U = U> = U extends unknown ? U & OptionalFlat<_Record<Exclude<Keys<_U>, keyof U>, never>> : never;
@@ -589,90 +633,87 @@ export namespace Prisma {
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
 
 
-
-  interface TypeMapCb<ClientOptions = {}> extends $Utils.Fn<{extArgs: $Extensions.InternalArgs }, $Utils.Record<string, any>> {
-    returns: Prisma.TypeMap<this['params']['extArgs'], ClientOptions extends { omit: infer OmitOptions } ? OmitOptions : {}>
+  export type Datasources = {
+    db?: Datasource
   }
 
-  export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> = {
-    globalOmitOptions: {
-      omit: GlobalOmitOptions
-    }
+
+  interface TypeMapCb extends $Utils.Fn<{extArgs: $Extensions.InternalArgs}, $Utils.Record<string, any>> {
+    returns: Prisma.TypeMap<this['params']['extArgs']>
+  }
+
+  export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: "inadimplenciaDiaria"
+      modelProps: 'inadimplenciaDiaria'
       txIsolationLevel: Prisma.TransactionIsolationLevel
-    }
+    },
     model: {
       InadimplenciaDiaria: {
         payload: Prisma.$InadimplenciaDiariaPayload<ExtArgs>
         fields: Prisma.InadimplenciaDiariaFieldRefs
         operations: {
           findUnique: {
-            args: Prisma.InadimplenciaDiariaFindUniqueArgs<ExtArgs>
+            args: Prisma.InadimplenciaDiariaFindUniqueArgs<ExtArgs>,
             result: $Utils.PayloadToResult<Prisma.$InadimplenciaDiariaPayload> | null
           }
           findUniqueOrThrow: {
-            args: Prisma.InadimplenciaDiariaFindUniqueOrThrowArgs<ExtArgs>
+            args: Prisma.InadimplenciaDiariaFindUniqueOrThrowArgs<ExtArgs>,
             result: $Utils.PayloadToResult<Prisma.$InadimplenciaDiariaPayload>
           }
           findFirst: {
-            args: Prisma.InadimplenciaDiariaFindFirstArgs<ExtArgs>
+            args: Prisma.InadimplenciaDiariaFindFirstArgs<ExtArgs>,
             result: $Utils.PayloadToResult<Prisma.$InadimplenciaDiariaPayload> | null
           }
           findFirstOrThrow: {
-            args: Prisma.InadimplenciaDiariaFindFirstOrThrowArgs<ExtArgs>
+            args: Prisma.InadimplenciaDiariaFindFirstOrThrowArgs<ExtArgs>,
             result: $Utils.PayloadToResult<Prisma.$InadimplenciaDiariaPayload>
           }
           findMany: {
-            args: Prisma.InadimplenciaDiariaFindManyArgs<ExtArgs>
+            args: Prisma.InadimplenciaDiariaFindManyArgs<ExtArgs>,
             result: $Utils.PayloadToResult<Prisma.$InadimplenciaDiariaPayload>[]
           }
           create: {
-            args: Prisma.InadimplenciaDiariaCreateArgs<ExtArgs>
+            args: Prisma.InadimplenciaDiariaCreateArgs<ExtArgs>,
             result: $Utils.PayloadToResult<Prisma.$InadimplenciaDiariaPayload>
           }
           createMany: {
-            args: Prisma.InadimplenciaDiariaCreateManyArgs<ExtArgs>
-            result: BatchPayload
+            args: Prisma.InadimplenciaDiariaCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
           }
           createManyAndReturn: {
-            args: Prisma.InadimplenciaDiariaCreateManyAndReturnArgs<ExtArgs>
+            args: Prisma.InadimplenciaDiariaCreateManyAndReturnArgs<ExtArgs>,
             result: $Utils.PayloadToResult<Prisma.$InadimplenciaDiariaPayload>[]
           }
           delete: {
-            args: Prisma.InadimplenciaDiariaDeleteArgs<ExtArgs>
+            args: Prisma.InadimplenciaDiariaDeleteArgs<ExtArgs>,
             result: $Utils.PayloadToResult<Prisma.$InadimplenciaDiariaPayload>
           }
           update: {
-            args: Prisma.InadimplenciaDiariaUpdateArgs<ExtArgs>
+            args: Prisma.InadimplenciaDiariaUpdateArgs<ExtArgs>,
             result: $Utils.PayloadToResult<Prisma.$InadimplenciaDiariaPayload>
           }
           deleteMany: {
-            args: Prisma.InadimplenciaDiariaDeleteManyArgs<ExtArgs>
-            result: BatchPayload
+            args: Prisma.InadimplenciaDiariaDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
           }
           updateMany: {
-            args: Prisma.InadimplenciaDiariaUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.InadimplenciaDiariaUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$InadimplenciaDiariaPayload>[]
+            args: Prisma.InadimplenciaDiariaUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
           }
           upsert: {
-            args: Prisma.InadimplenciaDiariaUpsertArgs<ExtArgs>
+            args: Prisma.InadimplenciaDiariaUpsertArgs<ExtArgs>,
             result: $Utils.PayloadToResult<Prisma.$InadimplenciaDiariaPayload>
           }
           aggregate: {
-            args: Prisma.InadimplenciaDiariaAggregateArgs<ExtArgs>
+            args: Prisma.InadimplenciaDiariaAggregateArgs<ExtArgs>,
             result: $Utils.Optional<AggregateInadimplenciaDiaria>
           }
           groupBy: {
-            args: Prisma.InadimplenciaDiariaGroupByArgs<ExtArgs>
+            args: Prisma.InadimplenciaDiariaGroupByArgs<ExtArgs>,
             result: $Utils.Optional<InadimplenciaDiariaGroupByOutputType>[]
           }
           count: {
-            args: Prisma.InadimplenciaDiariaCountArgs<ExtArgs>
+            args: Prisma.InadimplenciaDiariaCountArgs<ExtArgs>,
             result: $Utils.Optional<InadimplenciaDiariaCountAggregateOutputType> | number
           }
         }
@@ -682,15 +723,11 @@ export namespace Prisma {
     other: {
       payload: any
       operations: {
-        $executeRaw: {
-          args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
-          result: any
-        }
         $executeRawUnsafe: {
           args: [query: string, ...values: any[]],
           result: any
         }
-        $queryRaw: {
+        $executeRaw: {
           args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
           result: any
         }
@@ -698,13 +735,25 @@ export namespace Prisma {
           args: [query: string, ...values: any[]],
           result: any
         }
+        $queryRaw: {
+          args: [query: TemplateStringsArray | Prisma.Sql, ...values: any[]],
+          result: any
+        }
       }
     }
   }
-  export const defineExtension: $Extensions.ExtendsHook<"define", Prisma.TypeMapCb, $Extensions.DefaultArgs>
+  export const defineExtension: $Extensions.ExtendsHook<'define', Prisma.TypeMapCb, $Extensions.DefaultArgs>
   export type DefaultPrismaClient = PrismaClient
   export type ErrorFormat = 'pretty' | 'colorless' | 'minimal'
   export interface PrismaClientOptions {
+    /**
+     * Overwrites the datasource url from your schema.prisma file
+     */
+    datasources?: Datasources
+    /**
+     * Overwrites the datasource url from your schema.prisma file
+     */
+    datasourceUrl?: string
     /**
      * @default "colorless"
      */
@@ -712,26 +761,18 @@ export namespace Prisma {
     /**
      * @example
      * ```
-     * // Shorthand for `emit: 'stdout'`
+     * // Defaults to stdout
      * log: ['query', 'info', 'warn', 'error']
      * 
-     * // Emit as events only
+     * // Emit as events
      * log: [
-     *   { emit: 'event', level: 'query' },
-     *   { emit: 'event', level: 'info' },
-     *   { emit: 'event', level: 'warn' }
-     *   { emit: 'event', level: 'error' }
+     *   { emit: 'stdout', level: 'query' },
+     *   { emit: 'stdout', level: 'info' },
+     *   { emit: 'stdout', level: 'warn' }
+     *   { emit: 'stdout', level: 'error' }
      * ]
-     * 
-     * / Emit as events and log to stdout
-     * og: [
-     *  { emit: 'stdout', level: 'query' },
-     *  { emit: 'stdout', level: 'info' },
-     *  { emit: 'stdout', level: 'warn' }
-     *  { emit: 'stdout', level: 'error' }
-     * 
      * ```
-     * Read more in our [docs](https://pris.ly/d/logging).
+     * Read more in our [docs](https://www.prisma.io/docs/reference/tools-and-interfaces/prisma-client/logging#the-log-option).
      */
     log?: (LogLevel | LogDefinition)[]
     /**
@@ -744,48 +785,6 @@ export namespace Prisma {
       timeout?: number
       isolationLevel?: Prisma.TransactionIsolationLevel
     }
-    /**
-     * Instance of a Driver Adapter, e.g., like one provided by `@prisma/adapter-planetscale`
-     */
-    adapter?: runtime.SqlDriverAdapterFactory
-    /**
-     * Prisma Accelerate URL allowing the client to connect through Accelerate instead of a direct database.
-     */
-    accelerateUrl?: string
-    /**
-     * Global configuration for omitting model fields by default.
-     * 
-     * @example
-     * ```
-     * const prisma = new PrismaClient({
-     *   omit: {
-     *     user: {
-     *       password: true
-     *     }
-     *   }
-     * })
-     * ```
-     */
-    omit?: Prisma.GlobalOmitConfig
-    /**
-     * SQL commenter plugins that add metadata to SQL queries as comments.
-     * Comments follow the sqlcommenter format: https://google.github.io/sqlcommenter/
-     * 
-     * @example
-     * ```
-     * const prisma = new PrismaClient({
-     *   adapter,
-     *   comments: [
-     *     traceContext(),
-     *     queryInsights(),
-     *   ],
-     * })
-     * ```
-     */
-    comments?: runtime.SqlCommenterPlugin[]
-  }
-  export type GlobalOmitConfig = {
-    inadimplenciaDiaria?: InadimplenciaDiariaOmit
   }
 
   /* Types for Logging */
@@ -795,15 +794,10 @@ export namespace Prisma {
     emit: 'stdout' | 'event'
   }
 
-  export type CheckIsLogLevel<T> = T extends LogLevel ? T : never;
-
-  export type GetLogType<T> = CheckIsLogLevel<
-    T extends LogDefinition ? T['level'] : T
-  >;
-
-  export type GetEvents<T extends any[]> = T extends Array<LogLevel | LogDefinition>
-    ? GetLogType<T[number]>
-    : never;
+  export type GetLogType<T extends LogLevel | LogDefinition> = T extends LogDefinition ? T['emit'] extends 'event' ? T['level'] : never : never
+  export type GetEvents<T extends any> = T extends Array<LogLevel | LogDefinition> ?
+    GetLogType<T[0]> | GetLogType<T[1]> | GetLogType<T[2]> | GetLogType<T[3]>
+    : never
 
   export type QueryEvent = {
     timestamp: Date
@@ -832,7 +826,6 @@ export namespace Prisma {
     | 'createManyAndReturn'
     | 'update'
     | 'updateMany'
-    | 'updateManyAndReturn'
     | 'upsert'
     | 'delete'
     | 'deleteMany'
@@ -843,6 +836,25 @@ export namespace Prisma {
     | 'runCommandRaw'
     | 'findRaw'
     | 'groupBy'
+
+  /**
+   * These options are being passed into the middleware as "params"
+   */
+  export type MiddlewareParams = {
+    model?: ModelName
+    action: PrismaAction
+    args: any
+    dataPath: string[]
+    runInTransaction: boolean
+  }
+
+  /**
+   * The `T` type makes sure, that the `return proceed` is not forgotten in the middleware implementation
+   */
+  export type Middleware<T = any> = (
+    params: MiddlewareParams,
+    next: (params: MiddlewareParams) => $Utils.JsPromise<T>,
+  ) => $Utils.JsPromise<T>
 
   // tested in getLogLevel.test.ts
   export function getLogLevel(log: Array<LogLevel | LogDefinition>): LogLevel | undefined;
@@ -1070,22 +1082,6 @@ export namespace Prisma {
     dataExecucao?: boolean
   }, ExtArgs["result"]["inadimplenciaDiaria"]>
 
-  export type InadimplenciaDiariaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    dataReferencia?: boolean
-    valorTotal?: boolean
-    detalhes?: boolean
-    dataExecucao?: boolean
-  }, ExtArgs["result"]["inadimplenciaDiaria"]>
-
-  export type InadimplenciaDiariaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    dataReferencia?: boolean
-    valorTotal?: boolean
-    detalhes?: boolean
-    dataExecucao?: boolean
-  }, ExtArgs["result"]["inadimplenciaDiaria"]>
-
   export type InadimplenciaDiariaSelectScalar = {
     id?: boolean
     dataReferencia?: boolean
@@ -1094,7 +1090,7 @@ export namespace Prisma {
     dataExecucao?: boolean
   }
 
-  export type InadimplenciaDiariaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dataReferencia" | "valorTotal" | "detalhes" | "dataExecucao", ExtArgs["result"]["inadimplenciaDiaria"]>
+
 
   export type $InadimplenciaDiariaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "InadimplenciaDiaria"
@@ -1109,14 +1105,15 @@ export namespace Prisma {
     composites: {}
   }
 
+
   type InadimplenciaDiariaGetPayload<S extends boolean | null | undefined | InadimplenciaDiariaDefaultArgs> = $Result.GetResult<Prisma.$InadimplenciaDiariaPayload, S>
 
-  type InadimplenciaDiariaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<InadimplenciaDiariaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+  type InadimplenciaDiariaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<InadimplenciaDiariaFindManyArgs, 'select' | 'include' | 'distinct'> & {
       select?: InadimplenciaDiariaCountAggregateInputType | true
     }
 
-  export interface InadimplenciaDiariaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+  export interface InadimplenciaDiariaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
     [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['InadimplenciaDiaria'], meta: { name: 'InadimplenciaDiaria' } }
     /**
      * Find zero or one InadimplenciaDiaria that matches the filter.
@@ -1128,11 +1125,13 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     */
-    findUnique<T extends InadimplenciaDiariaFindUniqueArgs>(args: SelectSubset<T, InadimplenciaDiariaFindUniqueArgs<ExtArgs>>): Prisma__InadimplenciaDiariaClient<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    **/
+    findUnique<T extends InadimplenciaDiariaFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, InadimplenciaDiariaFindUniqueArgs<ExtArgs>>
+    ): Prisma__InadimplenciaDiariaClient<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
 
     /**
-     * Find one InadimplenciaDiaria that matches the filter or throw an error with `error.code='P2025'`
+     * Find one InadimplenciaDiaria that matches the filter or throw an error with `error.code='P2025'` 
      * if no matches were found.
      * @param {InadimplenciaDiariaFindUniqueOrThrowArgs} args - Arguments to find a InadimplenciaDiaria
      * @example
@@ -1142,8 +1141,10 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     */
-    findUniqueOrThrow<T extends InadimplenciaDiariaFindUniqueOrThrowArgs>(args: SelectSubset<T, InadimplenciaDiariaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InadimplenciaDiariaClient<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    **/
+    findUniqueOrThrow<T extends InadimplenciaDiariaFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, InadimplenciaDiariaFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__InadimplenciaDiariaClient<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
 
     /**
      * Find the first InadimplenciaDiaria that matches the filter.
@@ -1157,8 +1158,10 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     */
-    findFirst<T extends InadimplenciaDiariaFindFirstArgs>(args?: SelectSubset<T, InadimplenciaDiariaFindFirstArgs<ExtArgs>>): Prisma__InadimplenciaDiariaClient<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    **/
+    findFirst<T extends InadimplenciaDiariaFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, InadimplenciaDiariaFindFirstArgs<ExtArgs>>
+    ): Prisma__InadimplenciaDiariaClient<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
 
     /**
      * Find the first InadimplenciaDiaria that matches the filter or
@@ -1173,8 +1176,10 @@ export namespace Prisma {
      *     // ... provide filter here
      *   }
      * })
-     */
-    findFirstOrThrow<T extends InadimplenciaDiariaFindFirstOrThrowArgs>(args?: SelectSubset<T, InadimplenciaDiariaFindFirstOrThrowArgs<ExtArgs>>): Prisma__InadimplenciaDiariaClient<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    **/
+    findFirstOrThrow<T extends InadimplenciaDiariaFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, InadimplenciaDiariaFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__InadimplenciaDiariaClient<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
 
     /**
      * Find zero or more InadimplenciaDiarias that matches the filter.
@@ -1191,8 +1196,10 @@ export namespace Prisma {
      * // Only select the `id`
      * const inadimplenciaDiariaWithIdOnly = await prisma.inadimplenciaDiaria.findMany({ select: { id: true } })
      * 
-     */
-    findMany<T extends InadimplenciaDiariaFindManyArgs>(args?: SelectSubset<T, InadimplenciaDiariaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+    **/
+    findMany<T extends InadimplenciaDiariaFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, InadimplenciaDiariaFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, 'findMany'>>
 
     /**
      * Create a InadimplenciaDiaria.
@@ -1205,8 +1212,10 @@ export namespace Prisma {
      *   }
      * })
      * 
-     */
-    create<T extends InadimplenciaDiariaCreateArgs>(args: SelectSubset<T, InadimplenciaDiariaCreateArgs<ExtArgs>>): Prisma__InadimplenciaDiariaClient<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    **/
+    create<T extends InadimplenciaDiariaCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, InadimplenciaDiariaCreateArgs<ExtArgs>>
+    ): Prisma__InadimplenciaDiariaClient<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
 
     /**
      * Create many InadimplenciaDiarias.
@@ -1219,8 +1228,10 @@ export namespace Prisma {
      *   ]
      * })
      *     
-     */
-    createMany<T extends InadimplenciaDiariaCreateManyArgs>(args?: SelectSubset<T, InadimplenciaDiariaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    **/
+    createMany<T extends InadimplenciaDiariaCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, InadimplenciaDiariaCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Create many InadimplenciaDiarias and returns the data saved in the database.
@@ -1234,7 +1245,7 @@ export namespace Prisma {
      * })
      * 
      * // Create many InadimplenciaDiarias and only return the `id`
-     * const inadimplenciaDiariaWithIdOnly = await prisma.inadimplenciaDiaria.createManyAndReturn({
+     * const inadimplenciaDiariaWithIdOnly = await prisma.inadimplenciaDiaria.createManyAndReturn({ 
      *   select: { id: true },
      *   data: [
      *     // ... provide data here
@@ -1243,8 +1254,10 @@ export namespace Prisma {
      * Note, that providing `undefined` is treated as the value not being there.
      * Read more here: https://pris.ly/d/null-undefined
      * 
-     */
-    createManyAndReturn<T extends InadimplenciaDiariaCreateManyAndReturnArgs>(args?: SelectSubset<T, InadimplenciaDiariaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+    **/
+    createManyAndReturn<T extends InadimplenciaDiariaCreateManyAndReturnArgs<ExtArgs>>(
+      args?: SelectSubset<T, InadimplenciaDiariaCreateManyAndReturnArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, 'createManyAndReturn'>>
 
     /**
      * Delete a InadimplenciaDiaria.
@@ -1257,8 +1270,10 @@ export namespace Prisma {
      *   }
      * })
      * 
-     */
-    delete<T extends InadimplenciaDiariaDeleteArgs>(args: SelectSubset<T, InadimplenciaDiariaDeleteArgs<ExtArgs>>): Prisma__InadimplenciaDiariaClient<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    **/
+    delete<T extends InadimplenciaDiariaDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, InadimplenciaDiariaDeleteArgs<ExtArgs>>
+    ): Prisma__InadimplenciaDiariaClient<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
 
     /**
      * Update one InadimplenciaDiaria.
@@ -1274,8 +1289,10 @@ export namespace Prisma {
      *   }
      * })
      * 
-     */
-    update<T extends InadimplenciaDiariaUpdateArgs>(args: SelectSubset<T, InadimplenciaDiariaUpdateArgs<ExtArgs>>): Prisma__InadimplenciaDiariaClient<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+    **/
+    update<T extends InadimplenciaDiariaUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, InadimplenciaDiariaUpdateArgs<ExtArgs>>
+    ): Prisma__InadimplenciaDiariaClient<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
 
     /**
      * Delete zero or more InadimplenciaDiarias.
@@ -1288,8 +1305,10 @@ export namespace Prisma {
      *   }
      * })
      * 
-     */
-    deleteMany<T extends InadimplenciaDiariaDeleteManyArgs>(args?: SelectSubset<T, InadimplenciaDiariaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+    **/
+    deleteMany<T extends InadimplenciaDiariaDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, InadimplenciaDiariaDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Update zero or more InadimplenciaDiarias.
@@ -1307,38 +1326,10 @@ export namespace Prisma {
      *   }
      * })
      * 
-     */
-    updateMany<T extends InadimplenciaDiariaUpdateManyArgs>(args: SelectSubset<T, InadimplenciaDiariaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more InadimplenciaDiarias and returns the data updated in the database.
-     * @param {InadimplenciaDiariaUpdateManyAndReturnArgs} args - Arguments to update many InadimplenciaDiarias.
-     * @example
-     * // Update many InadimplenciaDiarias
-     * const inadimplenciaDiaria = await prisma.inadimplenciaDiaria.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more InadimplenciaDiarias and only return the `id`
-     * const inadimplenciaDiariaWithIdOnly = await prisma.inadimplenciaDiaria.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends InadimplenciaDiariaUpdateManyAndReturnArgs>(args: SelectSubset<T, InadimplenciaDiariaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+    **/
+    updateMany<T extends InadimplenciaDiariaUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, InadimplenciaDiariaUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
 
     /**
      * Create or update one InadimplenciaDiaria.
@@ -1356,9 +1347,10 @@ export namespace Prisma {
      *     // ... the filter for the InadimplenciaDiaria we want to update
      *   }
      * })
-     */
-    upsert<T extends InadimplenciaDiariaUpsertArgs>(args: SelectSubset<T, InadimplenciaDiariaUpsertArgs<ExtArgs>>): Prisma__InadimplenciaDiariaClient<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
+    **/
+    upsert<T extends InadimplenciaDiariaUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, InadimplenciaDiariaUpsertArgs<ExtArgs>>
+    ): Prisma__InadimplenciaDiariaClient<$Result.GetResult<Prisma.$InadimplenciaDiariaPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
 
     /**
      * Count the number of InadimplenciaDiarias.
@@ -1497,36 +1489,37 @@ export namespace Prisma {
    * Because we want to prevent naming conflicts as mentioned in
    * https://github.com/prisma/prisma-client-js/issues/707
    */
-  export interface Prisma__InadimplenciaDiariaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
+  export interface Prisma__InadimplenciaDiariaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of which ever callback is executed.
      */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
     /**
      * Attaches a callback for only the rejection of the Promise.
      * @param onrejected The callback to execute when the Promise is rejected.
      * @returns A Promise for the completion of the callback.
      */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
     /**
      * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
      * resolved value cannot be modified from the callback.
      * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
      * @returns A Promise for the completion of the callback.
      */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
   }
-
 
 
 
   /**
    * Fields of the InadimplenciaDiaria model
-   */
+   */ 
   interface InadimplenciaDiariaFieldRefs {
     readonly id: FieldRef<"InadimplenciaDiaria", 'Int'>
     readonly dataReferencia: FieldRef<"InadimplenciaDiaria", 'DateTime'>
@@ -1546,10 +1539,6 @@ export namespace Prisma {
      */
     select?: InadimplenciaDiariaSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the InadimplenciaDiaria
-     */
-    omit?: InadimplenciaDiariaOmit<ExtArgs> | null
-    /**
      * Filter, which InadimplenciaDiaria to fetch.
      */
     where: InadimplenciaDiariaWhereUniqueInput
@@ -1564,10 +1553,6 @@ export namespace Prisma {
      */
     select?: InadimplenciaDiariaSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the InadimplenciaDiaria
-     */
-    omit?: InadimplenciaDiariaOmit<ExtArgs> | null
-    /**
      * Filter, which InadimplenciaDiaria to fetch.
      */
     where: InadimplenciaDiariaWhereUniqueInput
@@ -1581,10 +1566,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the InadimplenciaDiaria
      */
     select?: InadimplenciaDiariaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the InadimplenciaDiaria
-     */
-    omit?: InadimplenciaDiariaOmit<ExtArgs> | null
     /**
      * Filter, which InadimplenciaDiaria to fetch.
      */
@@ -1630,10 +1611,6 @@ export namespace Prisma {
      */
     select?: InadimplenciaDiariaSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the InadimplenciaDiaria
-     */
-    omit?: InadimplenciaDiariaOmit<ExtArgs> | null
-    /**
      * Filter, which InadimplenciaDiaria to fetch.
      */
     where?: InadimplenciaDiariaWhereInput
@@ -1678,10 +1655,6 @@ export namespace Prisma {
      */
     select?: InadimplenciaDiariaSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the InadimplenciaDiaria
-     */
-    omit?: InadimplenciaDiariaOmit<ExtArgs> | null
-    /**
      * Filter, which InadimplenciaDiarias to fetch.
      */
     where?: InadimplenciaDiariaWhereInput
@@ -1709,11 +1682,6 @@ export namespace Prisma {
      * Skip the first `n` InadimplenciaDiarias.
      */
     skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of InadimplenciaDiarias.
-     */
     distinct?: InadimplenciaDiariaScalarFieldEnum | InadimplenciaDiariaScalarFieldEnum[]
   }
 
@@ -1725,10 +1693,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the InadimplenciaDiaria
      */
     select?: InadimplenciaDiariaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the InadimplenciaDiaria
-     */
-    omit?: InadimplenciaDiariaOmit<ExtArgs> | null
     /**
      * The data needed to create a InadimplenciaDiaria.
      */
@@ -1752,11 +1716,7 @@ export namespace Prisma {
     /**
      * Select specific fields to fetch from the InadimplenciaDiaria
      */
-    select?: InadimplenciaDiariaSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the InadimplenciaDiaria
-     */
-    omit?: InadimplenciaDiariaOmit<ExtArgs> | null
+    select?: InadimplenciaDiariaSelect<ExtArgs> | null
     /**
      * The data used to create many InadimplenciaDiarias.
      */
@@ -1771,10 +1731,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the InadimplenciaDiaria
      */
     select?: InadimplenciaDiariaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the InadimplenciaDiaria
-     */
-    omit?: InadimplenciaDiariaOmit<ExtArgs> | null
     /**
      * The data needed to update a InadimplenciaDiaria.
      */
@@ -1797,36 +1753,6 @@ export namespace Prisma {
      * Filter which InadimplenciaDiarias to update
      */
     where?: InadimplenciaDiariaWhereInput
-    /**
-     * Limit how many InadimplenciaDiarias to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * InadimplenciaDiaria updateManyAndReturn
-   */
-  export type InadimplenciaDiariaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the InadimplenciaDiaria
-     */
-    select?: InadimplenciaDiariaSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the InadimplenciaDiaria
-     */
-    omit?: InadimplenciaDiariaOmit<ExtArgs> | null
-    /**
-     * The data used to update InadimplenciaDiarias.
-     */
-    data: XOR<InadimplenciaDiariaUpdateManyMutationInput, InadimplenciaDiariaUncheckedUpdateManyInput>
-    /**
-     * Filter which InadimplenciaDiarias to update
-     */
-    where?: InadimplenciaDiariaWhereInput
-    /**
-     * Limit how many InadimplenciaDiarias to update.
-     */
-    limit?: number
   }
 
   /**
@@ -1837,10 +1763,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the InadimplenciaDiaria
      */
     select?: InadimplenciaDiariaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the InadimplenciaDiaria
-     */
-    omit?: InadimplenciaDiariaOmit<ExtArgs> | null
     /**
      * The filter to search for the InadimplenciaDiaria to update in case it exists.
      */
@@ -1864,10 +1786,6 @@ export namespace Prisma {
      */
     select?: InadimplenciaDiariaSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the InadimplenciaDiaria
-     */
-    omit?: InadimplenciaDiariaOmit<ExtArgs> | null
-    /**
      * Filter which InadimplenciaDiaria to delete.
      */
     where: InadimplenciaDiariaWhereUniqueInput
@@ -1881,10 +1799,6 @@ export namespace Prisma {
      * Filter which InadimplenciaDiarias to delete
      */
     where?: InadimplenciaDiariaWhereInput
-    /**
-     * Limit how many InadimplenciaDiarias to delete.
-     */
-    limit?: number
   }
 
   /**
@@ -1895,10 +1809,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the InadimplenciaDiaria
      */
     select?: InadimplenciaDiariaSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the InadimplenciaDiaria
-     */
-    omit?: InadimplenciaDiariaOmit<ExtArgs> | null
   }
 
 
@@ -1941,7 +1851,7 @@ export namespace Prisma {
 
 
   /**
-   * Field references
+   * Field references 
    */
 
 
@@ -2378,6 +2288,14 @@ export namespace Prisma {
   }
 
 
+
+  /**
+   * Aliases for legacy arg types
+   */
+    /**
+     * @deprecated Use InadimplenciaDiariaDefaultArgs instead
+     */
+    export type InadimplenciaDiariaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = InadimplenciaDiariaDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

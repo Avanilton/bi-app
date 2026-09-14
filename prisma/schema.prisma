@@ -3,10 +3,11 @@
 
 generator client {
   provider = "prisma-client-js"
-  engineType = "library"
+  engineType = "binary"
 }
 datasource db {
   provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 model Usuario {
   id        Int      @id @default(autoincrement())

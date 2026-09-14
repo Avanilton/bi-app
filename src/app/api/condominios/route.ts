@@ -3,7 +3,7 @@ import prisma from "@/lib/prisma";
 import { INACTIVE_CONDOMINIOS } from "@/lib/constants";
 
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 600; // cache por 10 minutos para não sobrecarregar o DB
 
 export async function GET() {
   try {

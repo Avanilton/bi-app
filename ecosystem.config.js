@@ -1,11 +1,11 @@
 module.exports = {
   apps: [
     {
-      name: "bi-app-dev",
+      name: "bi-app-prod",
       script: "node_modules/next/dist/bin/next",
-      args: "dev -p 3006",
+      args: "start -p 3006",
       env: {
-        NODE_ENV: "development",
+        NODE_ENV: "production",
       }
     }
   ]
