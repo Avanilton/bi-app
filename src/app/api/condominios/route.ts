@@ -3,6 +3,8 @@ import prisma from "@/lib/prisma";
 import { INACTIVE_CONDOMINIOS } from "@/lib/constants";
 
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
   try {
     const condominios = await prisma.tbImovel.findMany({
