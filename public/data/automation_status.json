@@ -1,12 +1,9 @@
 {
-  "message": "Processando: BELVEDERE II (53/617)",
+  "message": "Processando: BIANCA (56/617)",
   "progress": 40,
   "isRunning": true,
   "isError": false,
   "logs": [
-    "[10:42:10] Processando: AIMORE (4/617)",
-    "[10:42:28] Processando: ALAMEDA CLUBE (5/617)",
-    "[10:42:46] Processando: ALAMEDA DO VALE (ITAJAI) (6/617)",
     "[10:43:03] Processando: ALAMEDA DOS COQUEIROS (7/617)",
     "[10:43:21] Processando: ALAMEDA DOS IPES II (8/617)",
     "[10:43:39] Processando: ALAMEDA VILLE (9/617)",
@@ -53,7 +50,10 @@
     "[10:55:58] Processando: BELLA VITTA I (50/617)",
     "[10:56:16] Processando: BELLE MONDUBIM (51/617)",
     "[10:56:34] Processando: BELVEDERE I (52/617)",
-    "[10:56:52] Processando: BELVEDERE II (53/617)"
+    "[10:56:52] Processando: BELVEDERE II (53/617)",
+    "[10:57:10] Processando: BELVIC (54/617)",
+    "[10:57:27] Processando: BEM VIVER GUARUJA (55/617)",
+    "[10:57:45] Processando: BIANCA (56/617)"
   ],
-  "timestamp": "2026-09-15T13:56:52.251Z"
+  "timestamp": "2026-09-15T13:57:45.844Z"
 }
