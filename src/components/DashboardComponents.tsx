@@ -113,11 +113,12 @@ export function RecebimentoChart({ data }: { data?: { data: string; valor: numbe
   );
 }
 
-export function FaturamentoChart() {
+export function FaturamentoChart({ data }: { data?: { periodo: string; valor: number; crescimento: number }[] }) {
+  const chartData = data && data.length > 0 ? data : faturamentoData;
   return (
     <ChartCard title="Faturamento & Crescimento">
       <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart data={faturamentoData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+        <ComposedChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#f0f0f0" />
           <XAxis dataKey="periodo" axisLine={false} tickLine={false} tick={{fill: '#888', fontSize: 12}} dy={10} />
           <YAxis 

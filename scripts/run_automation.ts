@@ -510,6 +510,26 @@ export async function syncDashboardAggregates() {
             }
         }
 
+        // 4. FATURAMENTO (Boletos gerados = Não cancelados)
+        console.log("Buscando agrupamento FATURAMENTO...");
+        const faturamento = await prismaGlobal.tbBoleto.groupBy({
+            by: ['idImovel', 'dataVecto'],
+            _sum: { total: true },
+            where: { idEmpresa: 75, cancelado: false, dataVecto: { not: null } }
+        });
+        console.log(`> Obtidos ${faturamento.length} registros de Faturamento.`);
+        
+        for (const item of faturamento) {
+            if (item.dataVecto && item._sum.total !== null) {
+                batch.push({
+                    idImovel: item.idImovel,
+                    tipo: "FATURAMENTO",
+                    data: item.dataVecto,
+                    total: item._sum.total
+                });
+            }
+        }
+
         // Insere no banco local em lotes de 10.000 para evitar timeout do Prisma Local
         console.log(`Inserindo ${batch.length} registros no SQLite...`);
         const chunkSize = 10000;

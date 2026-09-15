@@ -167,7 +167,73 @@ const getCachedRecebimentoTotal = async (condominio: string | undefined, dataIni
     return 0;
   }
 };
+const getChartData = async (tipo: string, params: any) => {
+  const baseWhere: any = { tipo };
+  if (params.condominio) {
+    const idImovel = parseInt(params.condominio, 10);
+    if (!isNaN(idImovel)) baseWhere.idImovel = idImovel;
+  }
+  
+  const today = new Date();
+  today.setHours(23, 59, 59, 999);
+  const sixMonthsAgo = new Date();
+  sixMonthsAgo.setMonth(today.getMonth() - 5);
+  sixMonthsAgo.setDate(1);
+  sixMonthsAgo.setHours(0, 0, 0, 0);
 
+  try {
+    const rows = await prismaLocal.dashboardAggregates.findMany({
+      where: {
+        ...baseWhere,
+        data: { gte: sixMonthsAgo, lte: today }
+      },
+      select: { data: true, total: true }
+    });
+
+    const meses = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"];
+    const map = new Map<string, number>();
+    
+    for (let i = 5; i >= 0; i--) {
+        const d = new Date();
+        d.setMonth(d.getMonth() - i);
+        const key = `${meses[d.getMonth()]}/${String(d.getFullYear()).slice(-2)}`;
+        map.set(key, 0);
+    }
+
+    for (const row of rows) {
+      if (!row.data) continue;
+      const d = new Date(row.data);
+      const key = `${meses[d.getMonth()]}/${String(d.getFullYear()).slice(-2)}`;
+      if (map.has(key)) {
+          map.set(key, (map.get(key) || 0) + row.total);
+      }
+    }
+
+    const result = Array.from(map.entries()).map(([periodo, valor]) => ({
+        data: periodo,
+        periodo: periodo,
+        valor,
+        crescimento: 0
+    }));
+
+    if (tipo === "FATURAMENTO") {
+        for (let i = 1; i < result.length; i++) {
+            const prev = result[i-1].valor;
+            const curr = result[i].valor;
+            if (prev > 0) {
+                result[i].crescimento = Number((((curr - prev) / prev) * 100).toFixed(1));
+            } else if (prev === 0 && curr > 0) {
+                result[i].crescimento = 100;
+            }
+        }
+    }
+
+    return result;
+  } catch (error) {
+    console.error(`Erro ao buscar dados do grafico ${tipo}:`, error);
+    return [];
+  }
+};
 
 // COMPONENTES ASSÍNCRONOS
 async function AsyncJuridicosCard({ params }: { params: any }) {
@@ -216,6 +282,16 @@ async function AsyncRecebimentoCard({ params }: { params: any }) {
       colorClass="text-brand-primary bg-brand-primary/10"
     />
   );
+}
+
+async function AsyncRecebimentoChartWrapper({ params }: { params: any }) {
+  const data = await getChartData("RECEBIMENTO", params);
+  return <RecebimentoChart data={data} />;
+}
+
+async function AsyncFaturamentoChartWrapper({ params }: { params: any }) {
+  const data = await getChartData("FATURAMENTO", params);
+  return <FaturamentoChart data={data} />;
 }
 
 
@@ -405,8 +481,13 @@ export default async function DashboardPage({
 
       {/* Gráficos Principais */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <RecebimentoChart data={data.recebimentoChartData || []} />
-        <FaturamentoChart />
+        <Suspense fallback={<div className="h-72 bg-gray-100 animate-pulse rounded-2xl" />}>
+          <AsyncRecebimentoChartWrapper params={params} />
+        </Suspense>
+        
+        <Suspense fallback={<div className="h-72 bg-gray-100 animate-pulse rounded-2xl" />}>
+          <AsyncFaturamentoChartWrapper params={params} />
+        </Suspense>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
