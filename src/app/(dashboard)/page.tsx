@@ -182,12 +182,11 @@ const getDashboardData = async (params: any) => {
         if (!isNaN(idImovel)) {
           let nomeFantasia = null;
           try {
-            const res = await fetch("http://localhost:3006/api/condominios", { next: { revalidate: 600 } });
-            const json = await res.json();
-            if (json.success && json.data) {
-              const imovel = json.data.find((c: any) => c.idImovel === idImovel);
-              if (imovel) nomeFantasia = imovel.nomeFantasia;
-            }
+            const imovel = await prisma.tbImovel.findFirst({
+              where: { idImovel: idImovel },
+              select: { nomeFantasia: true }
+            });
+            if (imovel) nomeFantasia = imovel.nomeFantasia;
           } catch (error) {
             console.error("Erro ao buscar nome do condominio internamente:", error);
           }
