@@ -43,12 +43,14 @@ next-env.d.ts
 /src/generated/prisma
 
 # database files
-*.db
 *.db-*
 *.db-wal
 *.db-shm
 *.db-journal
 dev.db*
+
+# Exceção para o local.db ir pro Github
+!local.db
 
 # temporary scratch & logs
 scratch*

@@ -443,7 +443,20 @@ if (require.main === module) {
     async function main() {
         try {
             await runInadimplenciaAutomation();
-            updateStatus("Automação concluída com sucesso!", 100, false);
+            updateStatus("Automação concluída com sucesso! Enviando dados para nuvem...", 98, true);
+            
+            // Fazer push para o Github para atualizar o Vercel
+            const { exec } = require('child_process');
+            exec('git add local.db && git commit -m "Auto: Update local.db" && git push', (error: any, stdout: string, stderr: string) => {
+                if (error) {
+                    console.error("Erro no git push automático:", error);
+                    updateStatus(`Automação concluída, mas erro ao enviar para nuvem: ${error.message}`, 100, false, false);
+                } else {
+                    console.log("Git push realizado com sucesso.");
+                    updateStatus("Automação concluída com sucesso! Dados enviados para Vercel.", 100, false);
+                }
+            });
+            
         } catch (error: any) {
             console.error("Erro fatal na automação:", error);
             updateStatus(`Erro fatal: ${error.message}`, 0, false, true);
