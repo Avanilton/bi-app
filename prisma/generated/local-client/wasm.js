@@ -124,6 +124,14 @@ exports.Prisma.InadimplenciaDiariaScalarFieldEnum = {
   dataExecucao: 'dataExecucao'
 };
 
+exports.Prisma.DashboardAggregatesScalarFieldEnum = {
+  id: 'id',
+  idImovel: 'idImovel',
+  tipo: 'tipo',
+  data: 'data',
+  total: 'total'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -136,7 +144,8 @@ exports.Prisma.NullsOrder = {
 
 
 exports.Prisma.ModelName = {
-  InadimplenciaDiaria: 'InadimplenciaDiaria'
+  InadimplenciaDiaria: 'InadimplenciaDiaria',
+  DashboardAggregates: 'DashboardAggregates'
 };
 
 /**

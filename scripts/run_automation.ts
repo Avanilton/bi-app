@@ -1,10 +1,12 @@
 import { chromium } from 'playwright';
 import { PrismaClient } from '../prisma/generated/local-client';
+import { PrismaClient as GlobalPrismaClient } from '@prisma/client';
 import path from "path";
 import fs from "fs";
 
 const dbPath = path.resolve(process.cwd(), "local.db");
 const prismaLocal = new PrismaClient({ datasources: { db: { url: `file:${dbPath}` } } } as any);
+const prismaGlobal = new GlobalPrismaClient();
 
 const STATUS_FILE = path.resolve(process.cwd(), "public", "data", "automation_status.json");
 
@@ -438,11 +440,102 @@ Valor Total Inadimplência: R$ ${totalGeral.toFixed(2)}
     }
 }
 
+// Nova rotina: Busca os agregados (Juridicos, Amigavel, Recebimento) do MySQL e os copia para o SQLite local
+export async function syncDashboardAggregates() {
+    console.log("Iniciando sincronização dos agregados do Dashboard...");
+    updateStatus("Sincronizando totais dos cards remotos (MySQL -> SQLite)...", 96);
+    
+    try {
+        console.log("Limpando banco local...");
+        await prismaLocal.dashboardAggregates.deleteMany({});
+        
+        // 1. JURÍDICOS (Origem 5, Não pagos, Não cancelados)
+        console.log("Buscando agrupamento JURIDICOS...");
+        const juridicos = await prismaGlobal.tbBoleto.groupBy({
+            by: ['idImovel', 'dataVecto'],
+            _sum: { total: true },
+            where: { idEmpresa: 75, pago: false, cancelado: false, origem: 5, dataVecto: { not: null } }
+        });
+        console.log(`> Obtidos ${juridicos.length} registros de Jurídicos.`);
+        
+        let batch: any[] = [];
+        for (const item of juridicos) {
+            if (item.dataVecto && item._sum.total !== null) {
+                batch.push({
+                    idImovel: item.idImovel,
+                    tipo: "JURIDICOS",
+                    data: item.dataVecto,
+                    total: item._sum.total
+                });
+            }
+        }
+
+        // 2. AMIGÁVEL (Origem 6, Não pagos, Não cancelados)
+        console.log("Buscando agrupamento AMIGAVEL...");
+        const amigavel = await prismaGlobal.tbBoleto.groupBy({
+            by: ['idImovel', 'dataVecto'],
+            _sum: { total: true },
+            where: { idEmpresa: 75, pago: false, cancelado: false, origem: 6, dataVecto: { not: null } }
+        });
+        console.log(`> Obtidos ${amigavel.length} registros de Amigável.`);
+        
+        for (const item of amigavel) {
+            if (item.dataVecto && item._sum.total !== null) {
+                batch.push({
+                    idImovel: item.idImovel,
+                    tipo: "AMIGAVEL",
+                    data: item.dataVecto,
+                    total: item._sum.total
+                });
+            }
+        }
+
+        // 3. RECEBIMENTO (Pagos, Não cancelados)
+        console.log("Buscando agrupamento RECEBIMENTO...");
+        const recebimento = await prismaGlobal.tbBoleto.groupBy({
+            by: ['idImovel', 'dataPgto'],
+            _sum: { total: true },
+            where: { idEmpresa: 75, pago: true, cancelado: false, dataPgto: { not: null } }
+        });
+        console.log(`> Obtidos ${recebimento.length} registros de Recebimento.`);
+        
+        for (const item of recebimento) {
+            if (item.dataPgto && item._sum.total !== null) {
+                batch.push({
+                    idImovel: item.idImovel,
+                    tipo: "RECEBIMENTO",
+                    data: item.dataPgto,
+                    total: item._sum.total
+                });
+            }
+        }
+
+        // Insere no banco local em lotes de 10.000 para evitar timeout do Prisma Local
+        console.log(`Inserindo ${batch.length} registros no SQLite...`);
+        const chunkSize = 10000;
+        for (let i = 0; i < batch.length; i += chunkSize) {
+            const chunk = batch.slice(i, i + chunkSize);
+            await prismaLocal.dashboardAggregates.createMany({ data: chunk });
+            console.log(`> Lote inserido: ${i + chunk.length} / ${batch.length}`);
+        }
+        
+        console.log("Sincronização dos agregados concluída com sucesso!");
+    } catch (error) {
+        console.error("Erro ao sincronizar agregados:", error);
+    } finally {
+        await prismaGlobal.$disconnect();
+    }
+}
+
 // Se rodar direto via linha de comando
 if (require.main === module) {
     async function main() {
         try {
             await runInadimplenciaAutomation();
+            
+            // Nova chamada
+            await syncDashboardAggregates();
+            
             updateStatus("Automação concluída com sucesso! Enviando dados para nuvem...", 98, true);
             
             // Fazer push para o Github para atualizar o Vercel

@@ -18,6 +18,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  * 
  */
 export type InadimplenciaDiaria = $Result.DefaultSelection<Prisma.$InadimplenciaDiariaPayload>
+/**
+ * Model DashboardAggregates
+ * 
+ */
+export type DashboardAggregates = $Result.DefaultSelection<Prisma.$DashboardAggregatesPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -150,6 +155,16 @@ export class PrismaClient<
     * ```
     */
   get inadimplenciaDiaria(): Prisma.InadimplenciaDiariaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.dashboardAggregates`: Exposes CRUD operations for the **DashboardAggregates** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DashboardAggregates
+    * const dashboardAggregates = await prisma.dashboardAggregates.findMany()
+    * ```
+    */
+  get dashboardAggregates(): Prisma.DashboardAggregatesDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -627,7 +642,8 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    InadimplenciaDiaria: 'InadimplenciaDiaria'
+    InadimplenciaDiaria: 'InadimplenciaDiaria',
+    DashboardAggregates: 'DashboardAggregates'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -644,7 +660,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     meta: {
-      modelProps: 'inadimplenciaDiaria'
+      modelProps: 'inadimplenciaDiaria' | 'dashboardAggregates'
       txIsolationLevel: Prisma.TransactionIsolationLevel
     },
     model: {
@@ -715,6 +731,76 @@ export namespace Prisma {
           count: {
             args: Prisma.InadimplenciaDiariaCountArgs<ExtArgs>,
             result: $Utils.Optional<InadimplenciaDiariaCountAggregateOutputType> | number
+          }
+        }
+      }
+      DashboardAggregates: {
+        payload: Prisma.$DashboardAggregatesPayload<ExtArgs>
+        fields: Prisma.DashboardAggregatesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DashboardAggregatesFindUniqueArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DashboardAggregatesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DashboardAggregatesFindUniqueOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DashboardAggregatesPayload>
+          }
+          findFirst: {
+            args: Prisma.DashboardAggregatesFindFirstArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DashboardAggregatesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DashboardAggregatesFindFirstOrThrowArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DashboardAggregatesPayload>
+          }
+          findMany: {
+            args: Prisma.DashboardAggregatesFindManyArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DashboardAggregatesPayload>[]
+          }
+          create: {
+            args: Prisma.DashboardAggregatesCreateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DashboardAggregatesPayload>
+          }
+          createMany: {
+            args: Prisma.DashboardAggregatesCreateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DashboardAggregatesCreateManyAndReturnArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DashboardAggregatesPayload>[]
+          }
+          delete: {
+            args: Prisma.DashboardAggregatesDeleteArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DashboardAggregatesPayload>
+          }
+          update: {
+            args: Prisma.DashboardAggregatesUpdateArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DashboardAggregatesPayload>
+          }
+          deleteMany: {
+            args: Prisma.DashboardAggregatesDeleteManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DashboardAggregatesUpdateManyArgs<ExtArgs>,
+            result: Prisma.BatchPayload
+          }
+          upsert: {
+            args: Prisma.DashboardAggregatesUpsertArgs<ExtArgs>,
+            result: $Utils.PayloadToResult<Prisma.$DashboardAggregatesPayload>
+          }
+          aggregate: {
+            args: Prisma.DashboardAggregatesAggregateArgs<ExtArgs>,
+            result: $Utils.Optional<AggregateDashboardAggregates>
+          }
+          groupBy: {
+            args: Prisma.DashboardAggregatesGroupByArgs<ExtArgs>,
+            result: $Utils.Optional<DashboardAggregatesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DashboardAggregatesCountArgs<ExtArgs>,
+            result: $Utils.Optional<DashboardAggregatesCountAggregateOutputType> | number
           }
         }
       }
@@ -1813,6 +1899,944 @@ export namespace Prisma {
 
 
   /**
+   * Model DashboardAggregates
+   */
+
+  export type AggregateDashboardAggregates = {
+    _count: DashboardAggregatesCountAggregateOutputType | null
+    _avg: DashboardAggregatesAvgAggregateOutputType | null
+    _sum: DashboardAggregatesSumAggregateOutputType | null
+    _min: DashboardAggregatesMinAggregateOutputType | null
+    _max: DashboardAggregatesMaxAggregateOutputType | null
+  }
+
+  export type DashboardAggregatesAvgAggregateOutputType = {
+    id: number | null
+    idImovel: number | null
+    total: number | null
+  }
+
+  export type DashboardAggregatesSumAggregateOutputType = {
+    id: number | null
+    idImovel: number | null
+    total: number | null
+  }
+
+  export type DashboardAggregatesMinAggregateOutputType = {
+    id: number | null
+    idImovel: number | null
+    tipo: string | null
+    data: Date | null
+    total: number | null
+  }
+
+  export type DashboardAggregatesMaxAggregateOutputType = {
+    id: number | null
+    idImovel: number | null
+    tipo: string | null
+    data: Date | null
+    total: number | null
+  }
+
+  export type DashboardAggregatesCountAggregateOutputType = {
+    id: number
+    idImovel: number
+    tipo: number
+    data: number
+    total: number
+    _all: number
+  }
+
+
+  export type DashboardAggregatesAvgAggregateInputType = {
+    id?: true
+    idImovel?: true
+    total?: true
+  }
+
+  export type DashboardAggregatesSumAggregateInputType = {
+    id?: true
+    idImovel?: true
+    total?: true
+  }
+
+  export type DashboardAggregatesMinAggregateInputType = {
+    id?: true
+    idImovel?: true
+    tipo?: true
+    data?: true
+    total?: true
+  }
+
+  export type DashboardAggregatesMaxAggregateInputType = {
+    id?: true
+    idImovel?: true
+    tipo?: true
+    data?: true
+    total?: true
+  }
+
+  export type DashboardAggregatesCountAggregateInputType = {
+    id?: true
+    idImovel?: true
+    tipo?: true
+    data?: true
+    total?: true
+    _all?: true
+  }
+
+  export type DashboardAggregatesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DashboardAggregates to aggregate.
+     */
+    where?: DashboardAggregatesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DashboardAggregates to fetch.
+     */
+    orderBy?: DashboardAggregatesOrderByWithRelationInput | DashboardAggregatesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DashboardAggregatesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DashboardAggregates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DashboardAggregates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DashboardAggregates
+    **/
+    _count?: true | DashboardAggregatesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DashboardAggregatesAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DashboardAggregatesSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DashboardAggregatesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DashboardAggregatesMaxAggregateInputType
+  }
+
+  export type GetDashboardAggregatesAggregateType<T extends DashboardAggregatesAggregateArgs> = {
+        [P in keyof T & keyof AggregateDashboardAggregates]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDashboardAggregates[P]>
+      : GetScalarType<T[P], AggregateDashboardAggregates[P]>
+  }
+
+
+
+
+  export type DashboardAggregatesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DashboardAggregatesWhereInput
+    orderBy?: DashboardAggregatesOrderByWithAggregationInput | DashboardAggregatesOrderByWithAggregationInput[]
+    by: DashboardAggregatesScalarFieldEnum[] | DashboardAggregatesScalarFieldEnum
+    having?: DashboardAggregatesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DashboardAggregatesCountAggregateInputType | true
+    _avg?: DashboardAggregatesAvgAggregateInputType
+    _sum?: DashboardAggregatesSumAggregateInputType
+    _min?: DashboardAggregatesMinAggregateInputType
+    _max?: DashboardAggregatesMaxAggregateInputType
+  }
+
+  export type DashboardAggregatesGroupByOutputType = {
+    id: number
+    idImovel: number
+    tipo: string
+    data: Date
+    total: number
+    _count: DashboardAggregatesCountAggregateOutputType | null
+    _avg: DashboardAggregatesAvgAggregateOutputType | null
+    _sum: DashboardAggregatesSumAggregateOutputType | null
+    _min: DashboardAggregatesMinAggregateOutputType | null
+    _max: DashboardAggregatesMaxAggregateOutputType | null
+  }
+
+  type GetDashboardAggregatesGroupByPayload<T extends DashboardAggregatesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DashboardAggregatesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DashboardAggregatesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DashboardAggregatesGroupByOutputType[P]>
+            : GetScalarType<T[P], DashboardAggregatesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DashboardAggregatesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    idImovel?: boolean
+    tipo?: boolean
+    data?: boolean
+    total?: boolean
+  }, ExtArgs["result"]["dashboardAggregates"]>
+
+  export type DashboardAggregatesSelectScalar = {
+    id?: boolean
+    idImovel?: boolean
+    tipo?: boolean
+    data?: boolean
+    total?: boolean
+  }
+
+
+
+  export type $DashboardAggregatesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DashboardAggregates"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      idImovel: number
+      tipo: string
+      data: Date
+      total: number
+    }, ExtArgs["result"]["dashboardAggregates"]>
+    composites: {}
+  }
+
+
+  type DashboardAggregatesGetPayload<S extends boolean | null | undefined | DashboardAggregatesDefaultArgs> = $Result.GetResult<Prisma.$DashboardAggregatesPayload, S>
+
+  type DashboardAggregatesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DashboardAggregatesFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: DashboardAggregatesCountAggregateInputType | true
+    }
+
+  export interface DashboardAggregatesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DashboardAggregates'], meta: { name: 'DashboardAggregates' } }
+    /**
+     * Find zero or one DashboardAggregates that matches the filter.
+     * @param {DashboardAggregatesFindUniqueArgs} args - Arguments to find a DashboardAggregates
+     * @example
+     * // Get one DashboardAggregates
+     * const dashboardAggregates = await prisma.dashboardAggregates.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUnique<T extends DashboardAggregatesFindUniqueArgs<ExtArgs>>(
+      args: SelectSubset<T, DashboardAggregatesFindUniqueArgs<ExtArgs>>
+    ): Prisma__DashboardAggregatesClient<$Result.GetResult<Prisma.$DashboardAggregatesPayload<ExtArgs>, T, 'findUnique'> | null, null, ExtArgs>
+
+    /**
+     * Find one DashboardAggregates that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {DashboardAggregatesFindUniqueOrThrowArgs} args - Arguments to find a DashboardAggregates
+     * @example
+     * // Get one DashboardAggregates
+     * const dashboardAggregates = await prisma.dashboardAggregates.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findUniqueOrThrow<T extends DashboardAggregatesFindUniqueOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, DashboardAggregatesFindUniqueOrThrowArgs<ExtArgs>>
+    ): Prisma__DashboardAggregatesClient<$Result.GetResult<Prisma.$DashboardAggregatesPayload<ExtArgs>, T, 'findUniqueOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find the first DashboardAggregates that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DashboardAggregatesFindFirstArgs} args - Arguments to find a DashboardAggregates
+     * @example
+     * // Get one DashboardAggregates
+     * const dashboardAggregates = await prisma.dashboardAggregates.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirst<T extends DashboardAggregatesFindFirstArgs<ExtArgs>>(
+      args?: SelectSubset<T, DashboardAggregatesFindFirstArgs<ExtArgs>>
+    ): Prisma__DashboardAggregatesClient<$Result.GetResult<Prisma.$DashboardAggregatesPayload<ExtArgs>, T, 'findFirst'> | null, null, ExtArgs>
+
+    /**
+     * Find the first DashboardAggregates that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DashboardAggregatesFindFirstOrThrowArgs} args - Arguments to find a DashboardAggregates
+     * @example
+     * // Get one DashboardAggregates
+     * const dashboardAggregates = await prisma.dashboardAggregates.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+    **/
+    findFirstOrThrow<T extends DashboardAggregatesFindFirstOrThrowArgs<ExtArgs>>(
+      args?: SelectSubset<T, DashboardAggregatesFindFirstOrThrowArgs<ExtArgs>>
+    ): Prisma__DashboardAggregatesClient<$Result.GetResult<Prisma.$DashboardAggregatesPayload<ExtArgs>, T, 'findFirstOrThrow'>, never, ExtArgs>
+
+    /**
+     * Find zero or more DashboardAggregates that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DashboardAggregatesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DashboardAggregates
+     * const dashboardAggregates = await prisma.dashboardAggregates.findMany()
+     * 
+     * // Get first 10 DashboardAggregates
+     * const dashboardAggregates = await prisma.dashboardAggregates.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dashboardAggregatesWithIdOnly = await prisma.dashboardAggregates.findMany({ select: { id: true } })
+     * 
+    **/
+    findMany<T extends DashboardAggregatesFindManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, DashboardAggregatesFindManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DashboardAggregatesPayload<ExtArgs>, T, 'findMany'>>
+
+    /**
+     * Create a DashboardAggregates.
+     * @param {DashboardAggregatesCreateArgs} args - Arguments to create a DashboardAggregates.
+     * @example
+     * // Create one DashboardAggregates
+     * const DashboardAggregates = await prisma.dashboardAggregates.create({
+     *   data: {
+     *     // ... data to create a DashboardAggregates
+     *   }
+     * })
+     * 
+    **/
+    create<T extends DashboardAggregatesCreateArgs<ExtArgs>>(
+      args: SelectSubset<T, DashboardAggregatesCreateArgs<ExtArgs>>
+    ): Prisma__DashboardAggregatesClient<$Result.GetResult<Prisma.$DashboardAggregatesPayload<ExtArgs>, T, 'create'>, never, ExtArgs>
+
+    /**
+     * Create many DashboardAggregates.
+     * @param {DashboardAggregatesCreateManyArgs} args - Arguments to create many DashboardAggregates.
+     * @example
+     * // Create many DashboardAggregates
+     * const dashboardAggregates = await prisma.dashboardAggregates.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+    **/
+    createMany<T extends DashboardAggregatesCreateManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, DashboardAggregatesCreateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DashboardAggregates and returns the data saved in the database.
+     * @param {DashboardAggregatesCreateManyAndReturnArgs} args - Arguments to create many DashboardAggregates.
+     * @example
+     * // Create many DashboardAggregates
+     * const dashboardAggregates = await prisma.dashboardAggregates.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DashboardAggregates and only return the `id`
+     * const dashboardAggregatesWithIdOnly = await prisma.dashboardAggregates.createManyAndReturn({ 
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+    **/
+    createManyAndReturn<T extends DashboardAggregatesCreateManyAndReturnArgs<ExtArgs>>(
+      args?: SelectSubset<T, DashboardAggregatesCreateManyAndReturnArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DashboardAggregatesPayload<ExtArgs>, T, 'createManyAndReturn'>>
+
+    /**
+     * Delete a DashboardAggregates.
+     * @param {DashboardAggregatesDeleteArgs} args - Arguments to delete one DashboardAggregates.
+     * @example
+     * // Delete one DashboardAggregates
+     * const DashboardAggregates = await prisma.dashboardAggregates.delete({
+     *   where: {
+     *     // ... filter to delete one DashboardAggregates
+     *   }
+     * })
+     * 
+    **/
+    delete<T extends DashboardAggregatesDeleteArgs<ExtArgs>>(
+      args: SelectSubset<T, DashboardAggregatesDeleteArgs<ExtArgs>>
+    ): Prisma__DashboardAggregatesClient<$Result.GetResult<Prisma.$DashboardAggregatesPayload<ExtArgs>, T, 'delete'>, never, ExtArgs>
+
+    /**
+     * Update one DashboardAggregates.
+     * @param {DashboardAggregatesUpdateArgs} args - Arguments to update one DashboardAggregates.
+     * @example
+     * // Update one DashboardAggregates
+     * const dashboardAggregates = await prisma.dashboardAggregates.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    update<T extends DashboardAggregatesUpdateArgs<ExtArgs>>(
+      args: SelectSubset<T, DashboardAggregatesUpdateArgs<ExtArgs>>
+    ): Prisma__DashboardAggregatesClient<$Result.GetResult<Prisma.$DashboardAggregatesPayload<ExtArgs>, T, 'update'>, never, ExtArgs>
+
+    /**
+     * Delete zero or more DashboardAggregates.
+     * @param {DashboardAggregatesDeleteManyArgs} args - Arguments to filter DashboardAggregates to delete.
+     * @example
+     * // Delete a few DashboardAggregates
+     * const { count } = await prisma.dashboardAggregates.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+    **/
+    deleteMany<T extends DashboardAggregatesDeleteManyArgs<ExtArgs>>(
+      args?: SelectSubset<T, DashboardAggregatesDeleteManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DashboardAggregates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DashboardAggregatesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DashboardAggregates
+     * const dashboardAggregates = await prisma.dashboardAggregates.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+    **/
+    updateMany<T extends DashboardAggregatesUpdateManyArgs<ExtArgs>>(
+      args: SelectSubset<T, DashboardAggregatesUpdateManyArgs<ExtArgs>>
+    ): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one DashboardAggregates.
+     * @param {DashboardAggregatesUpsertArgs} args - Arguments to update or create a DashboardAggregates.
+     * @example
+     * // Update or create a DashboardAggregates
+     * const dashboardAggregates = await prisma.dashboardAggregates.upsert({
+     *   create: {
+     *     // ... data to create a DashboardAggregates
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DashboardAggregates we want to update
+     *   }
+     * })
+    **/
+    upsert<T extends DashboardAggregatesUpsertArgs<ExtArgs>>(
+      args: SelectSubset<T, DashboardAggregatesUpsertArgs<ExtArgs>>
+    ): Prisma__DashboardAggregatesClient<$Result.GetResult<Prisma.$DashboardAggregatesPayload<ExtArgs>, T, 'upsert'>, never, ExtArgs>
+
+    /**
+     * Count the number of DashboardAggregates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DashboardAggregatesCountArgs} args - Arguments to filter DashboardAggregates to count.
+     * @example
+     * // Count the number of DashboardAggregates
+     * const count = await prisma.dashboardAggregates.count({
+     *   where: {
+     *     // ... the filter for the DashboardAggregates we want to count
+     *   }
+     * })
+    **/
+    count<T extends DashboardAggregatesCountArgs>(
+      args?: Subset<T, DashboardAggregatesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DashboardAggregatesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DashboardAggregates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DashboardAggregatesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DashboardAggregatesAggregateArgs>(args: Subset<T, DashboardAggregatesAggregateArgs>): Prisma.PrismaPromise<GetDashboardAggregatesAggregateType<T>>
+
+    /**
+     * Group by DashboardAggregates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DashboardAggregatesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DashboardAggregatesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DashboardAggregatesGroupByArgs['orderBy'] }
+        : { orderBy?: DashboardAggregatesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DashboardAggregatesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDashboardAggregatesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DashboardAggregates model
+   */
+  readonly fields: DashboardAggregatesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DashboardAggregates.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DashboardAggregatesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: 'PrismaPromise';
+
+
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>;
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>;
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>;
+  }
+
+
+
+  /**
+   * Fields of the DashboardAggregates model
+   */ 
+  interface DashboardAggregatesFieldRefs {
+    readonly id: FieldRef<"DashboardAggregates", 'Int'>
+    readonly idImovel: FieldRef<"DashboardAggregates", 'Int'>
+    readonly tipo: FieldRef<"DashboardAggregates", 'String'>
+    readonly data: FieldRef<"DashboardAggregates", 'DateTime'>
+    readonly total: FieldRef<"DashboardAggregates", 'Float'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DashboardAggregates findUnique
+   */
+  export type DashboardAggregatesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardAggregates
+     */
+    select?: DashboardAggregatesSelect<ExtArgs> | null
+    /**
+     * Filter, which DashboardAggregates to fetch.
+     */
+    where: DashboardAggregatesWhereUniqueInput
+  }
+
+  /**
+   * DashboardAggregates findUniqueOrThrow
+   */
+  export type DashboardAggregatesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardAggregates
+     */
+    select?: DashboardAggregatesSelect<ExtArgs> | null
+    /**
+     * Filter, which DashboardAggregates to fetch.
+     */
+    where: DashboardAggregatesWhereUniqueInput
+  }
+
+  /**
+   * DashboardAggregates findFirst
+   */
+  export type DashboardAggregatesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardAggregates
+     */
+    select?: DashboardAggregatesSelect<ExtArgs> | null
+    /**
+     * Filter, which DashboardAggregates to fetch.
+     */
+    where?: DashboardAggregatesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DashboardAggregates to fetch.
+     */
+    orderBy?: DashboardAggregatesOrderByWithRelationInput | DashboardAggregatesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DashboardAggregates.
+     */
+    cursor?: DashboardAggregatesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DashboardAggregates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DashboardAggregates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DashboardAggregates.
+     */
+    distinct?: DashboardAggregatesScalarFieldEnum | DashboardAggregatesScalarFieldEnum[]
+  }
+
+  /**
+   * DashboardAggregates findFirstOrThrow
+   */
+  export type DashboardAggregatesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardAggregates
+     */
+    select?: DashboardAggregatesSelect<ExtArgs> | null
+    /**
+     * Filter, which DashboardAggregates to fetch.
+     */
+    where?: DashboardAggregatesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DashboardAggregates to fetch.
+     */
+    orderBy?: DashboardAggregatesOrderByWithRelationInput | DashboardAggregatesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DashboardAggregates.
+     */
+    cursor?: DashboardAggregatesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DashboardAggregates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DashboardAggregates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DashboardAggregates.
+     */
+    distinct?: DashboardAggregatesScalarFieldEnum | DashboardAggregatesScalarFieldEnum[]
+  }
+
+  /**
+   * DashboardAggregates findMany
+   */
+  export type DashboardAggregatesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardAggregates
+     */
+    select?: DashboardAggregatesSelect<ExtArgs> | null
+    /**
+     * Filter, which DashboardAggregates to fetch.
+     */
+    where?: DashboardAggregatesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DashboardAggregates to fetch.
+     */
+    orderBy?: DashboardAggregatesOrderByWithRelationInput | DashboardAggregatesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DashboardAggregates.
+     */
+    cursor?: DashboardAggregatesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DashboardAggregates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DashboardAggregates.
+     */
+    skip?: number
+    distinct?: DashboardAggregatesScalarFieldEnum | DashboardAggregatesScalarFieldEnum[]
+  }
+
+  /**
+   * DashboardAggregates create
+   */
+  export type DashboardAggregatesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardAggregates
+     */
+    select?: DashboardAggregatesSelect<ExtArgs> | null
+    /**
+     * The data needed to create a DashboardAggregates.
+     */
+    data: XOR<DashboardAggregatesCreateInput, DashboardAggregatesUncheckedCreateInput>
+  }
+
+  /**
+   * DashboardAggregates createMany
+   */
+  export type DashboardAggregatesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DashboardAggregates.
+     */
+    data: DashboardAggregatesCreateManyInput | DashboardAggregatesCreateManyInput[]
+  }
+
+  /**
+   * DashboardAggregates createManyAndReturn
+   */
+  export type DashboardAggregatesCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardAggregates
+     */
+    select?: DashboardAggregatesSelect<ExtArgs> | null
+    /**
+     * The data used to create many DashboardAggregates.
+     */
+    data: DashboardAggregatesCreateManyInput | DashboardAggregatesCreateManyInput[]
+  }
+
+  /**
+   * DashboardAggregates update
+   */
+  export type DashboardAggregatesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardAggregates
+     */
+    select?: DashboardAggregatesSelect<ExtArgs> | null
+    /**
+     * The data needed to update a DashboardAggregates.
+     */
+    data: XOR<DashboardAggregatesUpdateInput, DashboardAggregatesUncheckedUpdateInput>
+    /**
+     * Choose, which DashboardAggregates to update.
+     */
+    where: DashboardAggregatesWhereUniqueInput
+  }
+
+  /**
+   * DashboardAggregates updateMany
+   */
+  export type DashboardAggregatesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DashboardAggregates.
+     */
+    data: XOR<DashboardAggregatesUpdateManyMutationInput, DashboardAggregatesUncheckedUpdateManyInput>
+    /**
+     * Filter which DashboardAggregates to update
+     */
+    where?: DashboardAggregatesWhereInput
+  }
+
+  /**
+   * DashboardAggregates upsert
+   */
+  export type DashboardAggregatesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardAggregates
+     */
+    select?: DashboardAggregatesSelect<ExtArgs> | null
+    /**
+     * The filter to search for the DashboardAggregates to update in case it exists.
+     */
+    where: DashboardAggregatesWhereUniqueInput
+    /**
+     * In case the DashboardAggregates found by the `where` argument doesn't exist, create a new DashboardAggregates with this data.
+     */
+    create: XOR<DashboardAggregatesCreateInput, DashboardAggregatesUncheckedCreateInput>
+    /**
+     * In case the DashboardAggregates was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DashboardAggregatesUpdateInput, DashboardAggregatesUncheckedUpdateInput>
+  }
+
+  /**
+   * DashboardAggregates delete
+   */
+  export type DashboardAggregatesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardAggregates
+     */
+    select?: DashboardAggregatesSelect<ExtArgs> | null
+    /**
+     * Filter which DashboardAggregates to delete.
+     */
+    where: DashboardAggregatesWhereUniqueInput
+  }
+
+  /**
+   * DashboardAggregates deleteMany
+   */
+  export type DashboardAggregatesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DashboardAggregates to delete
+     */
+    where?: DashboardAggregatesWhereInput
+  }
+
+  /**
+   * DashboardAggregates without action
+   */
+  export type DashboardAggregatesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DashboardAggregates
+     */
+    select?: DashboardAggregatesSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -1832,6 +2856,17 @@ export namespace Prisma {
   };
 
   export type InadimplenciaDiariaScalarFieldEnum = (typeof InadimplenciaDiariaScalarFieldEnum)[keyof typeof InadimplenciaDiariaScalarFieldEnum]
+
+
+  export const DashboardAggregatesScalarFieldEnum: {
+    id: 'id',
+    idImovel: 'idImovel',
+    tipo: 'tipo',
+    data: 'data',
+    total: 'total'
+  };
+
+  export type DashboardAggregatesScalarFieldEnum = (typeof DashboardAggregatesScalarFieldEnum)[keyof typeof DashboardAggregatesScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -1940,6 +2975,60 @@ export namespace Prisma {
     dataExecucao?: DateTimeWithAggregatesFilter<"InadimplenciaDiaria"> | Date | string
   }
 
+  export type DashboardAggregatesWhereInput = {
+    AND?: DashboardAggregatesWhereInput | DashboardAggregatesWhereInput[]
+    OR?: DashboardAggregatesWhereInput[]
+    NOT?: DashboardAggregatesWhereInput | DashboardAggregatesWhereInput[]
+    id?: IntFilter<"DashboardAggregates"> | number
+    idImovel?: IntFilter<"DashboardAggregates"> | number
+    tipo?: StringFilter<"DashboardAggregates"> | string
+    data?: DateTimeFilter<"DashboardAggregates"> | Date | string
+    total?: FloatFilter<"DashboardAggregates"> | number
+  }
+
+  export type DashboardAggregatesOrderByWithRelationInput = {
+    id?: SortOrder
+    idImovel?: SortOrder
+    tipo?: SortOrder
+    data?: SortOrder
+    total?: SortOrder
+  }
+
+  export type DashboardAggregatesWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: DashboardAggregatesWhereInput | DashboardAggregatesWhereInput[]
+    OR?: DashboardAggregatesWhereInput[]
+    NOT?: DashboardAggregatesWhereInput | DashboardAggregatesWhereInput[]
+    idImovel?: IntFilter<"DashboardAggregates"> | number
+    tipo?: StringFilter<"DashboardAggregates"> | string
+    data?: DateTimeFilter<"DashboardAggregates"> | Date | string
+    total?: FloatFilter<"DashboardAggregates"> | number
+  }, "id">
+
+  export type DashboardAggregatesOrderByWithAggregationInput = {
+    id?: SortOrder
+    idImovel?: SortOrder
+    tipo?: SortOrder
+    data?: SortOrder
+    total?: SortOrder
+    _count?: DashboardAggregatesCountOrderByAggregateInput
+    _avg?: DashboardAggregatesAvgOrderByAggregateInput
+    _max?: DashboardAggregatesMaxOrderByAggregateInput
+    _min?: DashboardAggregatesMinOrderByAggregateInput
+    _sum?: DashboardAggregatesSumOrderByAggregateInput
+  }
+
+  export type DashboardAggregatesScalarWhereWithAggregatesInput = {
+    AND?: DashboardAggregatesScalarWhereWithAggregatesInput | DashboardAggregatesScalarWhereWithAggregatesInput[]
+    OR?: DashboardAggregatesScalarWhereWithAggregatesInput[]
+    NOT?: DashboardAggregatesScalarWhereWithAggregatesInput | DashboardAggregatesScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"DashboardAggregates"> | number
+    idImovel?: IntWithAggregatesFilter<"DashboardAggregates"> | number
+    tipo?: StringWithAggregatesFilter<"DashboardAggregates"> | string
+    data?: DateTimeWithAggregatesFilter<"DashboardAggregates"> | Date | string
+    total?: FloatWithAggregatesFilter<"DashboardAggregates"> | number
+  }
+
   export type InadimplenciaDiariaCreateInput = {
     dataReferencia: Date | string
     valorTotal: number
@@ -1991,6 +3080,59 @@ export namespace Prisma {
     valorTotal?: FloatFieldUpdateOperationsInput | number
     detalhes?: NullableStringFieldUpdateOperationsInput | string | null
     dataExecucao?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DashboardAggregatesCreateInput = {
+    idImovel: number
+    tipo: string
+    data: Date | string
+    total: number
+  }
+
+  export type DashboardAggregatesUncheckedCreateInput = {
+    id?: number
+    idImovel: number
+    tipo: string
+    data: Date | string
+    total: number
+  }
+
+  export type DashboardAggregatesUpdateInput = {
+    idImovel?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    data?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type DashboardAggregatesUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    idImovel?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    data?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type DashboardAggregatesCreateManyInput = {
+    id?: number
+    idImovel: number
+    tipo: string
+    data: Date | string
+    total: number
+  }
+
+  export type DashboardAggregatesUpdateManyMutationInput = {
+    idImovel?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    data?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: FloatFieldUpdateOperationsInput | number
+  }
+
+  export type DashboardAggregatesUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    idImovel?: IntFieldUpdateOperationsInput | number
+    tipo?: StringFieldUpdateOperationsInput | string
+    data?: DateTimeFieldUpdateOperationsInput | Date | string
+    total?: FloatFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -2142,6 +3284,73 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type StringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type DashboardAggregatesCountOrderByAggregateInput = {
+    id?: SortOrder
+    idImovel?: SortOrder
+    tipo?: SortOrder
+    data?: SortOrder
+    total?: SortOrder
+  }
+
+  export type DashboardAggregatesAvgOrderByAggregateInput = {
+    id?: SortOrder
+    idImovel?: SortOrder
+    total?: SortOrder
+  }
+
+  export type DashboardAggregatesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    idImovel?: SortOrder
+    tipo?: SortOrder
+    data?: SortOrder
+    total?: SortOrder
+  }
+
+  export type DashboardAggregatesMinOrderByAggregateInput = {
+    id?: SortOrder
+    idImovel?: SortOrder
+    tipo?: SortOrder
+    data?: SortOrder
+    total?: SortOrder
+  }
+
+  export type DashboardAggregatesSumOrderByAggregateInput = {
+    id?: SortOrder
+    idImovel?: SortOrder
+    total?: SortOrder
+  }
+
+  export type StringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
   }
@@ -2164,6 +3373,10 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -2287,6 +3500,37 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
+  export type NestedStringFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringFilter<$PrismaModel> | string
+  }
+
+  export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel>
+    in?: string[]
+    notIn?: string[]
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    not?: NestedStringWithAggregatesFilter<$PrismaModel> | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedStringFilter<$PrismaModel>
+    _max?: NestedStringFilter<$PrismaModel>
+  }
+
 
 
   /**
@@ -2296,6 +3540,10 @@ export namespace Prisma {
      * @deprecated Use InadimplenciaDiariaDefaultArgs instead
      */
     export type InadimplenciaDiariaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = InadimplenciaDiariaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use DashboardAggregatesDefaultArgs instead
+     */
+    export type DashboardAggregatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DashboardAggregatesDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

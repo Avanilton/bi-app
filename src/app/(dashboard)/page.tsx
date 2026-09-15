@@ -42,141 +42,121 @@ const parseToYYYYMMDD = (dateString: string) => {
   return 0;
 };
 
-// CACHE DE 24 HORAS (86400 segundos) PARA AS QUERYS REMOTAS (D-1)
 const getCachedJuridicosTotal = async (condominio: string | undefined, dataInicio: string | undefined, dataFim: string | undefined, periodo: string | undefined) => {
-  return await unstable_cache(
-    async () => {
-      const params: any = { condominio, dataInicio, dataFim, periodo };
-      let startDate: Date | null = null;
-      let endDate: Date | null = null;
-      if (params.dataInicio && params.dataFim) {
-        startDate = new Date(params.dataInicio + 'T00:00:00.000Z');
-        endDate = new Date(params.dataFim + 'T23:59:59.999Z');
-      } else if (params.periodo) {
-        const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-        const monthIndex = meses.indexOf(params.periodo);
-        if (monthIndex !== -1) {
-          const year = new Date().getFullYear();
-          startDate = new Date(year, monthIndex, 1);
-          endDate = new Date(year, monthIndex + 1, 0, 23, 59, 59, 999);
-        }
-      }
-      const baseWhere: any = { idEmpresa: 75, idImovel: { notIn: INACTIVE_CONDOMINIOS } };
-      if (params.condominio) {
-        const idImovel = parseInt(params.condominio, 10);
-        if (!isNaN(idImovel)) baseWhere.idImovel = idImovel;
-      }
-      const dateFilterVecto = startDate && endDate ? { gte: startDate, lte: endDate } : { lt: new Date() };
+  const params: any = { condominio, dataInicio, dataFim, periodo };
+  let startDate: Date | null = null;
+  let endDate: Date | null = null;
+  if (params.dataInicio && params.dataFim) {
+    startDate = new Date(params.dataInicio + 'T00:00:00.000Z');
+    endDate = new Date(params.dataFim + 'T23:59:59.999Z');
+  } else if (params.periodo) {
+    const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+    const monthIndex = meses.indexOf(params.periodo);
+    if (monthIndex !== -1) {
+      const year = new Date().getFullYear();
+      startDate = new Date(year, monthIndex, 1);
+      endDate = new Date(year, monthIndex + 1, 0, 23, 59, 59, 999);
+    }
+  }
+  const baseWhere: any = { tipo: "JURIDICOS" };
+  if (params.condominio) {
+    const idImovel = parseInt(params.condominio, 10);
+    if (!isNaN(idImovel)) baseWhere.idImovel = idImovel;
+  }
+  const dateFilter = startDate && endDate ? { gte: startDate, lte: endDate } : { lt: new Date() };
 
-      try {
-        const result = await prisma.tbBoleto.aggregate({
-          _sum: { total: true },
-          where: { ...baseWhere, pago: false, cancelado: false, origem: 5, dataVecto: dateFilterVecto }
-        });
-        return result?._sum?.total || 0;
-      } catch (error) {
-        console.error("Erro Juridicos:", error);
-        return 0;
-      }
-    },
-    ['juridicos-total-v3', condominio || 'all', dataInicio || 'any', dataFim || 'any', periodo || 'any'],
-    { revalidate: 86400 }
-  )();
+  try {
+    const result = await prismaLocal.dashboardAggregates.aggregate({
+      _sum: { total: true },
+      where: { ...baseWhere, data: dateFilter }
+    });
+    return result?._sum?.total || 0;
+  } catch (error) {
+    console.error("Erro Juridicos SQLite:", error);
+    return 0;
+  }
 };
 
 const getCachedAmigavelTotal = async (condominio: string | undefined, dataInicio: string | undefined, dataFim: string | undefined, periodo: string | undefined) => {
-  return await unstable_cache(
-    async () => {
-      const params: any = { condominio, dataInicio, dataFim, periodo };
-      let startDate: Date | null = null;
-      let endDate: Date | null = null;
-      if (params.dataInicio && params.dataFim) {
-        startDate = new Date(params.dataInicio + 'T00:00:00.000Z');
-        endDate = new Date(params.dataFim + 'T23:59:59.999Z');
-      } else if (params.periodo) {
-        const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-        const monthIndex = meses.indexOf(params.periodo);
-        if (monthIndex !== -1) {
-          const year = new Date().getFullYear();
-          startDate = new Date(year, monthIndex, 1);
-          endDate = new Date(year, monthIndex + 1, 0, 23, 59, 59, 999);
-        }
-      }
-      const baseWhere: any = { idEmpresa: 75, idImovel: { notIn: INACTIVE_CONDOMINIOS } };
-      if (params.condominio) {
-        const idImovel = parseInt(params.condominio, 10);
-        if (!isNaN(idImovel)) baseWhere.idImovel = idImovel;
-      }
-      const dateFilterVecto = startDate && endDate ? { gte: startDate, lte: endDate } : { lt: new Date() };
+  const params: any = { condominio, dataInicio, dataFim, periodo };
+  let startDate: Date | null = null;
+  let endDate: Date | null = null;
+  if (params.dataInicio && params.dataFim) {
+    startDate = new Date(params.dataInicio + 'T00:00:00.000Z');
+    endDate = new Date(params.dataFim + 'T23:59:59.999Z');
+  } else if (params.periodo) {
+    const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+    const monthIndex = meses.indexOf(params.periodo);
+    if (monthIndex !== -1) {
+      const year = new Date().getFullYear();
+      startDate = new Date(year, monthIndex, 1);
+      endDate = new Date(year, monthIndex + 1, 0, 23, 59, 59, 999);
+    }
+  }
+  const baseWhere: any = { tipo: "AMIGAVEL" };
+  if (params.condominio) {
+    const idImovel = parseInt(params.condominio, 10);
+    if (!isNaN(idImovel)) baseWhere.idImovel = idImovel;
+  }
+  const dateFilter = startDate && endDate ? { gte: startDate, lte: endDate } : { lt: new Date() };
 
-      try {
-        const result = await prisma.tbBoleto.aggregate({
-          _sum: { total: true },
-          where: { ...baseWhere, pago: false, cancelado: false, origem: 6, dataVecto: dateFilterVecto }
-        });
-        return result?._sum?.total || 0;
-      } catch (error) {
-        console.error("Erro Amigavel:", error);
-        return 0;
-      }
-    },
-    ['amigavel-total-v3', condominio || 'all', dataInicio || 'any', dataFim || 'any', periodo || 'any'],
-    { revalidate: 86400 }
-  )();
+  try {
+    const result = await prismaLocal.dashboardAggregates.aggregate({
+      _sum: { total: true },
+      where: { ...baseWhere, data: dateFilter }
+    });
+    return result?._sum?.total || 0;
+  } catch (error) {
+    console.error("Erro Amigavel SQLite:", error);
+    return 0;
+  }
 };
 
 const getCachedRecebimentoTotal = async (condominio: string | undefined, dataInicio: string | undefined, dataFim: string | undefined, periodo: string | undefined) => {
-  return await unstable_cache(
-    async () => {
-      const params: any = { condominio, dataInicio, dataFim, periodo };
-      let startDate: Date | null = null;
-      let endDate: Date | null = null;
-      if (params.dataInicio && params.dataFim) {
-        startDate = new Date(params.dataInicio + 'T00:00:00.000Z');
-        endDate = new Date(params.dataFim + 'T23:59:59.999Z');
-      } else if (params.periodo) {
-        const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-        const monthIndex = meses.indexOf(params.periodo);
-        if (monthIndex !== -1) {
-          const year = new Date().getFullYear();
-          startDate = new Date(year, monthIndex, 1);
-          endDate = new Date(year, monthIndex + 1, 0, 23, 59, 59, 999);
-        }
-      }
-      const baseWhere: any = { idEmpresa: 75, idImovel: { notIn: INACTIVE_CONDOMINIOS } };
-      if (params.condominio) {
-        const idImovel = parseInt(params.condominio, 10);
-        if (!isNaN(idImovel)) baseWhere.idImovel = idImovel;
-      }
-      const dateFilterPgto: any = {};
-      if (startDate && endDate) {
-        dateFilterPgto.gte = startDate;
-        dateFilterPgto.lte = endDate;
-      } else if (!startDate && !endDate && !params.periodo) {
-        const today = new Date();
-        const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-        dateFilterPgto.gte = firstDay;
-      }
+  const params: any = { condominio, dataInicio, dataFim, periodo };
+  let startDate: Date | null = null;
+  let endDate: Date | null = null;
+  if (params.dataInicio && params.dataFim) {
+    startDate = new Date(params.dataInicio + 'T00:00:00.000Z');
+    endDate = new Date(params.dataFim + 'T23:59:59.999Z');
+  } else if (params.periodo) {
+    const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+    const monthIndex = meses.indexOf(params.periodo);
+    if (monthIndex !== -1) {
+      const year = new Date().getFullYear();
+      startDate = new Date(year, monthIndex, 1);
+      endDate = new Date(year, monthIndex + 1, 0, 23, 59, 59, 999);
+    }
+  }
+  const baseWhere: any = { tipo: "RECEBIMENTO" };
+  if (params.condominio) {
+    const idImovel = parseInt(params.condominio, 10);
+    if (!isNaN(idImovel)) baseWhere.idImovel = idImovel;
+  }
+  
+  const dateFilterPgto: any = {};
+  if (startDate && endDate) {
+    dateFilterPgto.gte = startDate;
+    dateFilterPgto.lte = endDate;
+  } else if (!startDate && !endDate && !params.periodo) {
+    const today = new Date();
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    dateFilterPgto.gte = firstDay;
+  }
 
-      try {
-        const result = await prisma.tbBoleto.aggregate({
-          _sum: { total: true },
-          where: {
-            ...baseWhere,
-            pago: true,
-            cancelado: false,
-            dataPgto: Object.keys(dateFilterPgto).length > 0 ? dateFilterPgto : undefined
-          }
-        });
-        return result?._sum?.total || 0;
-      } catch (error) {
-        console.error("Erro Recebimento:", error);
-        return 0;
+  try {
+    const result = await prismaLocal.dashboardAggregates.aggregate({
+      _sum: { total: true },
+      where: {
+        ...baseWhere,
+        data: Object.keys(dateFilterPgto).length > 0 ? dateFilterPgto : undefined
       }
-    },
-    ['recebimento-total-v3', condominio || 'all', dataInicio || 'any', dataFim || 'any', periodo || 'any'],
-    { revalidate: 86400 }
-  )();
+    });
+    return result?._sum?.total || 0;
+  } catch (error) {
+    console.error("Erro Recebimento SQLite:", error);
+    return 0;
+  }
 };
 
 
