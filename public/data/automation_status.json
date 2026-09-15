@@ -1,0 +1,14 @@
+{
+  "message": "Aplicando os 7 filtros exigidos no relatório...",
+  "progress": 30,
+  "isRunning": true,
+  "isError": false,
+  "logs": [
+    "[10:41:00] Iniciando automação Playwright...",
+    "[10:41:00] Acessando página de login do Novacorp...",
+    "[10:41:02] Preenchendo credenciais de acesso...",
+    "[10:41:06] Login efetuado com sucesso. Navegando para o relatório...",
+    "[10:41:07] Aplicando os 7 filtros exigidos no relatório..."
+  ],
+  "timestamp": "2026-09-15T13:41:07.875Z"
+}
