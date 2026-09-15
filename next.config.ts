@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
     buildActivity: false,
     appIsrStatus: false
   },
+  experimental: {
+    outputFileTracingIncludes: {
+      "/**/*": ["./local.db"]
+    }
+  }
 };
 
 export default nextConfig;

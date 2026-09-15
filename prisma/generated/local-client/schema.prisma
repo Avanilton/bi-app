@@ -16,3 +16,15 @@ model InadimplenciaDiaria {
   detalhes       String? // JSON string
   dataExecucao   DateTime @default(now())
 }
+
+model DashboardAggregates {
+  id       Int      @id @default(autoincrement())
+  idImovel Int
+  tipo     String // "JURIDICOS", "AMIGAVEL", "RECEBIMENTO"
+  data     DateTime
+  total    Float
+
+  @@index([tipo])
+  @@index([idImovel])
+  @@index([data])
+}
