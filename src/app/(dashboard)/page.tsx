@@ -21,8 +21,17 @@ export const dynamic = 'force-dynamic';
 
 import { PrismaClient } from "../../../prisma/generated/local-client";
 
-const dbPath = path.resolve(process.cwd(), "local.db");
+let dbPath = path.resolve(process.cwd(), "local.db");
+// Na Vercel, o diretório raiz é read-only. Precisamos copiar para /tmp
+if (process.env.VERCEL === "1") {
+  const tmpPath = "/tmp/local.db";
+  if (!fs.existsSync(tmpPath) && fs.existsSync(dbPath)) {
+    try { fs.copyFileSync(dbPath, tmpPath); } catch (e) { console.error(e); }
+  }
+  dbPath = tmpPath;
+}
 const prismaLocal = new PrismaClient({ datasources: { db: { url: `file:${dbPath}` } } } as any);
+
 
 import prisma from "@/lib/prisma";
 import { INACTIVE_CONDOMINIOS } from "@/lib/constants";
