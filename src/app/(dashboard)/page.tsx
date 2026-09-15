@@ -60,6 +60,79 @@ const getDashboardData = async (params: any) => {
     }
   }
 
+  // --- INICIO DAS PROMISES REMOTAS (Paralelismo) ---
+  const baseWhere: any = {
+    idEmpresa: 75,
+    idImovel: { notIn: INACTIVE_CONDOMINIOS }
+  };
+
+  if (params.condominio) {
+    const idImovel = parseInt(params.condominio, 10);
+    if (!isNaN(idImovel)) {
+      baseWhere.idImovel = idImovel;
+    }
+  }
+
+  const dateFilterVecto: any = {};
+  const dateFilterPgto: any = {};
+  
+  if (startDate && endDate) {
+    dateFilterVecto.gte = startDate;
+    dateFilterVecto.lte = endDate;
+    
+    dateFilterPgto.gte = startDate;
+    dateFilterPgto.lte = endDate;
+  }
+
+  let recebimentoDateFilter = dateFilterPgto;
+  if (!startDate && !endDate && !params.periodo) {
+    const today = new Date();
+    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+    recebimentoDateFilter = { gte: firstDay };
+  }
+
+  const promiseJuridicos = prisma.tbBoleto.aggregate({
+    _sum: { total: true },
+    where: {
+      ...baseWhere,
+      pago: false,
+      cancelado: false,
+      origem: 5,
+      dataVecto: (startDate && endDate) ? dateFilterVecto : { lt: new Date() }
+    }
+  }).catch((e: any) => {
+    console.error("Erro Juridicos:", e);
+    return null;
+  });
+
+  const promiseAmigavel = prisma.tbBoleto.aggregate({
+    _sum: { total: true },
+    where: {
+      ...baseWhere,
+      pago: false,
+      cancelado: false,
+      origem: 6,
+      dataVecto: (startDate && endDate) ? dateFilterVecto : { lt: new Date() }
+    }
+  }).catch((e: any) => {
+    console.error("Erro Amigavel:", e);
+    return null;
+  });
+
+  const promiseRecebimento = prisma.tbBoleto.aggregate({
+    _sum: { total: true },
+    where: {
+      ...baseWhere,
+      pago: true,
+      cancelado: false,
+      dataPgto: (startDate || endDate || params.periodo) ? recebimentoDateFilter : recebimentoDateFilter
+    }
+  }).catch((e: any) => {
+    console.error("Erro Recebimento:", e);
+    return null;
+  });
+  // --- FIM DAS PROMISES REMOTAS ---
+
   try {
     // 1. Busca apenas a dataExecucao primeiro (Ultra Rápido)
     const lastRecordMeta = await prismaLocal.inadimplenciaDiaria.findFirst({
@@ -160,81 +233,23 @@ const getDashboardData = async (params: any) => {
     console.error("Erro ao ler dados do banco local:", error);
   }
 
-  // Consultando dados do banco para Recebimento, Jurídicos e Amigáveis
+  // Resolvendo Promises Paralelas
   let recebimentoTotal = 0;
   let juridicosTotal = 0;
   let amigavelTotal = 0;
 
   try {
-    const baseWhere: any = {
-      idEmpresa: 75,
-      idImovel: { notIn: INACTIVE_CONDOMINIOS }
-    };
+    const [resultJuridicos, resultAmigavel, resultRecebimento] = await Promise.all([
+      promiseJuridicos,
+      promiseAmigavel,
+      promiseRecebimento
+    ]);
 
-    if (params.condominio) {
-      const idImovel = parseInt(params.condominio, 10);
-      if (!isNaN(idImovel)) {
-        baseWhere.idImovel = idImovel;
-      }
-    }
-
-    const dateFilterVecto: any = {};
-    const dateFilterPgto: any = {};
-    
-    if (startDate && endDate) {
-      dateFilterVecto.gte = startDate;
-      dateFilterVecto.lte = endDate;
-      
-      dateFilterPgto.gte = startDate;
-      dateFilterPgto.lte = endDate;
-    }
-
-    // Jurídicos Não Pagos
-    const resultJuridicos = await prisma.tbBoleto.aggregate({
-      _sum: { total: true },
-      where: {
-        ...baseWhere,
-        pago: false,
-        cancelado: false,
-        origem: 5,
-        dataVecto: (startDate && endDate) ? dateFilterVecto : { lt: new Date() }
-      }
-    });
-    juridicosTotal = resultJuridicos._sum?.total || 0;
-
-    // Amigável Não Pagos
-    const resultAmigavel = await prisma.tbBoleto.aggregate({
-      _sum: { total: true },
-      where: {
-        ...baseWhere,
-        pago: false,
-        cancelado: false,
-        origem: 6,
-        dataVecto: (startDate && endDate) ? dateFilterVecto : { lt: new Date() }
-      }
-    });
-    amigavelTotal = resultAmigavel._sum?.total || 0;
-
-    // Recebimentos (pago: true)
-    let recebimentoDateFilter = dateFilterPgto;
-    if (!startDate && !endDate && !params.periodo) {
-      const today = new Date();
-      const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-      recebimentoDateFilter = { gte: firstDay };
-    }
-
-    const resultRecebimento = await prisma.tbBoleto.aggregate({
-      _sum: { total: true },
-      where: {
-        ...baseWhere,
-        pago: true,
-        cancelado: false,
-        dataPgto: (startDate || endDate || params.periodo) ? recebimentoDateFilter : recebimentoDateFilter
-      }
-    });
-    recebimentoTotal = resultRecebimento._sum?.total || 0;
+    juridicosTotal = resultJuridicos?._sum?.total || 0;
+    amigavelTotal = resultAmigavel?._sum?.total || 0;
+    recebimentoTotal = resultRecebimento?._sum?.total || 0;
   } catch (error) {
-    console.error("Erro ao ler dados do banco para Recebimentos, Jurídicos e Amigáveis:", error);
+    console.error("Erro ao resolver dados do banco para Recebimentos, Jurídicos e Amigáveis:", error);
   }
 
   // Lendo os outros dados estáticos (se existirem) ou zerados
