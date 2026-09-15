@@ -23,7 +23,7 @@ const dbPath = path.resolve(process.cwd(), "local.db");
 const prismaLocal = new PrismaClient({ datasources: { db: { url: `file:${dbPath}` } } } as any);
 
 import prisma from "@/lib/prisma";
-
+import { INACTIVE_CONDOMINIOS } from "@/lib/constants";
 // Cache global para evitar carregar e processar 20MB de JSON a cada load
 let cachedDataExecucaoTS: number | null = null;
 let cachedInadimplenciaDetalhes: any[] = [];
@@ -160,6 +160,83 @@ const getDashboardData = async (params: any) => {
     console.error("Erro ao ler dados do banco local:", error);
   }
 
+  // Consultando dados do banco para Recebimento, Jurídicos e Amigáveis
+  let recebimentoTotal = 0;
+  let juridicosTotal = 0;
+  let amigavelTotal = 0;
+
+  try {
+    const baseWhere: any = {
+      idEmpresa: 75,
+      idImovel: { notIn: INACTIVE_CONDOMINIOS }
+    };
+
+    if (params.condominio) {
+      const idImovel = parseInt(params.condominio, 10);
+      if (!isNaN(idImovel)) {
+        baseWhere.idImovel = idImovel;
+      }
+    }
+
+    const dateFilterVecto: any = {};
+    const dateFilterPgto: any = {};
+    
+    if (startDate && endDate) {
+      dateFilterVecto.gte = startDate;
+      dateFilterVecto.lte = endDate;
+      
+      dateFilterPgto.gte = startDate;
+      dateFilterPgto.lte = endDate;
+    }
+
+    // Jurídicos Não Pagos
+    const resultJuridicos = await prisma.tbBoleto.aggregate({
+      _sum: { total: true },
+      where: {
+        ...baseWhere,
+        pago: false,
+        cancelado: false,
+        origem: 5,
+        dataVecto: (startDate && endDate) ? dateFilterVecto : { lt: new Date() }
+      }
+    });
+    juridicosTotal = resultJuridicos._sum?.total || 0;
+
+    // Amigável Não Pagos
+    const resultAmigavel = await prisma.tbBoleto.aggregate({
+      _sum: { total: true },
+      where: {
+        ...baseWhere,
+        pago: false,
+        cancelado: false,
+        origem: 6,
+        dataVecto: (startDate && endDate) ? dateFilterVecto : { lt: new Date() }
+      }
+    });
+    amigavelTotal = resultAmigavel._sum?.total || 0;
+
+    // Recebimentos (pago: true)
+    let recebimentoDateFilter = dateFilterPgto;
+    if (!startDate && !endDate && !params.periodo) {
+      const today = new Date();
+      const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+      recebimentoDateFilter = { gte: firstDay };
+    }
+
+    const resultRecebimento = await prisma.tbBoleto.aggregate({
+      _sum: { total: true },
+      where: {
+        ...baseWhere,
+        pago: true,
+        cancelado: false,
+        dataPgto: (startDate || endDate || params.periodo) ? recebimentoDateFilter : recebimentoDateFilter
+      }
+    });
+    recebimentoTotal = resultRecebimento._sum?.total || 0;
+  } catch (error) {
+    console.error("Erro ao ler dados do banco para Recebimentos, Jurídicos e Amigáveis:", error);
+  }
+
   // Lendo os outros dados estáticos (se existirem) ou zerados
   let outrosDados = {};
   try {
@@ -172,18 +249,18 @@ const getDashboardData = async (params: any) => {
     console.error("Erro ao ler dados json do dashboard:", error);
   }
 
-  // Valores padrão/zerados caso o arquivo da automação ainda não exista
+  // Valores com os totais consultados remotamente e localmente
   return {
-    recebimentoTotal: 0,
-    juridicosTotal: 0,
-    amigavelTotal: 0,
+    recebimentoTotal,
+    juridicosTotal,
+    amigavelTotal,
     trendInadimplencia: { trend: "up", trendValue: "0.0%" },
     trendRecebimento: { trend: "up", trendValue: "0.0%" },
     trendJuridicos: { trend: "up", trendValue: "0.0%" },
     trendAmigavel: { trend: "up", trendValue: "0.0%" },
     recebimentoChartData: [],
     ...outrosDados,
-    inadimplenciaTotal, // sobrescreve com o do banco de dados
+    inadimplenciaTotal, // sobrescreve com o do banco de dados (local)
     inadimplenciaDetalhes // Array com os detalhes importados
   };
 };
