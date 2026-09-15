@@ -1,7 +1,10 @@
 import { chromium } from 'playwright';
-import prisma from '../src/lib/prisma';
+import { PrismaClient } from '../prisma/generated/local-client';
 import path from "path";
 import fs from "fs";
+
+const dbPath = path.resolve(process.cwd(), "local.db");
+const prismaLocal = new PrismaClient({ datasources: { db: { url: `file:${dbPath}` } } } as any);
 
 const STATUS_FILE = path.resolve(process.cwd(), "public", "data", "automation_status.json");
 
@@ -156,7 +159,7 @@ export async function runInadimplenciaAutomation() {
         today.setHours(0,0,0,0);
         
         try {
-            const existingRun = await prisma.inadimplenciaDiaria.findUnique({
+            const existingRun = await prismaLocal.inadimplenciaDiaria.findUnique({
                 where: { dataReferencia: today }
             });
             if (existingRun && existingRun.detalhes) {
@@ -375,7 +378,7 @@ export async function runInadimplenciaAutomation() {
 
             try {
                 // Salva de forma incremental no banco para não perder progresso
-                await prisma.inadimplenciaDiaria.upsert({
+                await prismaLocal.inadimplenciaDiaria.upsert({
                     where: { dataReferencia: today },
                     update: {
                         valorTotal: totalGeral,
@@ -404,7 +407,7 @@ export async function runInadimplenciaAutomation() {
         dbToday.setDate(dbToday.getDate() - 1);
         dbToday.setHours(0,0,0,0);
 
-        await prisma.inadimplenciaDiaria.upsert({
+        await prismaLocal.inadimplenciaDiaria.upsert({
             where: { dataReferencia: dbToday },
             update: {
                 valorTotal: totalGeral,
@@ -431,7 +434,7 @@ Valor Total Inadimplência: R$ ${totalGeral.toFixed(2)}
         console.log("Processo concluído com sucesso e gravado no DB Local.");
     } finally {
         await browser.close();
-        await prisma.$disconnect();
+        await prismaLocal.$disconnect();
     }
 }
 
