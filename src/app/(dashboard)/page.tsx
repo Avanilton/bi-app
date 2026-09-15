@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
+import { unstable_cache } from "next/cache";
 import {
   StatCard,
   RecebimentoChart,
@@ -41,52 +42,138 @@ const parseToYYYYMMDD = (dateString: string) => {
   return 0;
 };
 
+// CACHE DE 24 HORAS (86400 segundos) PARA AS QUERYS REMOTAS (D-1)
+const getCachedJuridicosTotal = unstable_cache(
+  async (params: any) => {
+    let startDate: Date | null = null;
+    let endDate: Date | null = null;
+    if (params.dataInicio && params.dataFim) {
+      startDate = new Date(params.dataInicio + 'T00:00:00.000Z');
+      endDate = new Date(params.dataFim + 'T23:59:59.999Z');
+    } else if (params.periodo) {
+      const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+      const monthIndex = meses.indexOf(params.periodo);
+      if (monthIndex !== -1) {
+        const year = new Date().getFullYear();
+        startDate = new Date(year, monthIndex, 1);
+        endDate = new Date(year, monthIndex + 1, 0, 23, 59, 59, 999);
+      }
+    }
+    const baseWhere: any = { idEmpresa: 75, idImovel: { notIn: INACTIVE_CONDOMINIOS } };
+    if (params.condominio) {
+      const idImovel = parseInt(params.condominio, 10);
+      if (!isNaN(idImovel)) baseWhere.idImovel = idImovel;
+    }
+    const dateFilterVecto = startDate && endDate ? { gte: startDate, lte: endDate } : { lt: new Date() };
+
+    try {
+      const result = await prisma.tbBoleto.aggregate({
+        _sum: { total: true },
+        where: { ...baseWhere, pago: false, cancelado: false, origem: 5, dataVecto: dateFilterVecto }
+      });
+      return result?._sum?.total || 0;
+    } catch (error) {
+      console.error("Erro Juridicos:", error);
+      return 0;
+    }
+  },
+  ['juridicos-total-v1'],
+  { revalidate: 86400 }
+);
+
+const getCachedAmigavelTotal = unstable_cache(
+  async (params: any) => {
+    let startDate: Date | null = null;
+    let endDate: Date | null = null;
+    if (params.dataInicio && params.dataFim) {
+      startDate = new Date(params.dataInicio + 'T00:00:00.000Z');
+      endDate = new Date(params.dataFim + 'T23:59:59.999Z');
+    } else if (params.periodo) {
+      const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+      const monthIndex = meses.indexOf(params.periodo);
+      if (monthIndex !== -1) {
+        const year = new Date().getFullYear();
+        startDate = new Date(year, monthIndex, 1);
+        endDate = new Date(year, monthIndex + 1, 0, 23, 59, 59, 999);
+      }
+    }
+    const baseWhere: any = { idEmpresa: 75, idImovel: { notIn: INACTIVE_CONDOMINIOS } };
+    if (params.condominio) {
+      const idImovel = parseInt(params.condominio, 10);
+      if (!isNaN(idImovel)) baseWhere.idImovel = idImovel;
+    }
+    const dateFilterVecto = startDate && endDate ? { gte: startDate, lte: endDate } : { lt: new Date() };
+
+    try {
+      const result = await prisma.tbBoleto.aggregate({
+        _sum: { total: true },
+        where: { ...baseWhere, pago: false, cancelado: false, origem: 6, dataVecto: dateFilterVecto }
+      });
+      return result?._sum?.total || 0;
+    } catch (error) {
+      console.error("Erro Amigavel:", error);
+      return 0;
+    }
+  },
+  ['amigavel-total-v1'],
+  { revalidate: 86400 }
+);
+
+const getCachedRecebimentoTotal = unstable_cache(
+  async (params: any) => {
+    let startDate: Date | null = null;
+    let endDate: Date | null = null;
+    if (params.dataInicio && params.dataFim) {
+      startDate = new Date(params.dataInicio + 'T00:00:00.000Z');
+      endDate = new Date(params.dataFim + 'T23:59:59.999Z');
+    } else if (params.periodo) {
+      const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+      const monthIndex = meses.indexOf(params.periodo);
+      if (monthIndex !== -1) {
+        const year = new Date().getFullYear();
+        startDate = new Date(year, monthIndex, 1);
+        endDate = new Date(year, monthIndex + 1, 0, 23, 59, 59, 999);
+      }
+    }
+    const baseWhere: any = { idEmpresa: 75, idImovel: { notIn: INACTIVE_CONDOMINIOS } };
+    if (params.condominio) {
+      const idImovel = parseInt(params.condominio, 10);
+      if (!isNaN(idImovel)) baseWhere.idImovel = idImovel;
+    }
+    const dateFilterPgto: any = {};
+    if (startDate && endDate) {
+      dateFilterPgto.gte = startDate;
+      dateFilterPgto.lte = endDate;
+    } else if (!startDate && !endDate && !params.periodo) {
+      const today = new Date();
+      const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+      dateFilterPgto.gte = firstDay;
+    }
+
+    try {
+      const result = await prisma.tbBoleto.aggregate({
+        _sum: { total: true },
+        where: {
+          ...baseWhere,
+          pago: true,
+          cancelado: false,
+          dataPgto: Object.keys(dateFilterPgto).length > 0 ? dateFilterPgto : undefined
+        }
+      });
+      return result?._sum?.total || 0;
+    } catch (error) {
+      console.error("Erro Recebimento:", error);
+      return 0;
+    }
+  },
+  ['recebimento-total-v1'],
+  { revalidate: 86400 }
+);
+
+
 // COMPONENTES ASSÍNCRONOS
 async function AsyncJuridicosCard({ params }: { params: any }) {
-  let startDate: Date | null = null;
-  let endDate: Date | null = null;
-  
-  if (params.dataInicio && params.dataFim) {
-    startDate = new Date(params.dataInicio + 'T00:00:00.000Z');
-    endDate = new Date(params.dataFim + 'T23:59:59.999Z');
-  } else if (params.periodo) {
-    const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-    const monthIndex = meses.indexOf(params.periodo);
-    if (monthIndex !== -1) {
-      const year = new Date().getFullYear();
-      startDate = new Date(year, monthIndex, 1);
-      endDate = new Date(year, monthIndex + 1, 0, 23, 59, 59, 999);
-    }
-  }
-
-  const baseWhere: any = {
-    idEmpresa: 75,
-    idImovel: { notIn: INACTIVE_CONDOMINIOS }
-  };
-
-  if (params.condominio) {
-    const idImovel = parseInt(params.condominio, 10);
-    if (!isNaN(idImovel)) baseWhere.idImovel = idImovel;
-  }
-
-  const dateFilterVecto = startDate && endDate ? { gte: startDate, lte: endDate } : { lt: new Date() };
-
-  let total = 0;
-  try {
-    const result = await prisma.tbBoleto.aggregate({
-      _sum: { total: true },
-      where: {
-        ...baseWhere,
-        pago: false,
-        cancelado: false,
-        origem: 5,
-        dataVecto: dateFilterVecto
-      }
-    });
-    total = result?._sum?.total || 0;
-  } catch (error) {
-    console.error("Erro Juridicos:", error);
-  }
+  const total = await getCachedJuridicosTotal(params);
   const formatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(total);
   
   return (
@@ -102,50 +189,7 @@ async function AsyncJuridicosCard({ params }: { params: any }) {
 }
 
 async function AsyncAmigavelCard({ params }: { params: any }) {
-  let startDate: Date | null = null;
-  let endDate: Date | null = null;
-  
-  if (params.dataInicio && params.dataFim) {
-    startDate = new Date(params.dataInicio + 'T00:00:00.000Z');
-    endDate = new Date(params.dataFim + 'T23:59:59.999Z');
-  } else if (params.periodo) {
-    const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-    const monthIndex = meses.indexOf(params.periodo);
-    if (monthIndex !== -1) {
-      const year = new Date().getFullYear();
-      startDate = new Date(year, monthIndex, 1);
-      endDate = new Date(year, monthIndex + 1, 0, 23, 59, 59, 999);
-    }
-  }
-
-  const baseWhere: any = {
-    idEmpresa: 75,
-    idImovel: { notIn: INACTIVE_CONDOMINIOS }
-  };
-
-  if (params.condominio) {
-    const idImovel = parseInt(params.condominio, 10);
-    if (!isNaN(idImovel)) baseWhere.idImovel = idImovel;
-  }
-
-  const dateFilterVecto = startDate && endDate ? { gte: startDate, lte: endDate } : { lt: new Date() };
-
-  let total = 0;
-  try {
-    const result = await prisma.tbBoleto.aggregate({
-      _sum: { total: true },
-      where: {
-        ...baseWhere,
-        pago: false,
-        cancelado: false,
-        origem: 6,
-        dataVecto: dateFilterVecto
-      }
-    });
-    total = result?._sum?.total || 0;
-  } catch (error) {
-    console.error("Erro Amigavel:", error);
-  }
+  const total = await getCachedAmigavelTotal(params);
   const formatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(total);
   
   return (
@@ -161,57 +205,7 @@ async function AsyncAmigavelCard({ params }: { params: any }) {
 }
 
 async function AsyncRecebimentoCard({ params }: { params: any }) {
-  let startDate: Date | null = null;
-  let endDate: Date | null = null;
-  
-  if (params.dataInicio && params.dataFim) {
-    startDate = new Date(params.dataInicio + 'T00:00:00.000Z');
-    endDate = new Date(params.dataFim + 'T23:59:59.999Z');
-  } else if (params.periodo) {
-    const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-    const monthIndex = meses.indexOf(params.periodo);
-    if (monthIndex !== -1) {
-      const year = new Date().getFullYear();
-      startDate = new Date(year, monthIndex, 1);
-      endDate = new Date(year, monthIndex + 1, 0, 23, 59, 59, 999);
-    }
-  }
-
-  const baseWhere: any = {
-    idEmpresa: 75,
-    idImovel: { notIn: INACTIVE_CONDOMINIOS }
-  };
-
-  if (params.condominio) {
-    const idImovel = parseInt(params.condominio, 10);
-    if (!isNaN(idImovel)) baseWhere.idImovel = idImovel;
-  }
-
-  const dateFilterPgto: any = {};
-  if (startDate && endDate) {
-    dateFilterPgto.gte = startDate;
-    dateFilterPgto.lte = endDate;
-  } else if (!startDate && !endDate && !params.periodo) {
-    const today = new Date();
-    const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
-    dateFilterPgto.gte = firstDay;
-  }
-
-  let total = 0;
-  try {
-    const result = await prisma.tbBoleto.aggregate({
-      _sum: { total: true },
-      where: {
-        ...baseWhere,
-        pago: true,
-        cancelado: false,
-        dataPgto: Object.keys(dateFilterPgto).length > 0 ? dateFilterPgto : undefined
-      }
-    });
-    total = result?._sum?.total || 0;
-  } catch (error) {
-    console.error("Erro Recebimento:", error);
-  }
+  const total = await getCachedRecebimentoTotal(params);
   const formatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(total);
   
   return (
@@ -272,8 +266,6 @@ const getInadimplenciaData = async (params: any) => {
           inadimplenciaTotal = lastRecord.valorTotal;
           inadimplenciaDetalhes = JSON.parse(lastRecord.detalhes);
           
-          // SEM O LOOP GIGANTE DE PRÉ PROCESSAMENTO DE DATAS AQUI!
-          
           // Salva no cache
           cachedDataExecucaoTS = currentDBTime;
           cachedInadimplenciaDetalhes = inadimplenciaDetalhes;
@@ -319,7 +311,6 @@ const getInadimplenciaData = async (params: any) => {
             const documentosFiltrados = pessoa.documentos?.filter((doc: any) => {
               // Converte a data da string on the fly ultra rápido
               const docInt = doc.parsedTS || parseToYYYYMMDD(doc.vecto);
-              // Salva para consultas futuras
               doc.parsedTS = docInt; 
               return docInt >= startInt && docInt <= endInt;
             }) || [];
