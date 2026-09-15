@@ -44,7 +44,8 @@ const parseToYYYYMMDD = (dateString: string) => {
 
 // CACHE DE 24 HORAS (86400 segundos) PARA AS QUERYS REMOTAS (D-1)
 const getCachedJuridicosTotal = unstable_cache(
-  async (params: any) => {
+  async (condominio: string | undefined, dataInicio: string | undefined, dataFim: string | undefined, periodo: string | undefined) => {
+    const params: any = { condominio, dataInicio, dataFim, periodo };
     let startDate: Date | null = null;
     let endDate: Date | null = null;
     if (params.dataInicio && params.dataFim) {
@@ -77,12 +78,13 @@ const getCachedJuridicosTotal = unstable_cache(
       return 0;
     }
   },
-  ['juridicos-total-v1'],
+  ['juridicos-total-v2'],
   { revalidate: 86400 }
 );
 
 const getCachedAmigavelTotal = unstable_cache(
-  async (params: any) => {
+  async (condominio: string | undefined, dataInicio: string | undefined, dataFim: string | undefined, periodo: string | undefined) => {
+    const params: any = { condominio, dataInicio, dataFim, periodo };
     let startDate: Date | null = null;
     let endDate: Date | null = null;
     if (params.dataInicio && params.dataFim) {
@@ -115,12 +117,13 @@ const getCachedAmigavelTotal = unstable_cache(
       return 0;
     }
   },
-  ['amigavel-total-v1'],
+  ['amigavel-total-v2'],
   { revalidate: 86400 }
 );
 
 const getCachedRecebimentoTotal = unstable_cache(
-  async (params: any) => {
+  async (condominio: string | undefined, dataInicio: string | undefined, dataFim: string | undefined, periodo: string | undefined) => {
+    const params: any = { condominio, dataInicio, dataFim, periodo };
     let startDate: Date | null = null;
     let endDate: Date | null = null;
     if (params.dataInicio && params.dataFim) {
@@ -166,14 +169,14 @@ const getCachedRecebimentoTotal = unstable_cache(
       return 0;
     }
   },
-  ['recebimento-total-v1'],
+  ['recebimento-total-v2'],
   { revalidate: 86400 }
 );
 
 
 // COMPONENTES ASSÍNCRONOS
 async function AsyncJuridicosCard({ params }: { params: any }) {
-  const total = await getCachedJuridicosTotal(params);
+  const total = await getCachedJuridicosTotal(params.condominio as string, params.dataInicio as string, params.dataFim as string, params.periodo as string);
   const formatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(total);
   
   return (
@@ -189,7 +192,7 @@ async function AsyncJuridicosCard({ params }: { params: any }) {
 }
 
 async function AsyncAmigavelCard({ params }: { params: any }) {
-  const total = await getCachedAmigavelTotal(params);
+  const total = await getCachedAmigavelTotal(params.condominio as string, params.dataInicio as string, params.dataFim as string, params.periodo as string);
   const formatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(total);
   
   return (
@@ -205,7 +208,7 @@ async function AsyncAmigavelCard({ params }: { params: any }) {
 }
 
 async function AsyncRecebimentoCard({ params }: { params: any }) {
-  const total = await getCachedRecebimentoTotal(params);
+  const total = await getCachedRecebimentoTotal(params.condominio as string, params.dataInicio as string, params.dataFim as string, params.periodo as string);
   const formatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(total);
   
   return (
