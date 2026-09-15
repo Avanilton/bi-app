@@ -24,9 +24,14 @@ export default function ConfiguracoesPage() {
     }
   };
 
+  const [isLocalhost, setIsLocalhost] = useState(true);
+
   useEffect(() => {
     fetchStatus();
     const interval = setInterval(fetchStatus, 2000);
+    if (typeof window !== "undefined") {
+      setIsLocalhost(window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+    }
     return () => clearInterval(interval);
   }, []);
 
@@ -88,6 +93,14 @@ export default function ConfiguracoesPage() {
               O robô (Playwright) acessará o sistema da Novacorp, fará os filtros de todos os condomínios para ontem (D-1), e atualizará o Card de Inadimplência. O processo pode demorar alguns minutos.
             </p>
             
+            {!isLocalhost && (
+              <div className="mb-4 bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                <p className="text-sm text-yellow-700">
+                  <strong>Atenção:</strong> A automação do robô exige a abertura de um navegador. Por limitações de servidor (Serverless), este recurso foi <strong>desativado no ambiente online da Vercel</strong>. Para atualizar a inadimplência diária, rode o projeto no seu computador (<i>localhost</i>). Ele enviará os dados para a nuvem automaticamente ao terminar!
+                </p>
+              </div>
+            )}
+            
             {(automationStatus?.isRunning || isStarting) && (
               <div className="mb-6 bg-gray-50 border border-gray-200 rounded-lg p-4">
                 <div className="flex justify-between items-center mb-2">
@@ -115,7 +128,7 @@ export default function ConfiguracoesPage() {
                     setIsStarting(false);
                   }
                 }}
-                disabled={automationStatus?.isRunning || isStarting}
+                disabled={!isLocalhost || automationStatus?.isRunning || isStarting}
                 className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-900 text-white font-medium text-sm rounded-lg hover:bg-gray-800 transition-all shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <RefreshCcw size={18} className={(automationStatus?.isRunning || isStarting) ? "animate-spin" : ""} />
